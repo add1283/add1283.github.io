@@ -1,9 +1,4 @@
-/**
-* Template Name: iPortfolio - v3.6.0
-* Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+
 (function() {
   "use strict";
 
@@ -126,6 +121,16 @@
   });
 
   /**
+   * Preloader
+   */
+  let preloader = select('#preloader');
+  if (preloader) {
+    window.addEventListener('load', () => {
+      preloader.remove()
+    });
+  }
+
+  /**
    * Hero type effect
    */
   const typed = select('.typed')
@@ -196,6 +201,15 @@
   });
 
   /**
+   * Initiate portfolio details lightbox 
+   */
+  const portfolioDetailsLightbox = GLightbox({
+    selector: '.portfolio-details-lightbox',
+    width: '90%',
+    height: '90vh'
+  });
+
+  /**
    * Portfolio details slider
    */
   new Swiper('.portfolio-details-slider', {
@@ -227,17 +241,6 @@
       el: '.swiper-pagination',
       type: 'bullets',
       clickable: true
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-        spaceBetween: 20
-      },
-
-      1200: {
-        slidesPerView: 3,
-        spaceBetween: 20
-      }
     }
   });
 
@@ -253,4 +256,23 @@
     })
   });
 
+  /**
+   * Initiate Pure Counter 
+   */
+  new PureCounter();
+
 })()
+
+
+var btnMail = document.getElementById('btnMail');
+
+if (btnMail) {
+  btnMail.addEventListener('click', function (e) {
+    var txtName = document.getElementById('txtName');
+    var txtSubject = document.getElementById('txtSubject');
+    var txtMail = document.getElementById('txtMail');
+    var txtMessage = document.getElementById('txtMessage');
+    var mailtoLink = 'mailto:contact@ahmetdenizdundar.com.tr?subject=' + encodeURIComponent(txtSubject.value) + '&body=' + encodeURIComponent(txtMessage.value);
+    window.location.href = mailtoLink;
+  });
+}
