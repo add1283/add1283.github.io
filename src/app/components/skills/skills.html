@@ -1,0 +1,52 @@
+<section id="skills" class="py-16 sm:py-20 bg-white">
+  <div class="container mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12 sm:mb-16">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">Skills</h2>
+      <div class="w-20 sm:w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-4 sm:mb-6"></div>
+      <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-2">
+        Here are some of the technologies and tools I work with
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
+      <div class="space-y-6 sm:space-y-8" *ngFor="let skill of skills; let i = index">
+        <div class="skill-item" [class.delay-1]="i % 2 === 1" [class.delay-2]="i % 2 === 0">
+          <!-- Skill Header -->
+          <div class="flex justify-between items-center mb-2 sm:mb-3">
+            <span class="text-base sm:text-lg font-semibold text-gray-700">{{ skill.name }}</span>
+            <span
+              class="text-xs sm:text-sm font-bold text-gray-600">{{ (animatedSkills[skill.name] || 0) | number:'1.0-0' }}%</span>
+          </div>
+
+          <!-- Progress Bar Container -->
+          <div class="w-full bg-gray-200 rounded-full h-2 sm:h-3 shadow-inner">
+            <div
+              class="h-2 sm:h-3 rounded-full bg-gradient-to-r transition-all duration-1000 ease-out relative overflow-hidden"
+              [class]="skill.color" [style.width.%]="animatedSkills[skill.name] || 0">
+              <!-- Shimmer effect -->
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 transform -skew-x-12 animate-shimmer">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Skills Section -->
+    <div class="mt-12 sm:mt-16 text-center">
+      <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-6 sm:mb-8">Other Technologies</h3>
+      <div class="flex flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4 max-w-4xl mx-auto px-2">
+        <span class="skill-tag text-xs sm:text-sm">Angular</span>
+        <span class="skill-tag text-xs sm:text-sm">.NET</span>
+        <span class="skill-tag text-xs sm:text-sm">TypeScript</span>
+        <span class="skill-tag text-xs sm:text-sm">Node.js</span>
+        <span class="skill-tag text-xs sm:text-sm">Git</span>
+        <span class="skill-tag text-xs sm:text-sm">Tailwind CSS</span>
+        <span class="skill-tag text-xs sm:text-sm">Bootstrap</span>
+        <span class="skill-tag text-xs sm:text-sm">Figma</span>
+        <span class="skill-tag text-xs sm:text-sm">Responsive Design</span>
+      </div>
+    </div>
+  </div>
+</section>

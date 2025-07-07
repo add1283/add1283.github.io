@@ -1,0 +1,84 @@
+/* Contact component specific styles */
+#contact {
+  scroll-margin-top: 80px;
+}
+
+/* Form input focus animations */
+input:focus,
+textarea:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Form field animations */
+.form-field {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.form-field:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.form-field:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.form-field:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* Button hover animations */
+button:not(:disabled):hover {
+  box-shadow: 0 15px 35px rgba(147, 51, 234, 0.3);
+}
+
+/* Status message animations */
+.status-message {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ripple effect for button */
+button {
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+button:active::before {
+  width: 300px;
+  height: 300px;
+}

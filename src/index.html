@@ -1,0 +1,273 @@
+<!doctype html>
+<html data-theme="valorant" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ahmet Deniz Dündar - Frontend Developer & Designer</title>
+  <base href="/">
+
+  <!-- Performance & SEO Meta Tags -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description"
+    content="Frontend Developer, UI/UX Designer and Researcher. I develop projects with modern web technologies.">
+  <meta name="theme-color" content="#8b5cf6">
+
+  <!-- Performance Resource Hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="//github.com">
+  <link rel="dns-prefetch" href="//linkedin.com">
+  <link rel="dns-prefetch" href="//twitter.com">
+
+  <!-- Preload Critical Fonts -->
+  <link rel="preload" href="assets/fonts/kumbh-sans/KumbhSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/kumbh-sans/KumbhSans-Bold.woff2" as="font" type="font/woff2" crossorigin>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Critical CSS Inline -->
+  <style>
+    /* Critical loading styles */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #1e293b 0%, #3b82f6 50%, #1e293b 100%);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    app-root {
+      display: block;
+      min-height: 100vh;
+    }
+
+    /* Glass background overlay */
+    .loading-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+
+    /* GPU-Optimized loader card */
+    .loading-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: 24px;
+      padding: 50px 60px;
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px);
+      min-width: 320px;
+      min-height: 240px;
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+
+
+    /* GPU-Optimized 3D Loader */
+    .loading {
+      position: relative;
+      width: 70px;
+      height: 70px;
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    .loading::before,
+    .loading::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+    .loading::before {
+      width: 100%;
+      height: 100%;
+      background: conic-gradient(from 0deg,
+          transparent 0deg 45deg,
+          #3b82f6 45deg 135deg,
+          transparent 135deg 225deg,
+          #8b5cf6 225deg 315deg,
+          transparent 315deg 360deg);
+      animation: rotateSmooth 2s linear infinite;
+    }
+
+    .loading::after {
+      width: 70%;
+      height: 70%;
+      top: 15%;
+      left: 15%;
+      background: conic-gradient(from 90deg,
+          transparent 0deg 60deg,
+          #ec4899 60deg 180deg,
+          transparent 180deg 300deg,
+          #06b6d4 300deg 360deg);
+      animation: rotateSmooth 1.5s linear infinite reverse;
+    }
+
+    @keyframes rotateSmooth {
+      0% {
+        transform: rotate3d(0, 0, 1, 0deg);
+      }
+
+      100% {
+        transform: rotate3d(0, 0, 1, 360deg);
+      }
+    }
+
+    /* GPU-Optimized Central dot */
+    .loading-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0);
+      width: 16px;
+      height: 16px;
+      background: radial-gradient(circle, #ffffff 30%, #f8fafc 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.9);
+      animation: pulseSmooth 2s ease-in-out infinite;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+
+    @keyframes pulseSmooth {
+
+      0%,
+      100% {
+        transform: translate3d(-50%, -50%, 0) scale3d(0.8, 0.8, 1);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: translate3d(-50%, -50%, 0) scale3d(1.2, 1.2, 1);
+        opacity: 1;
+      }
+    }
+
+    /* GPU-Optimized Brand text */
+    .loading-brand {
+      margin-top: 35px;
+      text-align: center;
+      will-change: transform, opacity;
+      transform: translateZ(0);
+    }
+
+    .loading-brand h1 {
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      animation: fadeInUpSmooth 1.5s ease-out;
+      letter-spacing: -0.5px;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+
+    .loading-text {
+      color: #e2e8f0;
+      font-weight: 500;
+      font-size: 15px;
+      margin: 8px 0 0 0;
+      opacity: 0.9;
+      text-align: center;
+      animation: fadeInUpSmooth 1.8s ease-out;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+
+
+
+    @keyframes fadeInUpSmooth {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+  <!-- Enhanced Glass Loading UI -->
+  <div id="loading-container" class="loading-container">
+    <div class="loading-card">
+      <!-- Main loader -->
+      <div class="loading">
+        <div class="loading-dot"></div>
+      </div>
+
+      <!-- Enhanced Brand and text -->
+      <div class="loading-brand">
+        <h1>Ahmet Deniz Dündar</h1>
+        <div class="loading-text">Creating amazing experiences...</div>
+      </div>
+    </div>
+  </div>
+
+  <app-root></app-root>
+
+  <script>
+    // Enhanced loader removal with body class management
+    function removeLoader() {
+      const container = document.getElementById('loading-container');
+      const body = document.body;
+
+      if (container) {
+        // Fade out effect
+        container.style.opacity = '0';
+        container.style.transition = 'opacity 0.5s ease';
+
+        setTimeout(() => {
+          if (container.parentNode) {
+            container.parentNode.removeChild(container);
+          }
+
+        }, 500);
+      }
+    }
+
+    // Remove loader when Angular loads
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(removeLoader, 1500);
+    });
+
+    // Fallback - remove loader if it takes too long
+    setTimeout(removeLoader, 5000);
+
+  </script>
+</body>
+
+</html>

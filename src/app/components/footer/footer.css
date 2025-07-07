@@ -1,0 +1,60 @@
+/* Footer specific styles */
+footer {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Social link hover effects */
+footer a {
+  transition: all 0.3s ease;
+}
+
+/* Animated background gradient */
+footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, #1e293b, #3b82f6, #9333ea, #1e293b);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  opacity: 0.8;
+  z-index: -1;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Smooth scroll for footer links */
+footer a[href^="#"] {
+  scroll-behavior: smooth;
+}
+
+/* Social icon hover effects */
+footer .group:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Text glow effect on hover */
+footer .text-purple-400:hover {
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  footer .flex {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}

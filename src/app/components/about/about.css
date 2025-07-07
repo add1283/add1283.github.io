@@ -1,0 +1,24 @@
+/* About component specific styles */
+#about {
+  scroll-margin-top: 80px;
+}
+
+/* Smooth hover effects for interactive elements */
+#about a {
+  transition: all 0.3s ease;
+}
+
+/* Custom animations for decorative elements */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}

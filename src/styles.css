@@ -1,0 +1,75 @@
+@import "tailwindcss";
+@plugin "flyonui" {
+  themes: all;
+}
+@plugin "@iconify/tailwind4";
+@import "flyonui/variants.css";
+@source "../node_modules/flyonui/flyonui.js";
+
+/* Font Imports */
+@import "./assets/fonts/kumbh-sans/kumbh-sans.css";
+@import "./assets/fonts/work-sans/work-sans.css";
+
+/* Font Override */
+:root {
+  --default-font-family: "Kumbh Sans", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+body {
+  font-family: "Kumbh Sans", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
+/* Performance optimizations */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeSpeed;
+}
+
+/* GPU acceleration for animations */
+.animate-pulse,
+.animate-bounce,
+.animate-spin,
+[class*="animate-"] {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Reduce repaints */
+img {
+  transform: translateZ(0);
+  image-rendering: optimizeQuality;
+}
+
+/* Optimize gradients for performance */
+.bg-gradient-to-r,
+.bg-gradient-to-br,
+.bg-gradient-to-l {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3b82f6, #9333ea);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2563eb, #7c3aed);
+}
