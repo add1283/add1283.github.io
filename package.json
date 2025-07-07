@@ -7,9 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:add1283.github.io": "node dist/add1283.github.io/server/server.mjs",
-    "github-build": "ng build --configuration production --base-href 'https://add1283.github.io/'",
-    "github-deploy": "npx angular-cli-ghpages --dir=dist/add1283.github.io/browser --no-silent"
+    "serve:ssr:add1283.github.io": "node dist/add1283.github.io/server/server.mjs"
   },
   "prettier": {
     "overrides": [
