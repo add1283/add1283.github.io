@@ -1,5 +1,5 @@
 {
-  "name": "ahmetdenizdundar.com.tr",
+  "name": "add1283.github.io",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:ahmetdenizdundar.com.tr": "node dist/ahmetdenizdundar.com.tr/server/server.mjs"
+    "serve:ssr:add1283.github.io": "node dist/add1283.github.io/server/server.mjs"
   },
   "prettier": {
     "overrides": [

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ahmetdenizdundar.com.tr": {
+    "add1283.github.io": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -71,10 +71,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ahmetdenizdundar.com.tr:build:production"
+              "buildTarget": "add1283.github.io:build:production"
             },
             "development": {
-              "buildTarget": "ahmetdenizdundar.com.tr:build:development"
+              "buildTarget": "add1283.github.io:build:development"
             }
           },
           "defaultConfiguration": "development"

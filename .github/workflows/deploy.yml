@@ -35,4 +35,4 @@ jobs:
         if: github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/ahmetdenizdundar.com.tr/browser
+          publish_dir: ./dist/add1283.github.io/browser
