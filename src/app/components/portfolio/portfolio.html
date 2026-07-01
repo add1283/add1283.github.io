@@ -1,0 +1,141 @@
+<section id="portfolio" class="py-16 sm:py-20 bg-gradient-to-b from-[#070a12] to-[#120d09] text-white relative overflow-hidden">
+  <!-- Subtle lighting background for portfolio section -->
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <div class="absolute bottom-1/2 left-1/3 w-[300px] h-[300px] rounded-full filter blur-[120px] bg-orange-500/5"></div>
+    <div class="absolute bottom-1/3 right-1/3 w-[300px] h-[300px] rounded-full filter blur-[120px] bg-amber-600/3"></div>
+  </div>
+
+  <div class="container mx-auto px-4 sm:px-6 relative z-10">
+    <!-- Section Header -->
+    <div class="text-center mb-16 sm:mb-20">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-100 mb-4 font-outfit">Portfolio</h2>
+      <div class="w-20 sm:w-24 h-1 bg-gradient-to-r from-amber-600 to-orange-500 mx-auto mb-4 sm:mb-6"></div>
+      <p class="text-base sm:text-lg text-neutral-300 max-w-2xl mx-auto px-2 font-outfit">
+        A showcase of web portals I have designed, developed, and optimized for search engine visibility.
+      </p>
+    </div>
+
+    <!-- Hanging Photo Wall String -->
+    <div class="relative w-full h-1 portfolio-string rounded-full mb-12 sm:mb-16">
+      <!-- Pulsing fairy lights along the wire -->
+      <div class="absolute top-[-3px] left-[10%] w-2 h-2 rounded-full fairy-light"></div>
+      <div class="absolute top-[-3px] left-[30%] w-2 h-2 rounded-full fairy-light"></div>
+      <div class="absolute top-[-3px] left-[50%] w-2 h-2 rounded-full fairy-light"></div>
+      <div class="absolute top-[-3px] left-[70%] w-2 h-2 rounded-full fairy-light"></div>
+      <div class="absolute top-[-3px] left-[90%] w-2 h-2 rounded-full fairy-light"></div>
+    </div>
+
+    <!-- Polaroids Grid: 3 Projects per Row on Desktop (md:grid-cols-3) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-12 max-w-6xl mx-auto px-4 justify-items-center">
+      <div *ngFor="let project of projects" 
+        [class]="project.rotationClass"
+        class="polaroid-card w-full max-w-[280px] sm:max-w-[300px] p-3.5 pb-5 rounded shadow-xl border border-stone-250 relative cursor-pointer flex flex-col justify-between"
+        (click)="openProjectDetails(project)">
+        
+        <!-- Wooden Pin Hanging the Polaroid -->
+        <div class="wooden-pin w-2.5 h-6 rounded-sm absolute top-[-10px] left-1/2 transform -translate-x-1/2 z-20"></div>
+        
+        <!-- Polaroid Frame Container (Mini Browser/IDE layout wrapping site screenshot - Landscape aspect-[4/3]) -->
+        <div class="w-full aspect-[4/3] rounded-sm overflow-hidden bg-[#0c0d12] flex flex-col justify-between border border-stone-300/30 relative shadow-inner group">
+          <!-- Code Editor Top Bar -->
+          <div class="flex items-center justify-between p-2 bg-[#1c1d22] border-b border-stone-300/10">
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-red-500/80"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-yellow-500/80"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-green-500/80"></span>
+            </div>
+            <!-- Dynamic site domain name inside browser tab header -->
+            <span class="text-[9px] text-neutral-350 font-mono tracking-tight">{{ project.domain }}</span>
+          </div>
+          
+          <!-- Screenshot Image as Content -->
+          <div class="flex-grow w-full h-full overflow-hidden relative">
+            <img [src]="project.image" [alt]="project.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-[0.8] group-hover:brightness-100" />
+            <!-- Soft warm light overlay -->
+            <div class="absolute inset-0 bg-amber-500/5 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none"></div>
+          </div>
+        </div>
+
+        <!-- Polaroid Labeling Area (Handwritten Vibe - Emphasized & Custom Orange Title) -->
+        <div class="mt-4 flex flex-col items-center">
+          <h3 class="font-patrick font-bold text-orange-700 text-xl sm:text-2xl text-center leading-tight">
+            {{ project.title }}
+          </h3>
+          <!-- Description text is styled in same handwriting style, scaled up for readability -->
+          <p class="font-patrick text-stone-700 text-sm sm:text-base text-center leading-snug mt-2 px-1 font-medium">
+            {{ project.shortDesc }}
+          </p>
+          
+          <!-- Technology Badges in Polaroid -->
+          <div class="flex flex-wrap gap-1.5 justify-center mt-4">
+            <span *ngFor="let tech of project.technologies.slice(0, 2)" 
+              class="font-mono text-[9px] text-stone-600 bg-stone-100 border border-stone-200/50 rounded px-1.5 py-0.5">
+              {{ tech }}
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Details Modal (Glassmorphic Cozy Modal - Expanded Widescreen Layout) -->
+  <div *ngIf="selectedProject" 
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md modal-fade-in"
+    (click)="closeProjectDetails()">
+    
+    <div class="bg-[#1c130e] border border-amber-950/20 max-w-4xl w-full rounded-2xl overflow-hidden shadow-2xl p-6 sm:p-8 relative flex flex-col md:flex-row gap-8 modal-content-scale"
+      (click)="$event.stopPropagation()">
+      
+      <!-- Close Button -->
+      <button class="absolute top-4 right-4 text-neutral-400 hover:text-white transition-colors p-1 bg-neutral-900/50 rounded-full border border-amber-950/20" 
+        (click)="closeProjectDetails()">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- Left Column: Site Screenshot Visual inside Modal (Wide Layout - 50% Width) -->
+      <div class="w-full md:w-1/2 aspect-[4/3] rounded-xl overflow-hidden shadow-inner border border-amber-950/15 self-start">
+        <img [src]="selectedProject.image" [alt]="selectedProject.title" class="w-full h-full object-cover" />
+      </div>
+
+      <!-- Right Column: Detail Content (50% Width) -->
+      <div class="w-full md:w-1/2 flex flex-col justify-between">
+        <div>
+          <span class="text-xs text-amber-500 font-mono tracking-widest uppercase">Project Review</span>
+          <h3 class="text-2xl font-bold text-neutral-100 mt-1 mb-3 font-outfit">
+            {{ selectedProject.title }}
+          </h3>
+          
+          <p class="text-neutral-350 text-sm sm:text-base leading-relaxed mb-5 font-outfit">
+            {{ selectedProject.longDesc }}
+          </p>
+
+          <!-- Technologies list -->
+          <div class="mb-6">
+            <h4 class="text-xs text-neutral-400 font-semibold uppercase tracking-wider mb-2 font-outfit">Built With:</h4>
+            <div class="flex flex-wrap gap-2">
+              <span *ngFor="let tech of selectedProject.technologies" 
+                class="font-mono text-xs text-amber-400 bg-amber-950/30 border border-amber-500/20 rounded-full px-3 py-1">
+                {{ tech }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Link Button (Full-width View Site) -->
+        <div class="pt-4 border-t border-amber-950/20">
+          <a *ngIf="selectedProject.liveLink" [href]="selectedProject.liveLink" target="_blank"
+            class="w-full inline-flex items-center justify-center px-4 py-3 bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-700 hover:to-orange-600 text-white font-semibold rounded-lg text-sm transition-all shadow-md shadow-orange-500/5 font-outfit text-center">
+            <span>View Site</span>
+            <svg class="w-4 h-4 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -9,12 +9,13 @@ import { CommonModule } from '@angular/common';
 })
 export class Skills implements OnInit, OnDestroy, AfterViewInit {
   skills = [
-    { name: 'HTML', percentage: 100, color: 'from-orange-500 to-red-500' },
-    { name: 'CSS/SCSS', percentage: 100, color: 'from-blue-500 to-cyan-500' },
-    { name: 'JavaScript', percentage: 75, color: 'from-yellow-500 to-orange-500' },
-    { name: 'WordPress/CMS', percentage: 80, color: 'from-blue-600 to-purple-600' },
-    { name: 'Figma', percentage: 60, color: 'from-pink-500 to-purple-500' },
-    { name: 'Photoshop', percentage: 55, color: 'from-blue-700 to-indigo-700' }
+    { name: 'HTML', percentage: 100, color: 'from-orange-500 to-red-500 shadow-[0_0_8px_rgba(239,68,68,0.2)]' },
+    { name: 'CSS/SCSS', percentage: 100, color: 'from-amber-600 to-orange-500 shadow-[0_0_8px_rgba(245,158,11,0.2)]' },
+    { name: 'JavaScript', percentage: 75, color: 'from-yellow-500 to-orange-500 shadow-[0_0_8px_rgba(234,88,12,0.2)]' },
+    { name: 'WordPress/CMS', percentage: 80, color: 'from-yellow-600 to-amber-500 shadow-[0_0_8px_rgba(217,119,6,0.2)]' },
+    { name: 'Search Engine Optimization (SEO)', percentage: 90, color: 'from-amber-500 to-orange-500 shadow-[0_0_8px_rgba(245,158,11,0.3)]' },
+    { name: 'AI Coding (Cursor / Copilot)', percentage: 85, color: 'from-orange-500 to-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.3)]' },
+    { name: 'AI Prompting & Automation', percentage: 80, color: 'from-amber-500 to-yellow-500 shadow-[0_0_8px_rgba(253,224,71,0.3)]' }
   ];
 
   animatedSkills: { [key: string]: number } = {};

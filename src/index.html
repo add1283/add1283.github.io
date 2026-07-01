@@ -10,14 +10,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description"
     content="Frontend Developer, UI/UX Designer and Researcher. I develop projects with modern web technologies.">
-  <meta name="theme-color" content="#8b5cf6">
+  <meta name="theme-color" content="#d97706">
 
   <!-- Performance Resource Hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="dns-prefetch" href="//github.com">
   <link rel="dns-prefetch" href="//linkedin.com">
   <link rel="dns-prefetch" href="//twitter.com">
+
+  <!-- Load Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Outfit:wght@100..900&family=Patrick+Hand&display=swap" rel="stylesheet">
 
   <!-- Preload Critical Fonts -->
   <link rel="preload" href="assets/fonts/kumbh-sans/KumbhSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -35,8 +39,8 @@
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, #1e293b 0%, #3b82f6 50%, #1e293b 100%);
+      font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at center, #1b130f 0%, #070a12 100%);
       color: white;
       overflow-x: hidden;
     }
@@ -58,7 +62,7 @@
       align-items: center;
       justify-content: center;
       z-index: 10000;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(7, 10, 18, 0.4);
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
     }
@@ -69,13 +73,13 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: rgba(15, 23, 42, 0.95);
+      background: rgba(11, 15, 23, 0.95);
       border-radius: 24px;
       padding: 50px 60px;
       box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(217, 119, 6, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(20px);
       min-width: 320px;
       min-height: 240px;
@@ -110,9 +114,9 @@
       height: 100%;
       background: conic-gradient(from 0deg,
           transparent 0deg 45deg,
-          #3b82f6 45deg 135deg,
+          #d97706 45deg 135deg,
           transparent 135deg 225deg,
-          #8b5cf6 225deg 315deg,
+          #ea580c 225deg 315deg,
           transparent 315deg 360deg);
       animation: rotateSmooth 2s linear infinite;
     }
@@ -124,9 +128,9 @@
       left: 15%;
       background: conic-gradient(from 90deg,
           transparent 0deg 60deg,
-          #ec4899 60deg 180deg,
+          #f59e0b 60deg 180deg,
           transparent 180deg 300deg,
-          #06b6d4 300deg 360deg);
+          #b45309 300deg 360deg);
       animation: rotateSmooth 1.5s linear infinite reverse;
     }
 
@@ -148,9 +152,9 @@
       transform: translate3d(-50%, -50%, 0);
       width: 16px;
       height: 16px;
-      background: radial-gradient(circle, #ffffff 30%, #f8fafc 70%);
+      background: radial-gradient(circle, #ffffff 30%, #fef3c7 70%);
       border-radius: 50%;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0 20px rgba(217, 119, 6, 0.9);
       animation: pulseSmooth 2s ease-in-out infinite;
       will-change: transform, opacity;
       backface-visibility: hidden;
@@ -180,10 +184,11 @@
 
     .loading-brand h1 {
       color: #ffffff;
+      font-family: 'Outfit', sans-serif;
       font-size: 24px;
       font-weight: 700;
       margin: 0 0 8px 0;
-      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
       animation: fadeInUpSmooth 1.5s ease-out;
       letter-spacing: -0.5px;
       will-change: transform, opacity;
@@ -191,9 +196,10 @@
     }
 
     .loading-text {
-      color: #e2e8f0;
+      color: #fde047;
+      font-family: 'Caveat', cursive;
       font-weight: 500;
-      font-size: 15px;
+      font-size: 20px;
       margin: 8px 0 0 0;
       opacity: 0.9;
       text-align: center;
@@ -217,7 +223,7 @@
     }
 
   </style>
-
+  
   <!-- GitHub Pages Redirect Script for SPA -->
   <script type="text/javascript">
     // Decode URL parameters from 404.html redirect
@@ -258,7 +264,7 @@
       <!-- Enhanced Brand and text -->
       <div class="loading-brand">
         <h1>Ahmet Deniz Dündar</h1>
-        <div class="loading-text">Creating amazing experiences...</div>
+        <div class="loading-text">Developer - Psychologist</div>
       </div>
     </div>
   </div>

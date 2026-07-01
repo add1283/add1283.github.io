@@ -4,14 +4,14 @@ import { Router, Event, NavigationEnd } from '@angular/router';
 import { Header } from './components/header/header';
 import { Footer } from './components/footer/footer';
 import { Hero } from './components/hero/hero';
-import { About } from './components/about/about';
 import { Skills } from './components/skills/skills';
 import { Resume } from './components/resume/resume';
+import { Portfolio } from './components/portfolio/portfolio';
 import { ContactComponent } from './components/contact/contact';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, Hero, About, Skills, Resume, ContactComponent],
+  imports: [RouterOutlet, Header, Footer, Hero, Skills, Resume, Portfolio, ContactComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

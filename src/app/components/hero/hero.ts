@@ -1,16 +1,35 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-hero',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './hero.html',
   styleUrl: './hero.css'
 })
 export class Hero implements OnInit, OnDestroy {
   displayText = '';
-  private textItems = ['Designer', 'Developer', 'Researcher'];
+  currentTime = '';
+  
+  personalInfo = {
+    website: 'www.ahmetdenizdundar.com.tr',
+    cities: 'Istanbul, Adana, Mugla - Turkey',
+    age: '24',
+    degree: 'Bachelor',
+    email: 'contact@ahmetdenizdundar.com.tr',
+    freelance: 'Non-Available'
+  };
+  
+  private textItems = [
+    'while (alive) { code(); love(); }',
+    'Developer',
+    'Dreamer',
+    'Researcher',
+    'Psychologist'
+  ];
   private currentIndex = 0;
   private typewriterTimeout: any;
+  private clockInterval: any;
   private isDestroyed = false;
 
   ngOnInit() {
@@ -20,6 +39,12 @@ export class Hero implements OnInit, OnDestroy {
         this.startTypewriterEffect();
       }
     }, 1500);
+
+    // Start live clock ticking
+    this.updateClock();
+    this.clockInterval = setInterval(() => {
+      this.updateClock();
+    }, 1000);
   }
 
   ngOnDestroy() {
@@ -28,6 +53,19 @@ export class Hero implements OnInit, OnDestroy {
       clearTimeout(this.typewriterTimeout);
       this.typewriterTimeout = null;
     }
+    if (this.clockInterval) {
+      clearInterval(this.clockInterval);
+      this.clockInterval = null;
+    }
+  }
+
+  private updateClock() {
+    const now = new Date();
+    // Get Turkish time by adding timezone offset if browser is elsewhere,
+    // but default formatting of hours and minutes is clean and sufficient.
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    this.currentTime = `${hours}:${minutes}`;
   }
 
   private startTypewriterEffect() {
@@ -60,9 +98,9 @@ export class Hero implements OnInit, OnDestroy {
           if (!this.isDestroyed) {
             this.deleteText(text);
           }
-        }, 2000);
+        }, 2500); // 2.5s display time
       }
-    }, 100); // Typing speed
+    }, 80); // Typing speed
   }
 
   private deleteText(text: string) {
@@ -91,6 +129,6 @@ export class Hero implements OnInit, OnDestroy {
           }
         }, 500);
       }
-    }, 50); // Deleting speed (faster than typing)
+    }, 40); // Deleting speed
   }
 }

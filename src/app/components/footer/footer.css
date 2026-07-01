@@ -17,10 +17,10 @@ footer::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, #1e293b, #3b82f6, #9333ea, #1e293b);
+  background: linear-gradient(45deg, #070a12, #1b130f, #231a14, #070a12);
   background-size: 400% 400%;
   animation: gradientShift 15s ease infinite;
-  opacity: 0.8;
+  opacity: 0.95;
   z-index: -1;
 }
 
@@ -47,8 +47,8 @@ footer .group:hover {
 }
 
 /* Text glow effect on hover */
-footer .text-purple-400:hover {
-  text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+footer .text-amber-400:hover {
+  text-shadow: 0 0 10px rgba(217, 119, 6, 0.5);
 }
 
 /* Responsive adjustments */
@@ -58,3 +58,4 @@ footer .text-purple-400:hover {
     gap: 1rem;
   }
 }
+

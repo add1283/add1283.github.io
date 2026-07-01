@@ -11,14 +11,26 @@
 @import "./assets/fonts/work-sans/work-sans.css";
 
 /* Font Override */
+@theme {
+  --font-caveat: "Caveat", cursive;
+  --font-patrick: "Patrick Hand", cursive;
+  --font-outfit: "Outfit", sans-serif;
+  --font-sans: "Outfit", sans-serif;
+
+  --color-cozy-dark: #070a12;
+  --color-cozy-wood: #1b130f;
+  --color-cozy-amber: #d97706;
+  --color-cozy-orange: #ea580c;
+  --color-cozy-gold: #f59e0b;
+}
+
 :root {
-  --default-font-family: "Kumbh Sans", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --default-font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
-  font-family: "Kumbh Sans", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+  font-family: "Outfit", ui-sans-serif, system-ui, sans-serif !important;
+  background-color: #070a12;
 }
 
 /* Performance optimizations */
@@ -62,14 +74,15 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: #070a12;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #3b82f6, #9333ea);
+  background: linear-gradient(180deg, #d97706, #ea580c);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #2563eb, #7c3aed);
+  background: linear-gradient(180deg, #ea580c, #b45309);
 }
+

@@ -1,36 +1,126 @@
 /* Hero section animations */
 #hero {
   scroll-margin-top: 80px;
+  background: radial-gradient(circle at center, #1b130f 0%, #070a12 100%);
 }
 
-/* Animated gradient background - Optimized for performance */
-.animated-gradient {
-  background: linear-gradient(
-    -45deg,
-    #1e293b,
-    #3b82f6,
-    #9333ea,
-    #1e293b,
-    #3b82f6,
-    #6366f1
-  );
-  background-size: 400% 400%;
-  animation: gradientShift 12s ease-in-out infinite;
-  will-change: background-position;
-  transform: translateZ(0);
-  backface-visibility: hidden;
+/* Cozy Ambient Pulsing Background Glows */
+.ambient-glow-1 {
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.08) 0%, transparent 70%);
+  animation: glowPulse 8s ease-in-out infinite alternate;
 }
 
-@keyframes gradientShift {
-  0%,
+.ambient-glow-2 {
+  background: radial-gradient(circle, rgba(234, 88, 12, 0.06) 0%, transparent 70%);
+  animation: glowPulse 10s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes glowPulse {
+  0% {
+    transform: scale(0.9) translate3d(0, 0, 0);
+    opacity: 0.8;
+  }
   100% {
-    background-position: 0% 50%;
+    transform: scale(1.1) translate3d(10px, -10px, 0);
+    opacity: 1;
   }
-  33% {
-    background-position: 100% 50%;
+}
+
+/* Chalkboard and Cozy Wood Textures */
+.chalkboard-container {
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.6),
+    inset 0 0 40px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(217, 119, 6, 0.1);
+}
+
+.wood-desk-container {
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.6),
+    inset 0 0 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Neon Signs Styling & Pulsing */
+.neon-amber {
+  color: #fef3c7;
+  text-shadow: 0 0 5px #d97706, 0 0 10px #d97706, 0 0 20px #ea580c;
+  animation: neonAmberPulse 3s ease-in-out infinite alternate;
+}
+
+.neon-orange {
+  color: #ffedd5;
+  text-shadow: 0 0 5px #ea580c, 0 0 10px #ea580c, 0 0 20px #f59e0b;
+  animation: neonOrangePulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes neonAmberPulse {
+  0% {
+    opacity: 0.85;
+    text-shadow: 0 0 4px #d97706, 0 0 8px #d97706, 0 0 15px #ea580c;
   }
-  66% {
-    background-position: 50% 100%;
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 8px #d97706, 0 0 16px #d97706, 0 0 30px #ea580c;
+  }
+}
+
+@keyframes neonOrangePulse {
+  0% {
+    opacity: 0.8;
+    text-shadow: 0 0 4px #ea580c, 0 0 8px #ea580c, 0 0 15px #f59e0b, 0 0 2px rgba(234, 88, 12, 0.5);
+  }
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 8px #ea580c, 0 0 16px #ea580c, 0 0 30px #f59e0b, 0 0 4px rgba(234, 88, 12, 0.7);
+  }
+}
+
+/* Coffee Steam Animation */
+.steam-container {
+  display: flex;
+  justify-content: space-around;
+  width: 20px;
+  height: 25px;
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.steam-line {
+  width: 2px;
+  height: 12px;
+  background: rgba(254, 243, 199, 0.4);
+  border-radius: 50%;
+  filter: blur(1px);
+  animation: steamRising 2.5s infinite linear;
+  opacity: 0;
+}
+
+.steam-line:nth-child(2) {
+  animation-delay: 0.8s;
+}
+
+.steam-line:nth-child(3) {
+  animation-delay: 1.6s;
+}
+
+@keyframes steamRising {
+  0% {
+    transform: translateY(0) scaleX(1) scaleY(1);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-12px) scaleX(1.8) scaleY(1.3);
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(-24px) scaleX(3) scaleY(1.8);
+    opacity: 0;
   }
 }
 
@@ -40,77 +130,20 @@
 }
 
 @keyframes blink {
-  0%,
-  50% {
+  0%, 50% {
     opacity: 1;
   }
-  51%,
-  100% {
+  51%, 100% {
     opacity: 0;
   }
 }
 
-/* Enhanced fade in animations */
-.animate-fade-in {
-  animation: fadeIn 1.5s ease-out;
+/* Typewriter terminal look */
+.cozy-terminal {
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 1.8s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Floating animation for background elements */
-.float-slow {
-  animation: floatSlow 6s ease-in-out infinite;
-}
-
-.float-medium {
-  animation: floatMedium 4s ease-in-out infinite;
-}
-
-@keyframes floatSlow {
-  0%,
-  100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(180deg);
-  }
-}
-
-@keyframes floatMedium {
-  0%,
-  100% {
-    transform: translateY(0px) scale(1);
-  }
-  50% {
-    transform: translateY(-15px) scale(1.1);
-  }
-}
-
-/* Scroll indicator animation */
+/* Scroll down indicator */
 .animate-scroll {
   animation: scroll 2s infinite;
 }
@@ -130,54 +163,33 @@
   }
 }
 
-/* Profile image glow effect */
-.profile-glow {
-  box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
-  animation: pulseGlow 3s ease-in-out infinite alternate;
+/* Profile image cozy glow */
+.profile-cozy-glow {
+  box-shadow: 0 0 35px rgba(217, 119, 6, 0.25);
+  animation: cozyGlow 4s ease-in-out infinite alternate;
 }
 
-@keyframes pulseGlow {
+@keyframes cozyGlow {
   from {
-    box-shadow: 0 0 50px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 0 35px rgba(217, 119, 6, 0.25);
+    border-color: rgba(217, 119, 6, 0.2);
   }
   to {
-    box-shadow: 0 0 80px rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 55px rgba(217, 119, 6, 0.45);
+    border-color: rgba(217, 119, 6, 0.4);
   }
 }
 
-/* Performance optimizations */
-.animate-fade-in,
-.animate-fade-in-up,
-.animate-pulse,
-.animate-bounce {
-  will-change: transform, opacity;
+/* Floating animation for decorative items */
+.float-subtle {
+  animation: floatSubtle 5s ease-in-out infinite;
 }
 
-/* Optimize transforms for GPU acceleration */
-section {
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
-
-/* Text readability improvements */
-h1[class*="bg-gradient"] {
-  /* Gradient text'e ekstra gölge */
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-  -webkit-filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-}
-
-/* Typewriter text enhanced */
-.hero-typewriter-text {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-  padding: 8px 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Improved text shadows for better readability */
-.text-shadow-strong {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 4px 8px rgba(0, 0, 0, 0.6),
-    0 8px 16px rgba(0, 0, 0, 0.4);
+@keyframes floatSubtle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
