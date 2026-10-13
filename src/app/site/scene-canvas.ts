@@ -37,6 +37,8 @@ const NARROW: Record<PoseName, Pose> = {
   contact: { wallX: 0, wallY: 9, wallRotY: -0.3, wallRotX: 0.35, camZ: 46, scatter: 0 },
 };
 
+const isNarrow = () => window.innerWidth < 760;
+
 /** Ease within a segment so the wall rests on each whole state while reading. */
 const hold = (t: number) => {
   const x = Math.min(1, Math.max(0, (t - 0.3) / 0.4));
@@ -69,6 +71,7 @@ export class SceneCanvas {
   private anchors: Anchor[] = [];
   private frame = 0;
   private cleanup: (() => void)[] = [];
+  private destroyed = false;
 
   constructor() {
     const browser = signal(false);
@@ -85,7 +88,10 @@ export class SceneCanvas {
       untracked(() => this.wall?.setDark(dark));
     });
 
-    inject(DestroyRef).onDestroy(() => this.teardown());
+    inject(DestroyRef).onDestroy(() => {
+      this.destroyed = true;
+      this.teardown();
+    });
   }
 
   private async boot() {
@@ -97,12 +103,14 @@ export class SceneCanvas {
     this.loading = true;
     try {
       const { TileWall } = await import('../scene/tile-wall');
-      if (this.prefs.view() !== '3d') return;
-      const narrow = window.innerWidth < 760;
+      // The view may have changed, or the component gone, while three.js loaded.
+      if (this.destroyed || this.prefs.view() !== '3d') return;
+      const narrow = isNarrow();
       this.wall = new TileWall({
         canvas: this.canvas().nativeElement,
         textures: PROJECTS.map((p) => `/img/work/${p.slug}-${narrow ? 800 : 1600}.webp`),
         dark: this.prefs.theme() === 'dark',
+        narrow,
         onReady: () => this.ready.set(true),
       });
     } catch {
@@ -178,7 +186,7 @@ export class SceneCanvas {
   private update() {
     if (!this.wall || !this.anchors.length) return;
     const mid = window.innerHeight * 0.5;
-    const poses = window.innerWidth < 760 ? NARROW : WIDE;
+    const poses = isNarrow() ? NARROW : WIDE;
     const ys = this.anchors.map((a) => {
       const r = a.el.getBoundingClientRect();
       // Tall sections anchor near their top so the change happens on entry.

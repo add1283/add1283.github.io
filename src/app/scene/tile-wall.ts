@@ -30,6 +30,8 @@ export interface TileWallOptions {
   canvas: HTMLCanvasElement;
   textures: string[];
   dark: boolean;
+  /** Small screens get a coarser grid. */
+  narrow: boolean;
   /** Called once the first frame has been drawn. */
   onReady?: () => void;
 }
@@ -60,7 +62,6 @@ const vertex = /* glsl */ `
   uniform float uScatter;
   uniform vec3 uPointer;
   uniform float uPointerStrength;
-  uniform vec2 uGrid;
   uniform float uMotion;
 
   varying vec2 vLocal;
@@ -68,7 +69,6 @@ const vertex = /* glsl */ `
   varying vec3 vNormal;
   varying vec3 vView;
   varying float vFace;
-  varying float vRand;
 
   mat3 rotY(float a) { float c = cos(a), s = sin(a); return mat3(c, 0., -s, 0., 1., 0., s, 0., c); }
   mat3 rotX(float a) { float c = cos(a), s = sin(a); return mat3(1., 0., 0., 0., c, s, 0., -s, c); }
@@ -76,7 +76,6 @@ const vertex = /* glsl */ `
 
   void main() {
     vCell = aCell;
-    vRand = aRand;
     vLocal = position.xy + 0.5;
     vFace = normal.z;
 
@@ -129,9 +128,7 @@ const fragment = /* glsl */ `
   uniform vec3 uPorcelain;
   uniform vec3 uCobalt;
   uniform vec3 uTurquoise;
-  uniform vec3 uInk;
   uniform vec3 uFog;
-  uniform float uScatter;
   uniform float uFogNear;
 
   varying vec2 vLocal;
@@ -139,7 +136,6 @@ const fragment = /* glsl */ `
   varying vec3 vNormal;
   varying vec3 vView;
   varying float vFace;
-  varying float vRand;
 
   // Signed distance to an eight-pointed star (two overlapping squares).
   float sdBox(vec2 p, float r) { vec2 q = abs(p) - r; return max(q.x, q.y); }
@@ -150,7 +146,6 @@ const fragment = /* glsl */ `
   }
 
   vec3 pattern(vec2 g) {
-    // One motif repeats every two tiles; stars on even cells, crosses between.
     // One motif repeats every four tiles: a cobalt star, crosses between.
     vec2 cell = g * 0.25;
     vec2 f = fract(cell) - 0.5;
@@ -221,6 +216,7 @@ export class TileWall {
   private visible = true;
   private running = false;
   private readied = false;
+  private disposed = false;
 
   private pointer = new Vector2(10, 10);
   private pointerWorld = new Vector3(100, 100, 0);
@@ -314,6 +310,7 @@ export class TileWall {
     cancelAnimationFrame(this.raf);
     this.running = false;
     this.visible = false;
+    this.disposed = true;
     this.textures.forEach((t) => t?.dispose());
     this.mesh.geometry.dispose();
     this.material.dispose();
@@ -322,9 +319,8 @@ export class TileWall {
   }
 
   private build(dark: boolean) {
-    const narrow = window.innerWidth < 760;
-    const cols = narrow ? COLS_NARROW : COLS_WIDE;
-    const rows = narrow ? ROWS_NARROW : ROWS_WIDE;
+    const cols = this.opts.narrow ? COLS_NARROW : COLS_WIDE;
+    const rows = this.opts.narrow ? ROWS_NARROW : ROWS_WIDE;
     const size = WALL_W / cols;
     const gap = size * 0.06;
 
@@ -348,7 +344,6 @@ export class TileWall {
         uPorcelain: { value: new Color(pal.porcelain) },
         uCobalt: { value: new Color('#2346A0') },
         uTurquoise: { value: new Color('#1FA39A') },
-        uInk: { value: new Color('#141A2E') },
         uFog: { value: new Color(pal.fog) },
         uFogNear: { value: 30 },
       },
@@ -384,10 +379,15 @@ export class TileWall {
     this.textures = this.opts.textures.map(() => null);
     // Load in order so the first project is ready first.
     const next = (i: number) => {
-      if (i >= this.opts.textures.length) return;
+      if (this.disposed || i >= this.opts.textures.length) return;
       loader.load(
         this.opts.textures[i],
         (t) => {
+          // A texture that lands after dispose() would never be freed.
+          if (this.disposed) {
+            t.dispose();
+            return;
+          }
           t.colorSpace = SRGBColorSpace;
           t.anisotropy = 4;
           this.textures[i] = t;

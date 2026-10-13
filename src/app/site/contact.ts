@@ -5,6 +5,10 @@ import { I18n } from '../core/i18n';
 import { environment } from '../../environments/environment';
 
 type Status = 'idle' | 'sending' | 'sent' | 'failed' | 'missing' | 'notConfigured';
+type Field = 'name' | 'email' | 'subject' | 'message';
+
+const FIELDS: Field[] = ['name', 'email', 'subject', 'message'];
+const EMAIL_RE = /^\S+@\S+\.\S+$/;
 
 @Component({
   selector: 'app-contact',
@@ -50,7 +54,7 @@ type Status = 'idle' | 'sending' | 'sent' | 'failed' | 'missing' | 'notConfigure
           <button class="button" type="submit" [disabled]="status() === 'sending'">
             {{ status() === 'sending' ? t.sending : t.send }}
           </button>
-          <p class="form__status" id="form-status" [class.is-ok]="status() === 'sent'" [class.is-error]="status() === 'missing' || status() === 'failed'" role="status" aria-live="polite">
+          <p class="form__status" id="form-status" [class.is-ok]="status() === 'sent'" [class.is-error]="status() === 'missing' || status() === 'failed' || status() === 'notConfigured'" role="status" aria-live="polite">
             @switch (status()) {
               @case ('sent') { {{ t.sent }} }
               @case ('failed') { {{ t.failed }} }
@@ -72,16 +76,19 @@ export class Contact {
   private tried = signal(false);
 
   /** A field is marked invalid only after a send attempt. */
-  protected invalid(field: 'name' | 'email' | 'subject' | 'message') {
-    if (!this.tried()) return null;
+  protected invalid(field: Field) {
+    return this.tried() && !this.valid(field) ? 'true' : null;
+  }
+
+  private valid(field: Field) {
     const v = this.model[field].trim();
-    return !v || (field === 'email' && !/^\S+@\S+\.\S+$/.test(v)) ? 'true' : null;
+    return !!v && (field !== 'email' || EMAIL_RE.test(v));
   }
 
   protected async send() {
     const m = this.model;
     this.tried.set(true);
-    if (![m.name, m.email, m.subject, m.message].every((v) => v.trim()) || !/^\S+@\S+\.\S+$/.test(m.email)) {
+    if (!FIELDS.every((f) => this.valid(f))) {
       this.status.set('missing');
       return;
     }
@@ -98,11 +105,11 @@ export class Contact {
         templateId,
         {
           from_name: m.name,
-          from_email: m.email,
+          from_email: m.email.trim(),
           subject: m.subject,
           message: m.message,
           to_email: EMAIL,
-          reply_to: m.email,
+          reply_to: m.email.trim(),
         },
         { publicKey },
       );

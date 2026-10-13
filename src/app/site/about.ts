@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { CREDENTIALS } from '../content';
 import { I18n } from '../core/i18n';
 import { openCv } from './cv';
@@ -103,11 +103,13 @@ export class About {
   protected i18n = inject(I18n);
   protected credentials = CREDENTIALS;
 
+  private monthFormat = computed(
+    () => new Intl.DateTimeFormat(this.i18n.lang() === 'tr' ? 'tr-TR' : 'en-GB', { month: 'long', year: 'numeric' }),
+  );
+
   protected month(iso: string) {
     const [y, m] = iso.split('-').map(Number);
-    return new Intl.DateTimeFormat(this.i18n.lang() === 'tr' ? 'tr-TR' : 'en-GB', { month: 'long', year: 'numeric' }).format(
-      new Date(Date.UTC(y, m - 1, 1)),
-    );
+    return this.monthFormat().format(new Date(Date.UTC(y, m - 1, 1)));
   }
 
   protected cv() {
