@@ -28,7 +28,7 @@ export interface Copy {
   meta: { title: string; description: string; locale: string };
   nav: { work: string; about: string; contact: string; skip: string; menu: string };
   toggles: { view3d: string; viewPlain: string; theme: string; lang: string; langLabel: string };
-  hero: { role: string; lead: string; now: string; primary: string; secondary: string; scroll: string };
+  hero: { role: string; lead: string; now: string; credential: string; verify: string; primary: string; secondary: string; scroll: string };
   work: { title: string; intro: string; open: string; count: (i: number, n: number) => string; next: string; nextLink: string };
   about: {
     title: string;
@@ -228,6 +228,8 @@ export const COPY: Record<Lang, Copy> = {
       role: 'Frontend geliştirici ve SEO uzmanı',
       lead: 'Psikoloji okudum, sonra kod yazmaya başladım. Arayüzleri insanların bir sayfayı nasıl okuduğuna göre kuruyor, aynı sayfayı arama motorları için de hazırlıyorum.',
       now: 'Şu an İstanbul’da, VBT Yazılım’ın UI ekibindeyim.',
+      credential: 'YÖK Veri Analizi Okulu’ndan Yapay Zekâ ve Makine Öğrenmesi sertifikası',
+      verify: 'Belgeyi doğrula',
       primary: 'İşleri gör',
       secondary: 'E-posta gönder',
       scroll: 'Kaydırdıkça karolar dönüp işlerimi gösterecek',
@@ -324,6 +326,8 @@ export const COPY: Record<Lang, Copy> = {
       role: 'Frontend developer and SEO specialist',
       lead: 'I studied psychology before I started writing code. I build interfaces around how people actually read a page, and build the same page for search engines too.',
       now: 'Currently in Istanbul, on the UI team at VBT Software.',
+      credential: 'Certified in Artificial Intelligence and Machine Learning by YÖK’s Data Analysis School',
+      verify: 'Verify',
       primary: 'See the work',
       secondary: 'Send an email',
       scroll: 'Scroll and the tiles turn to show my work',
