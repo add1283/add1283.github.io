@@ -1,4 +1,4 @@
-import { COPY, EMAIL, Lang, PROJECTS, SITE } from '../content';
+import { COPY, CREDENTIALS, EMAIL, Lang, PROJECTS, SITE } from '../content';
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
 
@@ -49,6 +49,10 @@ export function openCv(lang: Lang) {
 <h2>${esc(a.experienceTitle)}</h2>${roles(a.experience)}
 <h2>${esc(t.work.title)}</h2>${work}
 <h2>${esc(a.educationTitle)}</h2>${roles(a.education)}
+<h2>${esc(a.credentialsTitle)}</h2>
+${CREDENTIALS.map((c) => `<div class="item"><div class="row"><strong>${esc(c.title[lang])}</strong><span>${esc(c.date.replace('-', '.'))}</span></div><div class="org">${esc(c.issuer)}</div></div>`).join('')}
+<h2>${esc(a.languagesTitle)}</h2>
+<p>${a.languages.map((l) => `${esc(l.name)}: ${esc(l.level)}`).join(', ')}</p>
 <h2>${esc(a.toolsTitle)}</h2>
 ${a.tools.map((g) => `<p><strong>${esc(g.group)}:</strong> ${esc(g.items.join(', '))}</p>`).join('')}
 <script>document.fonts.ready.then(() => setTimeout(() => print(), 150));</script>

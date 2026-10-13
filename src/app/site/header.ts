@@ -10,7 +10,7 @@ import { Prefs } from '../core/prefs';
   template: `
     @let t = i18n.t();
     <a class="skip" routerLink="." fragment="main" (click)="skip()">{{ t.nav.skip }}</a>
-    <header class="bar">
+    <header class="bar" (keydown.escape)="open.set(false)">
       <a class="bar__name" routerLink="." fragment="top">Ahmet Deniz Dündar</a>
 
       <nav class="bar__nav" [class.is-open]="open()" [attr.aria-label]="t.nav.menu">
@@ -36,7 +36,7 @@ import { Prefs } from '../core/prefs';
             }
           </svg>
         </button>
-        <a class="tool tool--text" [routerLink]="i18n.otherHome()" [attr.hreflang]="t.toggles.lang.toLowerCase()" [attr.aria-label]="t.toggles.langLabel">{{ t.toggles.lang }}</a>
+        <a class="tool tool--text" [href]="i18n.otherHome()" [attr.hreflang]="t.toggles.lang.toLowerCase()" [attr.aria-label]="t.toggles.langLabel">{{ t.toggles.lang }}</a>
         <button type="button" class="tool bar__menu" (click)="open.set(!open())" [attr.aria-expanded]="open()" [attr.aria-label]="t.nav.menu">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
             <path [attr.d]="open() ? 'M6 6l12 12M18 6L6 18' : 'M4 8h16M4 16h16'" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />

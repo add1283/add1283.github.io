@@ -1,0 +1,43 @@
+# Ahmet Deniz Dündar
+
+> Frontend developer and SEO specialist based in Istanbul, Türkiye. Works on the UI team at VBT Yazılım (VBT Software) since 2021. Holds a BSc in Psychology (Çukurova University, 2022) and an associate degree in Computer Programming (Anadolu University, 2024), and uses his psychology background to design interfaces around how people read.
+
+Site in Turkish: https://ahmetdenizdundar.com.tr/
+Site in English: https://ahmetdenizdundar.com.tr/en/
+Contact: contact@ahmetdenizdundar.com.tr
+
+## Focus
+
+- Frontend development: HTML, CSS/SCSS, JavaScript, TypeScript, Angular, Tailwind CSS, Three.js, GSAP
+- Search engine optimisation: technical SEO, page speed, structured data, content architecture
+- CMS and back-end work on client sites: WordPress, PHP, ASP.NET, Bootstrap
+- AI-assisted development and data: Cursor, GitHub Copilot, data analysis, machine learning basics
+
+## Live work
+
+- [12 Punto](https://12punto.com.tr): independent news site; mobile-first feeds, page speed and indexing
+- [Heroty](https://heroty.com): HR software marketing site; interface and GSAP product walkthrough
+- [Atatürkçü Düşünce Derneği](https://add.org.tr): association portal; content flows for news and archives, search structure
+- [Disnet](https://disnet.com.tr/en): BMC Software distributor for Türkiye and Eastern Europe; ITSM and cloud automation pages
+- [Avrupadan](https://avrupadan.com): news and guide site for the Turkish community in Europe; mobile layouts and multi-market search visibility
+- [Kpay](https://kpay.com.tr): payments company (POS, SoftPOS, virtual POS); product interface for merchants
+- [VBT Yazılım](https://vbt.com.tr/en): corporate site; solution pages and investor content
+- [Ser&Berker](https://serberker.com): independent audit firm in the DFK International network; services and regulatory content
+- [Flerpi](https://flerpi.com/en): modular ERP product; page system introducing each module
+
+## Certificates
+
+- Data Analysis School: Artificial Intelligence and Machine Learning, Council of Higher Education of Türkiye (YÖK), June 2026
+- Empower Me Youth Summit: Circular Economy Trainer Programme, Habitat Association, January 2026
+- Intellectual and Industrial Property Rights, Kobimen Akademi, September 2024
+- Digital Marketing, Boğaziçi University Business and Economics Club, January 2021
+
+## Languages
+
+Turkish (native), English (professional working proficiency)
+
+## Profiles
+
+- [LinkedIn](https://www.linkedin.com/in/ahmetdenizdundar)
+- [GitHub](https://github.com/add1283)
+- [X](https://x.com/add1283)

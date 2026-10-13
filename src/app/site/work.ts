@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { PROJECTS } from '../content';
 import { I18n } from '../core/i18n';
 
 @Component({
   selector: 'app-work',
+  imports: [RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @let t = i18n.t().work;
@@ -46,6 +48,8 @@ import { I18n } from '../core/i18n';
           </li>
         }
       </ol>
+
+      <p class="work__next">{{ t.next }} <a class="link" routerLink="." fragment="contact">{{ t.nextLink }}</a></p>
     </section>
   `,
 })

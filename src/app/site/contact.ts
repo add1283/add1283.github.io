@@ -13,35 +13,44 @@ type Status = 'idle' | 'sending' | 'sent' | 'failed' | 'missing' | 'notConfigure
   template: `
     @let t = i18n.t().contact;
     <section class="contact" id="contact" data-scene="contact" aria-labelledby="contact-title">
-      <h2 class="section-title" id="contact-title">{{ t.title }}</h2>
-      <p class="contact__lead">{{ t.lead }}</p>
-      <a class="contact__email" href="mailto:{{ email }}">{{ email }}</a>
+      <div class="contact__intro">
+        <h2 class="section-title" id="contact-title">{{ t.title }}</h2>
+        <p class="contact__lead">{{ t.lead }}</p>
+        <a class="contact__email" href="mailto:{{ email }}">{{ email }}</a>
+
+        <h3 class="sub-title">{{ t.elsewhere }}</h3>
+        <ul class="social">
+          @for (s of social; track s.url) {
+            <li><a class="link" [href]="s.url" target="_blank" rel="me noopener">{{ s.label }}</a></li>
+          }
+        </ul>
+      </div>
 
       <form class="form" (ngSubmit)="send()" novalidate>
         <h3 class="sub-title">{{ t.formTitle }}</h3>
         <div class="form__row">
           <label class="field">
             <span>{{ t.name }}</span>
-            <input name="name" autocomplete="name" required [(ngModel)]="model.name" />
+            <input name="name" autocomplete="name" required [(ngModel)]="model.name" [attr.aria-invalid]="invalid('name')" aria-describedby="form-status" />
           </label>
           <label class="field">
             <span>{{ t.email }}</span>
-            <input name="email" type="email" autocomplete="email" required [(ngModel)]="model.email" />
+            <input name="email" type="email" autocomplete="email" required [(ngModel)]="model.email" [attr.aria-invalid]="invalid('email')" aria-describedby="form-status" />
           </label>
         </div>
         <label class="field">
           <span>{{ t.subject }}</span>
-          <input name="subject" required [(ngModel)]="model.subject" />
+          <input name="subject" required [(ngModel)]="model.subject" [attr.aria-invalid]="invalid('subject')" aria-describedby="form-status" />
         </label>
         <label class="field">
           <span>{{ t.message }}</span>
-          <textarea name="message" rows="5" required [(ngModel)]="model.message"></textarea>
+          <textarea name="message" rows="5" required [(ngModel)]="model.message" [attr.aria-invalid]="invalid('message')" aria-describedby="form-status"></textarea>
         </label>
         <div class="form__foot">
           <button class="button" type="submit" [disabled]="status() === 'sending'">
             {{ status() === 'sending' ? t.sending : t.send }}
           </button>
-          <p class="form__status" [class.is-ok]="status() === 'sent'" role="status" aria-live="polite">
+          <p class="form__status" id="form-status" [class.is-ok]="status() === 'sent'" [class.is-error]="status() === 'missing' || status() === 'failed'" role="status" aria-live="polite">
             @switch (status()) {
               @case ('sent') { {{ t.sent }} }
               @case ('failed') { {{ t.failed }} }
@@ -51,13 +60,6 @@ type Status = 'idle' | 'sending' | 'sent' | 'failed' | 'missing' | 'notConfigure
           </p>
         </div>
       </form>
-
-      <h3 class="sub-title">{{ t.elsewhere }}</h3>
-      <ul class="social">
-        @for (s of social; track s.url) {
-          <li><a class="link" [href]="s.url" target="_blank" rel="me noopener">{{ s.label }}</a></li>
-        }
-      </ul>
     </section>
   `,
 })
@@ -67,9 +69,18 @@ export class Contact {
   protected social = SOCIAL;
   protected status = signal<Status>('idle');
   protected model = { name: '', email: '', subject: '', message: '' };
+  private tried = signal(false);
+
+  /** A field is marked invalid only after a send attempt. */
+  protected invalid(field: 'name' | 'email' | 'subject' | 'message') {
+    if (!this.tried()) return null;
+    const v = this.model[field].trim();
+    return !v || (field === 'email' && !/^\S+@\S+\.\S+$/.test(v)) ? 'true' : null;
+  }
 
   protected async send() {
     const m = this.model;
+    this.tried.set(true);
     if (![m.name, m.email, m.subject, m.message].every((v) => v.trim()) || !/^\S+@\S+\.\S+$/.test(m.email)) {
       this.status.set('missing');
       return;
@@ -96,6 +107,7 @@ export class Contact {
         { publicKey },
       );
       this.model = { name: '', email: '', subject: '', message: '' };
+      this.tried.set(false);
       this.status.set('sent');
     } catch {
       this.status.set('failed');

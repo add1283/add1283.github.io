@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { COPY, EMAIL, Lang, PROJECTS, SITE, SOCIAL } from '../content';
+import { COPY, CREDENTIALS, EMAIL, Lang, PROJECTS, SITE, SOCIAL } from '../content';
 
 /** Current language, its copy, and everything in <head> that depends on it. */
 @Injectable({ providedIn: 'root' })
@@ -13,7 +13,7 @@ export class I18n {
   readonly lang = signal<Lang>('tr');
   readonly t = computed(() => COPY[this.lang()]);
   /** Home page of the other language, for the language switch. */
-  readonly otherHome = computed(() => (this.lang() === 'en' ? '/' : '/en'));
+  readonly otherHome = computed(() => (this.lang() === 'en' ? '/' : '/en/'));
 
   use(lang: Lang) {
     this.lang.set(lang);
@@ -52,9 +52,9 @@ export class I18n {
 
   private jsonLd(lang: Lang, url: string) {
     const t = COPY[lang];
-    const data = {
-      '@context': 'https://schema.org',
+    const person = {
       '@type': 'Person',
+      '@id': `${SITE}/#person`,
       name: 'Ahmet Deniz Dündar',
       url,
       email: `mailto:${EMAIL}`,
@@ -66,9 +66,27 @@ export class I18n {
         { '@type': 'CollegeOrUniversity', name: 'Çukurova Üniversitesi' },
         { '@type': 'CollegeOrUniversity', name: 'Anadolu Üniversitesi' },
       ],
-      knowsAbout: ['Frontend development', 'Search engine optimization', 'Angular', 'Three.js', 'Web performance'],
+      knowsLanguage: ['tr', 'en'],
+      hasCredential: CREDENTIALS.map((c) => ({
+        '@type': 'EducationalOccupationalCredential',
+        name: c.title[lang],
+        credentialCategory: 'certificate',
+        dateCreated: c.date,
+        recognizedBy: { '@type': 'Organization', name: c.issuer },
+        ...(c.url ? { url: c.url } : {}),
+      })),
+      knowsAbout: ['Frontend development', 'Search engine optimization', 'Angular', 'Three.js', 'Web performance', 'Data analysis', 'Machine learning'],
       sameAs: SOCIAL.map((s) => s.url),
       subjectOf: PROJECTS.map((p) => ({ '@type': 'WebSite', name: p.name, url: p.url })),
+    };
+    const data = {
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      url,
+      name: t.meta.title,
+      inLanguage: lang,
+      dateModified: '2026-10-13',
+      mainEntity: person,
     };
     let el = this.doc.head.querySelector<HTMLScriptElement>('script#ld-person');
     if (!el) {

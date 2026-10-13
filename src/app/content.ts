@@ -17,12 +17,19 @@ export interface Role {
   points: string[];
 }
 
+export interface Credential {
+  title: Record<Lang, string>;
+  issuer: string;
+  date: string;
+  url?: string;
+}
+
 export interface Copy {
   meta: { title: string; description: string; locale: string };
   nav: { work: string; about: string; contact: string; skip: string; menu: string };
   toggles: { view3d: string; viewPlain: string; theme: string; lang: string; langLabel: string };
   hero: { role: string; lead: string; now: string; primary: string; secondary: string; scroll: string };
-  work: { title: string; intro: string; open: string; count: (i: number, n: number) => string };
+  work: { title: string; intro: string; open: string; count: (i: number, n: number) => string; next: string; nextLink: string };
   about: {
     title: string;
     paragraphs: string[];
@@ -34,6 +41,10 @@ export interface Copy {
     education: Role[];
     toolsTitle: string;
     tools: { group: string; items: string[] }[];
+    credentialsTitle: string;
+    verify: string;
+    languagesTitle: string;
+    languages: { name: string; level: string }[];
     cv: string;
   };
   contact: {
@@ -61,7 +72,7 @@ export const SITE = 'https://ahmetdenizdundar.com.tr';
 
 export const SOCIAL = [
   { label: 'GitHub', url: 'https://github.com/add1283' },
-  { label: 'LinkedIn', url: 'https://www.linkedin.com/in/ahmet-deniz-d%C3%BCndar-218a3b198/' },
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/in/ahmetdenizdundar' },
   { label: 'X', url: 'https://x.com/add1283' },
   { label: 'Threads', url: 'https://www.threads.net/@add.1283' },
 ];
@@ -74,8 +85,8 @@ export const PROJECTS: Project[] = [
     url: 'https://12punto.com.tr',
     kind: { tr: 'Haber platformu', en: 'News platform' },
     summary: {
-      tr: 'Yoğun trafikli bağımsız bir haber sitesi. Mobil öncelikli akışları kurdum, sayfa hızını ve haberlerin arama motorlarında hızlı indekslenmesini optimize ettim.',
-      en: 'A high-traffic independent news site. I built the mobile-first feeds and tuned page speed so new stories get indexed quickly.',
+      tr: 'Bağımsız bir haber sitesi. Mobil öncelikli akışları kurdum; sayfa hızı ve haberlerin arama motorlarında hızlı indekslenmesi üzerinde çalıştım.',
+      en: 'An independent news site. I built the mobile-first feeds and worked on page speed and on getting new stories indexed quickly.',
     },
     stack: ['ASP.NET Core', 'C#', 'Tailwind CSS', 'SEO'],
   },
@@ -177,6 +188,32 @@ export const PROJECTS: Project[] = [
   },
 ];
 
+/** From the LinkedIn profile; newest first. Event attendance certificates are left out. */
+export const CREDENTIALS: Credential[] = [
+  {
+    title: { tr: 'Veri Analizi Okulu: Yapay Zekâ ve Makine Öğrenmesi', en: 'Data Analysis School: Artificial Intelligence and Machine Learning' },
+    issuer: 'Yükseköğretim Kurulu (YÖK)',
+    date: '2026-06',
+    url: 'https://belge.verianaliziokulu.com/e1f35b42-ae82-487a-a271-90dbd0bba565',
+  },
+  {
+    title: { tr: 'Empower Me Gençlik Zirvesi: Döngüsel Ekonomi Eğitmen Eğitimi', en: 'Empower Me Youth Summit: Circular Economy Trainer Programme' },
+    issuer: 'Habitat Derneği',
+    date: '2026-01',
+    url: 'https://verified.sertifier.com/en/verify/08098888944153/',
+  },
+  {
+    title: { tr: 'Fikri ve Sınai Mülkiyet Hakları', en: 'Intellectual and Industrial Property Rights' },
+    issuer: 'Kobimen Akademi',
+    date: '2024-09',
+  },
+  {
+    title: { tr: 'Dijital Pazarlama', en: 'Digital Marketing' },
+    issuer: 'Boğaziçi Üniversitesi İşletme ve Ekonomi Kulübü',
+    date: '2021-01',
+  },
+];
+
 export const COPY: Record<Lang, Copy> = {
   tr: {
     meta: {
@@ -189,7 +226,7 @@ export const COPY: Record<Lang, Copy> = {
     toggles: { view3d: '3D görünüm', viewPlain: 'Sade görünüm', theme: 'Temayı değiştir', lang: 'EN', langLabel: 'Switch to English' },
     hero: {
       role: 'Frontend geliştirici ve SEO uzmanı',
-      lead: 'Psikoloji okudum, sonra kod yazmaya başladım. İnsanların bir sayfayı nasıl okuduğunu bilerek arayüz kuruyor, o sayfanın aramada bulunmasını sağlıyorum.',
+      lead: 'Psikoloji okudum, sonra kod yazmaya başladım. Arayüzleri insanların bir sayfayı nasıl okuduğuna göre kuruyor, aynı sayfayı arama motorları için de hazırlıyorum.',
       now: 'Şu an İstanbul’da, VBT Yazılım’ın UI ekibindeyim.',
       primary: 'İşleri gör',
       secondary: 'E-posta gönder',
@@ -200,6 +237,8 @@ export const COPY: Record<Lang, Copy> = {
       intro: 'Haber platformları, SaaS tanıtım siteleri ve kurumsal portallar. Hepsi canlı ve hepsinde arayüz ile SEO tarafında çalıştım.',
       open: 'Siteyi aç',
       count: (i, n) => `${i} / ${n}`,
+      next: 'Benzer bir iş için konuşalım.',
+      nextLink: 'İletişime geç',
     },
     about: {
       title: 'Hakkımda',
@@ -242,7 +281,14 @@ export const COPY: Record<Lang, Copy> = {
         { group: 'Her gün', items: ['HTML', 'CSS / SCSS', 'JavaScript', 'TypeScript', 'Angular', 'Tailwind CSS'] },
         { group: 'Projelerde', items: ['WordPress', 'PHP', 'ASP.NET', 'Bootstrap', 'GSAP', 'Three.js'] },
         { group: 'Arama', items: ['Teknik SEO', 'Sayfa hızı', 'Yapılandırılmış veri', 'İçerik mimarisi'] },
-        { group: 'Yapay zekâ ile', items: ['Cursor', 'GitHub Copilot', 'Prompt ve otomasyon'] },
+        { group: 'Yapay zekâ ve veri', items: ['Cursor', 'GitHub Copilot', 'Prompt ve otomasyon', 'Veri analizi', 'Makine öğrenmesi temelleri'] },
+      ],
+      credentialsTitle: 'Sertifikalar',
+      verify: 'Belgeyi doğrula',
+      languagesTitle: 'Diller',
+      languages: [
+        { name: 'Türkçe', level: 'Ana dil' },
+        { name: 'İngilizce', level: 'Profesyonel çalışma düzeyi' },
       ],
       cv: 'Özgeçmişi indir',
     },
@@ -259,7 +305,7 @@ export const COPY: Record<Lang, Copy> = {
       sending: 'Gönderiliyor',
       sent: 'Mesajın gönderildi. En kısa sürede dönüş yapacağım.',
       failed: 'Mesaj gönderilemedi. Lütfen doğrudan e-posta ile yaz.',
-      missing: 'Lütfen tüm alanları doldur.',
+      missing: 'İşaretli alanları doldur; e-posta adresinin geçerli olduğundan emin ol.',
       notConfigured: 'Form şu an kapalı. Lütfen doğrudan e-posta ile yaz.',
       elsewhere: 'Başka yerlerde',
     },
@@ -276,7 +322,7 @@ export const COPY: Record<Lang, Copy> = {
     toggles: { view3d: '3D view', viewPlain: 'Plain view', theme: 'Change theme', lang: 'TR', langLabel: 'Türkçeye geç' },
     hero: {
       role: 'Frontend developer and SEO specialist',
-      lead: 'I studied psychology before I started writing code. I build interfaces around how people actually read a page, and make sure that page gets found in search.',
+      lead: 'I studied psychology before I started writing code. I build interfaces around how people actually read a page, and build the same page for search engines too.',
       now: 'Currently in Istanbul, on the UI team at VBT Software.',
       primary: 'See the work',
       secondary: 'Send an email',
@@ -287,6 +333,8 @@ export const COPY: Record<Lang, Copy> = {
       intro: 'News platforms, SaaS marketing sites and corporate portals. Every one is live, and on every one I worked on the interface and on search.',
       open: 'Open site',
       count: (i, n) => `${i} / ${n}`,
+      next: 'Planning something similar?',
+      nextLink: 'Get in touch',
     },
     about: {
       title: 'About',
@@ -329,7 +377,14 @@ export const COPY: Record<Lang, Copy> = {
         { group: 'Every day', items: ['HTML', 'CSS / SCSS', 'JavaScript', 'TypeScript', 'Angular', 'Tailwind CSS'] },
         { group: 'On projects', items: ['WordPress', 'PHP', 'ASP.NET', 'Bootstrap', 'GSAP', 'Three.js'] },
         { group: 'Search', items: ['Technical SEO', 'Page speed', 'Structured data', 'Content architecture'] },
-        { group: 'With AI', items: ['Cursor', 'GitHub Copilot', 'Prompting and automation'] },
+        { group: 'AI and data', items: ['Cursor', 'GitHub Copilot', 'Prompting and automation', 'Data analysis', 'Machine learning basics'] },
+      ],
+      credentialsTitle: 'Certificates',
+      verify: 'Verify',
+      languagesTitle: 'Languages',
+      languages: [
+        { name: 'Turkish', level: 'Native' },
+        { name: 'English', level: 'Professional working proficiency' },
       ],
       cv: 'Download CV',
     },
@@ -346,7 +401,7 @@ export const COPY: Record<Lang, Copy> = {
       sending: 'Sending',
       sent: 'Message sent. I’ll get back to you soon.',
       failed: 'The message couldn’t be sent. Please email me directly.',
-      missing: 'Please fill in every field.',
+      missing: 'Fill in the highlighted fields and check that your email address is valid.',
       notConfigured: 'The form is off right now. Please email me directly.',
       elsewhere: 'Elsewhere',
     },
