@@ -1,35 +1,15 @@
-import { Component } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Router, Event, NavigationEnd } from '@angular/router';
-import { Header } from './components/header/header';
-import { Footer } from './components/footer/footer';
-import { Hero } from './components/hero/hero';
-import { Skills } from './components/skills/skills';
-import { Resume } from './components/resume/resume';
-import { Portfolio } from './components/portfolio/portfolio';
-import { ContactComponent } from './components/contact/contact';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, Hero, Skills, Resume, Portfolio, ContactComponent],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  imports: [RouterOutlet],
+  template: `<router-outlet />`,
 })
 export class App {
-  protected title = 'ahmetdenizdundar.com.tr';
-
-  constructor(private router: Router) { }
-
-  ngOnInit() {
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
-        setTimeout(() => {
-          if (typeof window !== 'undefined' && window.HSStaticMethods) {
-            window.HSStaticMethods.autoInit();
-          }
-        }, 100);
-      }
-    });
+  constructor() {
+    // Keep section titles clear of the fixed 64px header.
+    inject(ViewportScroller).setOffset([0, 80]);
   }
 }
-

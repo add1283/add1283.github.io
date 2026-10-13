@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect width="100" height="100" fill="#F7F8FA"/>
+  <g fill="#2346A0" transform="translate(50 50)">
+    <rect x="-30" y="-30" width="60" height="60"/>
+    <rect x="-30" y="-30" width="60" height="60" transform="rotate(45)"/>
+  </g>
+  <g fill="#F7F8FA" transform="translate(50 50)">
+    <rect x="-21.5" y="-21.5" width="43" height="43"/>
+    <rect x="-21.5" y="-21.5" width="43" height="43" transform="rotate(45)"/>
+  </g>
+  <g fill="#2346A0" transform="translate(50 50)">
+    <rect x="-15" y="-15" width="30" height="30"/>
+    <rect x="-15" y="-15" width="30" height="30" transform="rotate(45)"/>
+  </g>
+  <circle cx="50" cy="50" r="7.5" fill="#1FA39A"/>
+  <g fill="#1FA39A">
+    <rect x="-16" y="-5" width="32" height="10"/><rect x="-5" y="-16" width="10" height="32"/>
+    <rect x="84" y="-5" width="32" height="10"/><rect x="95" y="-16" width="10" height="32"/>
+    <rect x="-16" y="95" width="32" height="10"/><rect x="-5" y="84" width="10" height="32"/>
+    <rect x="84" y="95" width="32" height="10"/><rect x="95" y="84" width="10" height="32"/>
+  </g>
+  <path d="M25 0V100M50 0V100M75 0V100M0 25H100M0 50H100M0 75H100M0 .5H100M.5 0V100" stroke="#D5DBE6" stroke-width="1.2" opacity=".7"/>
+</svg>

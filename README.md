@@ -1,95 +1,35 @@
-<h1 align="center">☕ Cozy Developer Portfolio</h1>
+# ahmetdenizdundar.com.tr
 
-<p align="center">
-  <strong>A premium, lo-fi personal portfolio website representing a programmer's workspace, integrating deep night layouts and live web development projects.</strong>
-</p>
+Personal portfolio of Ahmet Deniz Dündar, frontend developer and SEO specialist in Istanbul.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" alt="Angular" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind" />
-  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-  <img src="https://img.shields.io/badge/SEO_Optimized-Orange?style=for-the-badge&logo=google&logoColor=white" alt="SEO" />
-  <img src="https://img.shields.io/badge/Theme-Cozy_Dark-1b130f?style=for-the-badge" alt="Theme" />
-</p>
+The page is built around a wall of İznik tiles rendered with Three.js. The front of each tile carries a piece of a star-and-cross pattern; the back carries a piece of a project screenshot. As you scroll, the tiles turn in a wave to show each of nine live sites, scatter behind the About section, and settle back into the pattern at Contact.
 
----
+## Stack
 
-## 🌟 Overview
+- Angular 20, prerendered to static HTML for `/` (Turkish) and `/en/` (English)
+- Three.js, loaded lazily in the browser only; one instanced mesh and a custom shader
+- Plain CSS with design tokens; Bricolage Grotesque and IBM Plex Sans, self-hosted
+- EmailJS for the contact form, loaded only when someone sends a message
+- GitHub Pages, deployed by `.github/workflows/deploy.yml` on every push to `main`
 
-This portfolio website is a complete redesign of my developer landing page, transitioning from a bright default theme to a **warm, cozy, night-mode workspace aesthetic**. The layout represents a software developer's desk under soft amber candle lighting, directly inspired by lo-fi study spaces. It combines creative design, Kemalist values, and technical engineering into a single-page responsive dashboard.
+## Views
 
----
+- **3D view** is the default on devices with hardware WebGL.
+- **Plain view** shows the same content with screenshots inline. It is used automatically when the visitor prefers reduced motion, when WebGL is missing, or when the browser only has a software renderer. Visitors can switch either way from the header; the choice is remembered.
+- Add `?3d=force` to the URL to skip the hardware check while testing.
 
-## ✨ Features
+## Develop
 
-- **📺 Centered wide desk workstation**: A landscape desktop dashboard housing profile picture card, typewriter code terminal, and social links.
-- **✨ Cozy widgets**:
-  - 🕯️ **Steaming Coffee Mug**: Animates rising steam and displays a live digital clock inside the cup!
-  - 🏮 **Neon Quote Sign**: A glowing orange sign displaying Mustafa Kemal Atatürk's quote: *"We need nothing, we only need one thing; to be hardworking!"*
-- **✍️ Handwritten polaroids**: Projects are suspended from twinkling fairy lights like physical Polaroids pinned on a workspace wall.
-- **💻 Mini IDE browser frames**: Inside each Polaroid card, live website screenshots are styled inside custom browser wrappers displaying the real domain tab name.
-- **⚡ Dynamic CV Generator**: Generates a print-styled resume instantly inside the browser and opens the system PDF print layout.
-- **🧠 Psychology-driven UX**: Integrates warm HSL colors, high-contrast dark readability, and clean typography (`Outfit`, `Caveat`, `Patrick Hand`).
-
----
-
-## 🛠️ Technology Stack & Badges
-
-### Frontend Core
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=flat-square&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=flat-square&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/javascript-%23F7DF1E.svg?style=flat-square&logo=javascript&logoColor=black)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat-square&logo=typescript&logoColor=white)
-![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=flat-square&logo=angular&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=flat-square&logo=tailwind-css&logoColor=white)
-
-### Specialized Focus
-![SEO](https://img.shields.io/badge/SEO-Search_Engine_Optimization-orange?style=flat-square&logo=google)
-![WordPress](https://img.shields.io/badge/WordPress-%2321759B.svg?style=flat-square&logo=wordpress&logoColor=white)
-![GSAP](https://img.shields.io/badge/GSAP-GreenSock-green?style=flat-square)
-![.NET Core](https://img.shields.io/badge/.NET_Core-512BD4?style=flat-square&logo=dotnet&logoColor=white)
-
----
-
-## 📂 Project Showcase (Portfolio)
-
-I have designed, developed, and launched 9 live platforms, now catalogued inside the interactive Polaroid slider:
-
-1. **Atatürkçü Düşünce Derneği** ([add.org.tr](https://add.org.tr)) - Kemalist NGO Web Portal.
-2. **Heroty** ([heroty.com](https://heroty.com)) - Innovative Human Resources (HR) Software.
-3. **12 Punto** ([12punto.com.tr](https://12punto.com.tr)) - High-capacity Media News Platform.
-4. **Disnet** ([disnet.com.tr/en](https://disnet.com.tr/en)) - Technology company representing BMC Software's exclusive distributor in Turkey & Eastern Europe.
-5. **Avrupadan** ([avrupadan.com](https://avrupadan.com)) - Community News Portal serving European Turkish diaspora.
-6. **Kpay** ([kpay.com.tr](https://kpay.com.tr)) - Merchant Payment Gateways & SoftPOS Solutions.
-7. **VBT Software Inc.** ([vbt.com.tr/en](https://vbt.com.tr/en)) - Corporate IT Software Consulting firm.
-8. **Ser&Berker** ([serberker.com](https://serberker.com)) - Independent Auditing & Financial Services corporate portal.
-9. **Flerpi** ([flerpi.com/en](https://flerpi.com/en)) - Enterprise Resource Planning (ERP) Commercial Business Software.
-
----
-
-## 🚀 Running Locally
-
-Follow these steps to set up the repository and start the development server:
-
-### 1. Install dependencies
 ```bash
-npm install
+npm ci
+npm start          # http://localhost:4200
+npm run build      # static output in dist/add1283.github.io/browser
 ```
 
-### 2. Run the development server
-```bash
-npm run start
-```
-Navigate to `http://localhost:4200/` in your browser.
+## Content
 
-### 3. Build for production
-```bash
-npm run build
-```
-The compiled output will be written to `dist/add1283.github.io/`.
+All copy, projects and links live in `src/app/content.ts`, in both languages. Project screenshots are in `public/img/work/` as `{slug}-800.webp` and `{slug}-1600.webp`, 16:10.
 
----
+## Contact form
 
-<p align="center">
-  Made with ❤️, ☕ & AI in Istanbul
-</p>
+The deploy workflow writes `src/environments/environment.prod.ts` from three repository secrets: `EMAILJS_SERVICE_ID`, `EMAILJS_TEMPLATE_ID` and `EMAILJS_PUBLIC_KEY`. Without them the form tells visitors to email directly.
