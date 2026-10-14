@@ -338,6 +338,13 @@ export const COPY: Record<Lang, Copy> = {
             'Adana Büyükşehir Belediyesi Öğrenci İletişim Merkezi ile çalıştaylar ve etkinlikler tasarlayıp yürütüyoruz.',
             '“Bir Diyeceğim Var!” Gençlik Çalıştayı, Karataş Yaz Kampı, Adana’nın Sorunları ve Potansiyelleri Konferansı, 29 Ekim Gençlik Yürüyüşü.',
           ],
+          photos: [
+            { src: 'kk-calistay', alt: '“Bir Diyeceğim Var!” Gençlik Çalıştayı’nda Gençlik Meclisi ekibi' },
+            { src: 'kk-konferans', alt: 'Adana’nın Sorunları ve Potansiyelleri Arama Konferansı’nda masa çalışmaları' },
+            { src: 'kk-karatas', alt: 'ABB Öğrenci İletişim Merkezi ve Gençlik Meclisi Karataş Yaz Kampı' },
+            { src: 'kk-29-ekim', alt: '29 Ekim Cumhuriyet Bayramı Gençlik Yürüyüşü’nde öğrenci kulüpleri' },
+            { src: 'kk-29-ekim-pankart', alt: '29 Ekim yürüyüşünde “Mavi gözlü bir devin asaleti var kanımda” yazılı pankart' },
+          ],
         },
         {
           org: '1907 ÜNİFEB, Çukurova Üniversitesi',
@@ -351,6 +358,11 @@ export const COPY: Record<Lang, Copy> = {
           ],
           quote: { text: 'Biz gençler için zaman, çalışma zamanıdır.', source: 'Koray Şener Ana Sınıfı açılış konuşması, 2022' },
           photos: [
+            { src: 'unifeb-ana-sinifi-ic', alt: 'Koray Şener Ana Sınıfı’nın içinde çocuklar ve 1907 ÜNİFEB üyeleri, duvarda “Koray Şener anısına” yazısı' },
+            { src: 'unifeb-ana-sinifi-acilis', alt: 'Koray Şener Ana Sınıfı’nın açılış kurdelesinin kesilmesi' },
+            { src: 'unifeb-ana-sinifi-bina', alt: 'Sarı lacivert boyanan ana sınıfı binasının önünde 1907 ÜNİFEB Çukurova üyeleri' },
+            { src: 'unifeb-ana-sinifi-koy', alt: 'Açılışta köy halkı, çocuklar ve 1907 ÜNİFEB Çukurova üyeleri' },
+            { src: 'unifeb-ana-sinifi-yuruyus', alt: 'Açılış günü köyde çocuklarla birlikte yürüyüş' },
             { src: 'unifeb-scarf', alt: '1907 ÜNİFEB Çukurova üyeleri, ellerinde dernek atkısıyla' },
             { src: 'unifeb-tribune', alt: '1907 ÜNİFEB Çukurova üyeleri bir basketbol maçında tribünde' },
             { src: 'unifeb-cup-2020', alt: 'Kadınlar Türkiye Kupası 2020 töreninde 1907 ÜNİFEB üyeleri' },
@@ -558,6 +570,13 @@ export const COPY: Record<Lang, Copy> = {
             'With the Adana Metropolitan Municipality Student Communication Centre we design and run workshops and events.',
             '“Bir Diyeceğim Var!” youth workshop, Karataş summer camp, a conference on Adana’s problems and potential, the 29 October youth march.',
           ],
+          photos: [
+            { src: 'kk-calistay', alt: 'The Youth Council team at the “Bir Diyeceğim Var!” youth workshop' },
+            { src: 'kk-konferans', alt: 'Round tables at the search conference on Adana’s problems and potential' },
+            { src: 'kk-karatas', alt: 'Karataş summer camp with the Student Communication Centre and the Youth Council' },
+            { src: 'kk-29-ekim', alt: 'Student clubs at the 29 October Republic Day youth march' },
+            { src: 'kk-29-ekim-pankart', alt: 'A placard at the 29 October march quoting a line about Atatürk' },
+          ],
         },
         {
           org: '1907 ÜNİFEB, Çukurova University',
@@ -571,6 +590,11 @@ export const COPY: Record<Lang, Copy> = {
           ],
           quote: { text: 'For us young people, the time is the time to work.', source: 'Opening speech, Koray Şener Nursery Class, 2022' },
           photos: [
+            { src: 'unifeb-ana-sinifi-ic', alt: 'Children and 1907 ÜNİFEB members inside the Koray Şener Nursery Class, “In memory of Koray Şener” on the wall' },
+            { src: 'unifeb-ana-sinifi-acilis', alt: 'Cutting the ribbon at the Koray Şener Nursery Class' },
+            { src: 'unifeb-ana-sinifi-bina', alt: '1907 ÜNİFEB Çukurova members in front of the classroom building painted yellow and navy' },
+            { src: 'unifeb-ana-sinifi-koy', alt: 'Villagers, children and 1907 ÜNİFEB Çukurova members at the opening' },
+            { src: 'unifeb-ana-sinifi-yuruyus', alt: 'A walk through the village with children on opening day' },
             { src: 'unifeb-scarf', alt: '1907 ÜNİFEB Çukurova members holding the union’s scarf' },
             { src: 'unifeb-tribune', alt: '1907 ÜNİFEB Çukurova members in the stands at a basketball game' },
             { src: 'unifeb-cup-2020', alt: '1907 ÜNİFEB members at the 2020 Women’s Turkish Cup ceremony' },

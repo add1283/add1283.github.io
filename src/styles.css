@@ -1760,6 +1760,21 @@ textarea {
   cursor: zoom-in;
 }
 
+.photo__open {
+  position: relative;
+}
+
+/* The last thumbnail counts the photos that open in the lightbox. */
+.photo__more {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(17, 19, 23, 0.62);
+  color: #ece9e2;
+  font: 500 1.6rem / 1 var(--mono);
+}
+
 .photo__open:focus-visible img {
   outline-color: var(--blue);
 }
@@ -1886,7 +1901,7 @@ textarea {
 .maxim__signature {
   display: block;
   width: clamp(180px, 20vw, 280px);
-  aspect-ratio: 572 / 205;
+  aspect-ratio: 805 / 176;
   background: var(--ink);
   -webkit-mask: url(/img/ataturk-signature.svg) center / contain no-repeat;
   mask: url(/img/ataturk-signature.svg) center / contain no-repeat;

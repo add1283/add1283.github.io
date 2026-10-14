@@ -36,23 +36,17 @@ import { I18n } from '../core/i18n';
                 <a class="link org__link" [href]="item.link.url" target="_blank" rel="noopener">{{ item.link.label }}<span class="visually-hidden">: {{ item.org }}</span></a>
               }
             </div>
-            @if (item.photos?.length) {
+            @if (item.photos; as photos) {
               <div class="org__photos">
-                @for (ph of item.photos; track ph.src; let pi = $index) {
+                @for (ph of photos.slice(0, 3); track ph.src; let pi = $index; let last = $last) {
                   <figure class="photo">
                     <button type="button" class="photo__open" (click)="open(item, pi)" [attr.aria-label]="t.lightbox.open + ': ' + ph.alt">
-                    <img
-                      [src]="'/img/civic/' + ph.src + '-640.webp'"
-                      [attr.srcset]="'/img/civic/' + ph.src + '-640.webp 640w' + (hasLarge(ph.src) ? ', /img/civic/' + ph.src + '-1280.webp 1280w' : '')"
-                      sizes="(min-width: 960px) 30vw, 80vw"
-                      width="640"
-                      height="480"
-                      loading="lazy"
-                      decoding="async"
-                      alt=""
-                    />
+                      <img [src]="'/img/civic/' + ph.src + '-640.webp'" width="640" height="480" loading="lazy" decoding="async" alt="" />
+                      @if (last && photos.length > 3) {
+                        <span class="photo__more" aria-hidden="true">+{{ photos.length - 3 }}</span>
+                      }
                     </button>
-                    <figcaption class="label">{{ i18n.t().labels.fig }} {{ i + 2 }}.{{ pi + 1 }}</figcaption>
+                    <figcaption class="label">{{ i18n.t().labels.fig }} {{ i + 1 }}.{{ pi + 1 }}</figcaption>
                   </figure>
                 }
               </div>
@@ -86,7 +80,7 @@ import { I18n } from '../core/i18n';
       <dialog #box class="lightbox" (click)="backdrop($event)" (keydown)="keys($event)" (close)="shown.set(null)" [attr.aria-label]="current()?.alt ?? ''">
         @if (current(); as ph) {
           <figure class="lightbox__figure">
-            <img [src]="'/img/civic/' + ph.src + (hasLarge(ph.src) ? '-1280' : '-640') + '.webp'" [alt]="ph.alt" />
+            <img [src]="'/img/civic/' + ph.src + '-full.webp'" [alt]="ph.alt" />
             <figcaption>
               <span class="label">{{ (shown()!.index + 1).toString().padStart(2, '0') }} / {{ shown()!.photos.length.toString().padStart(2, '0') }}</span>
               <span>{{ ph.alt }}</span>
@@ -138,9 +132,6 @@ export class Civic {
   protected backdrop(e: MouseEvent) {
     if (e.target === this.box().nativeElement) this.close();
   }
-
-  /** Photos narrower than 1280 px were only exported at 640. */
-  protected hasLarge = (src: string) => src !== 'unifeb-scarf';
 
   private monthFormat = computed(
     () => new Intl.DateTimeFormat(this.i18n.lang() === 'tr' ? 'tr-TR' : 'en-GB', { month: 'long', year: 'numeric' }),
