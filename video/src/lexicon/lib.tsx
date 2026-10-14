@@ -2,12 +2,24 @@ import gsap from "gsap";
 import React, { createContext, useContext } from "react";
 import { Img, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import beatsData from "./beats.json";
+import loserData from "./beats-loser.json";
 import { F } from "./fonts";
 import { P } from "./tokens";
 
 /* ── Time ──────────────────────────────────────────────────── */
 
-export const BEATS: number[] = beatsData.beats;
+export type Track = "papaoutai" | "loser";
+const GRIDS: Record<Track, number[]> = { papaoutai: beatsData.beats, loser: loserData.beats };
+export const MUSIC: Record<Track, string> = { papaoutai: "music60.m4a", loser: "music-loser60.m4a" };
+
+/**
+ * The beat grid in use. The Loser grid keeps the same pacing in beats, warped
+ * so every act boundary and screen change lands on that song's sections and bars.
+ */
+export let BEATS: number[] = GRIDS.papaoutai;
+export const setTrack = (track: Track) => {
+  BEATS = GRIDS[track];
+};
 export const beat = (n: number) => {
   const i = Math.max(0, Math.min(BEATS.length - 2, Math.floor(n)));
   return BEATS[i] + (BEATS[i + 1] - BEATS[i]) * (n - i);
