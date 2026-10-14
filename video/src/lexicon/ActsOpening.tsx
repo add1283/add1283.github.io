@@ -32,6 +32,7 @@ export const ActSignal: React.FC = () => {
   const meet = ramp(t, beat(5), beat(6.5), "power3.inOut");
   const times = ramp(t, beat(6), beat(7), "back.out(1.6)");
   const tagline = ramp(t, beat(8), beat(9.5), "linear");
+  const subline = ramp(t, beat(10), beat(11.5), "power2.out");
   const out = ramp(t, end - 0.45, end, "power3.in");
 
   const mindY = lerp(560, 735, meet);
@@ -66,7 +67,7 @@ export const ActSignal: React.FC = () => {
       <div style={{ position: "absolute", left: 80, top: 1270, font: SERIF(58), color: P.steel, clipPath: `inset(0 ${100 - tagline * 100}% 0 0)`, opacity: 1 - out }}>
         Beyond the interface.
       </div>
-      <div style={{ position: "absolute", left: 80, top: 1356, width: 900, font: `400 32px/1.35 ${F.plex}`, color: P.offwhite, opacity: ramp(t, beat(9), beat(10.2), "power2.out") * (1 - out) }}>
+      <div style={{ position: "absolute", left: 80, top: 1356, width: 900, font: `400 32px/1.35 ${F.plex}`, color: P.offwhite, opacity: subline * (1 - out) }}>
         Interfaces built around how people actually read,
         <br />
         <span style={{ color: P.steel }}>and built for search engines too.</span>
@@ -97,11 +98,11 @@ export const ActIdentity: React.FC = () => {
     <AbsoluteFill>
       <div style={{ opacity: fade }}>
         <BaselineGrid p={ramp(t, s, s + 1.2, "power2.out")} />
-        <Tick x={80} y={260} p={ramp(t, beat(13), beat(14), "expo.out")} />
-        <Tick x={1000} y={260} p={ramp(t, beat(13.5), beat(14.5), "expo.out")} />
-        <Tick x={80} y={1540} p={ramp(t, beat(14), beat(15), "expo.out")} />
-        <Tick x={1000} y={1540} p={ramp(t, beat(14.5), beat(15.5), "expo.out")} />
-        <Label x={80} y={300} p={ramp(t, beat(13), beat(15), "linear")}>identity / portfolio, 2026</Label>
+        <Tick x={80} y={260} p={ramp(t, beat(17), beat(18), "expo.out")} />
+        <Tick x={1000} y={260} p={ramp(t, beat(17.5), beat(18.5), "expo.out")} />
+        <Tick x={80} y={1540} p={ramp(t, beat(18), beat(19), "expo.out")} />
+        <Tick x={1000} y={1540} p={ramp(t, beat(18.5), beat(19.5), "expo.out")} />
+        <Label x={80} y={300} p={ramp(t, beat(17), beat(19), "linear")}>identity / portfolio, 2026</Label>
       </div>
 
       {/* The signal line from Act I settles as the cap-height line of the name. */}
@@ -112,34 +113,34 @@ export const ActIdentity: React.FC = () => {
         p={fade}
         color={P.blue}
       />
-      <Label right={80} y={632} p={ramp(t, beat(15), beat(16.5), "linear") * fade} color={P.blue} align="right" size={22}>
+      <Label right={80} y={632} p={ramp(t, beat(19), beat(20.5), "linear") * fade} color={P.blue} align="right" size={22}>
         cap height
       </Label>
 
       <Statement lines={["Ahmet", "Deniz", "Dündar"]} x={74} y={668} size={168} lh={0.95} tracking="-0.03em" p={ramp(t, s + 0.35, s + 1.9, "linear")} out={out} />
 
       {/* A real portrait from the site, framed like a figure. */}
-      <div style={{ position: "absolute", left: 760, top: 336, width: 220, opacity: ramp(t, beat(20), beat(22), "power2.out") * fade }}>
-        <div style={{ width: 220, height: 220, overflow: "hidden", clipPath: `inset(0 0 ${100 - ramp(t, beat(20), beat(22.5), "expo.out") * 100}% 0)` }}>
+      <div style={{ position: "absolute", left: 760, top: 336, width: 220, opacity: ramp(t, beat(24), beat(26), "power2.out") * fade }}>
+        <div style={{ width: 220, height: 220, overflow: "hidden", clipPath: `inset(0 0 ${100 - ramp(t, beat(24), beat(26.5), "expo.out") * 100}% 0)` }}>
           <Img src={staticFile("portrait.webp")} style={{ width: "100%", filter: "grayscale(0.25) contrast(1.05)" }} />
         </div>
         <div style={{ font: `400 20px ${F.mono}`, color: P.steel, marginTop: 12 }}>fig. 1</div>
       </div>
 
       <div style={{ opacity: fade }}>
-        <Dim x1={80} x2={1000} y={1236} p={ramp(t, beat(16), beat(17.5), "expo.out")} label="1080 px" />
+        <Dim x1={80} x2={1000} y={1236} p={ramp(t, beat(20), beat(21.5), "expo.out")} label="1080 px" />
       </div>
       {/* The two disciplines, each in its own voice. */}
       <div style={{ position: "absolute", left: 80, top: 1272, overflow: "hidden", opacity: fade }}>
-        <div style={{ font: SERIF(60), color: P.offwhite, translate: `0 ${(1 - ramp(t, beat(18), beat(19.5), "expo.out")) * 110}%`, paddingBottom: 10 }}>Psychology graduate.</div>
+        <div style={{ font: SERIF(60), color: P.offwhite, translate: `0 ${(1 - ramp(t, beat(22), beat(23.5), "expo.out")) * 110}%`, paddingBottom: 10 }}>Psychology graduate.</div>
       </div>
-      <Statement lines={["Frontend developer & SEO specialist."]} x={80} y={1350} size={50} tracking="-0.02em" p={ramp(t, beat(19), beat(20.5), "linear")} out={out} />
-      <Label x={80} y={1428} p={ramp(t, beat(21), beat(23), "linear") * fade}>interfaces / technical seo / performance / ai</Label>
+      <Statement lines={["Frontend developer & SEO specialist."]} x={80} y={1350} size={50} tracking="-0.02em" p={ramp(t, beat(23), beat(24.5), "linear")} out={out} />
+      <Label x={80} y={1428} p={ramp(t, beat(25), beat(27), "linear") * fade}>interfaces / technical seo / performance / ai</Label>
 
       {/* A specification sheet beside the name, read like a drawing's title block. */}
       <div style={{ position: "absolute", left: 700, top: 668, width: 300, opacity: fade }}>
         {SPEC.map(([k, v], i) => {
-          const p = ramp(t, beat(21 + i * 0.6), beat(22 + i * 0.6), "expo.out");
+          const p = ramp(t, beat(25 + i * 0.4), beat(26 + i * 0.4), "expo.out");
           return (
             <div key={k} style={{ borderTop: `1px solid ${P.steelDim}`, padding: "12px 0 16px", opacity: p, translate: `${(1 - p) * 24}px 0` }}>
               <div style={{ font: `400 18px ${F.mono}`, color: P.steel, letterSpacing: "0.06em" }}>{k}</div>
@@ -171,12 +172,12 @@ const CODE: { text: string; kind?: "kw" | "type" | "dim" }[][] = [
 const SQL = ["SELECT TOP 20 Id, Title, PublishedAt", "FROM Articles", "ORDER BY PublishedAt DESC;"];
 
 const STACK: { name: string; at: number }[] = [
-  { name: "C# / .NET", at: 29 },
-  { name: "ASP.NET MVC", at: 30 },
-  { name: "SQL", at: 34 },
-  { name: "TypeScript", at: 37 },
-  { name: "Angular", at: 37.5 },
-  { name: "HTML / SCSS", at: 38 },
+  { name: "C# / .NET", at: 30.5 },
+  { name: "ASP.NET MVC", at: 31 },
+  { name: "SQL", at: 35 },
+  { name: "TypeScript", at: 37.5 },
+  { name: "Angular", at: 38 },
+  { name: "HTML / SCSS", at: 38.5 },
   { name: "WordPress / PHP", at: 40 },
   { name: "Bootstrap 5 / Tailwind", at: 40.5 },
   { name: "Git / GitHub", at: 41 },
@@ -189,18 +190,18 @@ export const ActCraft: React.FC = () => {
   if (t < s - 0.05 || t > e + 0.05) return null;
 
   const codeLines = CODE.length;
-  const typed = ramp(t, s + 0.2, beat(33), "linear") * codeLines;
-  const toTable = ramp(t, beat(33.5), beat(35), "power3.inOut");
-  const toUi = ramp(t, beat(36), beat(37.5), "power3.inOut");
-  const toDash = ramp(t, beat(39), beat(40.5), "power3.inOut");
+  const typed = ramp(t, s + 0.2, beat(34), "linear") * codeLines;
+  const toTable = ramp(t, beat(34.5), beat(35.5), "power3.inOut");
+  const toUi = ramp(t, beat(37), beat(38), "power3.inOut");
+  const toDash = ramp(t, beat(39.5), beat(40.5), "power3.inOut");
   // The panel folds into a phone outline on the drop, carrying the eye into Act IV.
   const fold = ramp(t, beat(43), e, "power3.inOut");
 
   const panel = {
-    x: lerp(80, 365, fold),
-    y: lerp(340, 365, fold),
-    w: lerp(920, 350, fold),
-    h: lerp(760, 350 * (932 / 430), fold),
+    x: lerp(80, 385, fold),
+    y: lerp(340, 470, fold),
+    w: lerp(920, 270, fold),
+    h: lerp(760, 270 * (932 / 430), fold),
   };
 
   const color = (k?: string) => (k === "kw" ? P.steel : k === "type" ? P.blue : P.offwhite);
@@ -257,7 +258,7 @@ export const ActCraft: React.FC = () => {
             <span>PublishedAt</span>
           </div>
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: "90px 1fr 220px", alignItems: "center", height: 44, borderBottom: "1px solid rgba(236,233,226,0.06)", opacity: ramp(t, beat(34) + i * 0.06, beat(34.5) + i * 0.06, "power2.out") }}>
+            <div key={i} style={{ display: "grid", gridTemplateColumns: "90px 1fr 220px", alignItems: "center", height: 44, borderBottom: "1px solid rgba(236,233,226,0.06)", opacity: ramp(t, beat(35) + i * 0.06, beat(35.5) + i * 0.06, "power2.out") }}>
               <div style={{ width: 34, height: 8, background: P.steelDim }} />
               <div style={{ width: `${55 + ((i * 37) % 35)}%`, height: 8, background: "rgba(236,233,226,0.35)" }} />
               <div style={{ width: 150, height: 8, background: P.steelDim }} />
@@ -273,7 +274,7 @@ export const ActCraft: React.FC = () => {
           </div>
           <div style={{ marginTop: 24, height: 250, background: "rgba(74,125,255,0.10)", border: `1px solid ${P.steelDim}` }} />
           {[0, 1, 2].map((i) => (
-            <div key={i} style={{ display: "flex", gap: 20, marginTop: 22, translate: `0 ${(1 - ramp(t, beat(36.5) + i * 0.08, beat(37.5) + i * 0.08, "expo.out")) * 40}px` }}>
+            <div key={i} style={{ display: "flex", gap: 20, marginTop: 22, translate: `0 ${(1 - ramp(t, beat(37.5) + i * 0.08, beat(38.5) + i * 0.08, "expo.out")) * 40}px` }}>
               <div style={{ width: 150, height: 96, background: "rgba(236,233,226,0.08)", border: `1px solid ${P.steelDim}` }} />
               <div style={{ flex: 1 }}>
                 <div style={{ width: "86%", height: 12, background: "rgba(236,233,226,0.45)" }} />
@@ -305,7 +306,7 @@ export const ActCraft: React.FC = () => {
                 strokeWidth="3"
                 pathLength={1}
                 strokeDasharray="1"
-                strokeDashoffset={1 - ramp(t, beat(39.5), beat(41.5), "power2.inOut")}
+                strokeDashoffset={1 - ramp(t, beat(40), beat(41.5), "power2.inOut")}
               />
             </svg>
           </div>

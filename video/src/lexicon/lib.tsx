@@ -14,11 +14,11 @@ export const beat = (n: number) => {
 };
 
 /** Act boundaries, in beats. Cuts and reveals are placed on this grid. */
-export const ACT = { signal: 0, identity: 12, craft: 28, portfolio: 45, systems: 93, human: 109, signature: 125, peak: 132 } as const;
-export const RUNTIME = 64;
+export const ACT = { signal: 0, identity: 16, craft: 30, portfolio: 45, systems: 90, human: 104, signature: 117, peak: 132 } as const;
+export const RUNTIME = 60;
 
-/** Project changes inside Act IV, in beats: nine projects across twelve bars. */
-export const PROJECT_BEATS = [45, 51, 56, 61, 66, 72, 77, 82, 87, 93];
+/** Act IV screens, in beats: three groups of three projects, four bars each. */
+export const GROUP_BEATS = [45, 60, 75, 90];
 
 /** Current time in seconds, independent of the render frame rate. */
 export const TimeContext = createContext(0);
