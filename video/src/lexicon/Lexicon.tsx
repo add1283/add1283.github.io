@@ -5,7 +5,7 @@ import { ActCraft, ActIdentity, ActSignal } from "./ActsOpening";
 import { ActPortfolio } from "./ActPortfolio";
 import { ActHuman, ActSignature, ActSystems } from "./ActsClosing";
 import { lexiconFonts } from "./fonts";
-import { TimeContext } from "./lib";
+import { MUSIC, TimeContext, Track, setTrack } from "./lib";
 import { P } from "./tokens";
 
 const Grain: React.FC = () => {
@@ -24,10 +24,11 @@ const Grain: React.FC = () => {
 };
 
 /**
- * Project Lexicon: a 64-second vertical portfolio film. Every act reads the
+ * Project Lexicon: a 60-second vertical portfolio film. Every act reads the
  * current time in seconds, so the cut holds at any frame rate.
  */
-export const Lexicon: React.FC<{ music?: boolean }> = ({ music = true }) => {
+export const Lexicon: React.FC<{ music?: boolean; track?: Track }> = ({ music = true, track = "papaoutai" }) => {
+  setTrack(track);
   const frame = useCurrentFrame();
   const { fps, width } = useVideoConfig();
   const [handle] = useState(() => delayRender("Loading Lexicon fonts"));
@@ -42,7 +43,7 @@ export const Lexicon: React.FC<{ music?: boolean }> = ({ music = true }) => {
 
   return (
     <AbsoluteFill style={{ background: P.graphite }}>
-      {music && <Audio src={staticFile("music60.m4a")} />}
+      {music && <Audio src={staticFile(MUSIC[track])} />}
       {ready && (
         <TimeContext.Provider value={frame / fps}>
           {/* Laid out on a 1080 × 1920 grid and scaled to the output size. */}
