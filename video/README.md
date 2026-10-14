@@ -9,10 +9,10 @@ A 64-second vertical film (1080 × 1920, 60 fps) in a technical-blueprint langua
 | Act | Time | What happens |
 |---|---|---|
 | I · Mind × Code | 0–5.3 s | Two voices on one blue line: "Psychology" in a serif, "Software" in Plex. They meet on the beat; "Beyond the interface." |
-| II · The Identity | 5.3–12.4 s | The line becomes the cap height of the name. Portrait from the site; "Psychology graduate. Software developer." |
+| II · The Identity | 5.3–12.4 s | The line becomes the cap height of the name. Portrait from the site, a title-block spec sheet (based, role, since, studied, certified); "Psychology graduate. Frontend developer & SEO specialist." |
 | III · The Craft | 12.4–19.9 s | A typeset C# controller and SQL query become rows, an interface, then a dashboard; the stack lights up as it is used. The panel folds into the phone outline. |
-| IV · The Portfolio | 19.9–41.1 s | All nine projects on their real mobile screens. Numbered rings mark the intended reading order; the page's real `<title>`, function and documented stack; one serif line on what the screen asks of the person reading it. |
-| V · Systems | 41.1–48.4 s | Engineering, Visibility and Intelligence settle into columns on one foundation: people (perception, attention, behaviour). Languages. |
+| IV · The Portfolio | 19.9–41.1 s | All nine projects on their real mobile screens. Numbered rings mark the intended reading order; the page's real `<title>`, function and documented stack; what I did on it (condensed from the website), and one serif line on what the screen asks of the person reading it. |
+| V · Systems | 41.1–48.4 s | Engineering, Interface, Visibility and Intelligence settle into a two-by-two grid on one foundation: people (perception, attention, behaviour). Languages. |
 | VI · The Path | 48.4–55.5 s | Psychology BSc, design and marketing training, VBT Software, programming degree, certificates up to the YÖK AI and Machine Learning programme. "Understand the problem. Build the right solution." |
 | VII · The Signature | 55.5–64 s | The name returns; on the music's peak only the initials stay and become the ADD mark. "Psychology × Software", "Engineer the experience.", URL. |
 

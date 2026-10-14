@@ -8,9 +8,10 @@ import { P } from "./tokens";
 /* ── ACT V · VISIBILITY AND INTELLIGENCE ───────────────────── */
 
 const COLUMNS = [
-  { head: "ENGINEERING", items: ["Web applications", "C# / .NET", "ASP.NET MVC", "Angular", "SQL"] },
-  { head: "VISIBILITY", items: ["Technical SEO", "Search Console", "GA4", "Core Web Vitals", "PageSpeed", "SEM & Google Ads"] },
-  { head: "INTELLIGENCE", items: ["AI APIs", "Prompt engineering", "Claude, GPT", "Cursor workflows", "Automation"] },
+  { head: "ENGINEERING", items: ["C# / .NET", "ASP.NET MVC / Core", "SQL", "PHP / WordPress", "Git / GitHub"] },
+  { head: "INTERFACE", items: ["TypeScript / Angular", "HTML / SCSS", "Tailwind / Bootstrap", "GSAP / Three.js", "Responsive, accessible UI"] },
+  { head: "VISIBILITY", items: ["Technical SEO", "Core Web Vitals", "Structured data", "Search Console / GA4", "SEM / Google Ads", "Content architecture"] },
+  { head: "INTELLIGENCE", items: ["AI and machine learning", "Data analysis", "Prompt engineering", "Claude / GPT APIs", "Cursor / Copilot", "Automation"] },
 ];
 
 /** Deterministic scatter: where each label starts, around the last project's module list. */
@@ -29,19 +30,24 @@ export const ActSystems: React.FC = () => {
   const e = beat(ACT.human);
   if (t < s - 0.6 || t > e + 0.2) return null;
   const out = ramp(t, e - 0.45, e, "power3.in");
-  const colX = [80, 390, 700];
+  // Two rows of two: each discipline gets a heading on the blue rail and its items below.
+  const colX = [80, 560, 80, 560];
+  const colY = [430, 430, 790, 790];
   return (
     <AbsoluteFill style={{ opacity: 1 - out * 0.85 }}>
       <Label x={80} y={250} p={ramp(t, s, s + 0.8, "linear")}>systems / how the work connects</Label>
+      <Label right={80} y={250} p={ramp(t, s + 0.2, s + 0.9, "linear")} align="right">04 disciplines, 1 foundation</Label>
 
-      <HLine x={80} y={440} w={620} p={ramp(t, beat(93.5), beat(95.5), "expo.out")} color={P.blue} />
-      {colX.map((x, c) => (
+      {[430, 790].map((y, r) => (
+        <HLine key={y} x={80} y={y} w={920} p={ramp(t, beat(93.5 + r), beat(95.5 + r), "expo.out")} color={P.blue} />
+      ))}
+      {COLUMNS.map((col, c) => (
         <React.Fragment key={c}>
           <div
             style={{
               position: "absolute",
-              left: x - 7,
-              top: 433,
+              left: colX[c] - 7,
+              top: colY[c] - 7,
               width: 14,
               height: 14,
               borderRadius: 7,
@@ -49,7 +55,10 @@ export const ActSystems: React.FC = () => {
               scale: String(ramp(t, beat(94 + c * 0.5), beat(94.6 + c * 0.5), "back.out(2)")),
             }}
           />
-          <Statement lines={[COLUMNS[c].head]} x={x} y={470} size={33} weight={600} tracking="0.05em" p={ramp(t, beat(94.5 + c), beat(96 + c), "linear")} />
+          <Label x={colX[c] + 24} y={colY[c] + 22} p={ramp(t, beat(94.5 + c), beat(95.5 + c), "linear")} size={20}>
+            {String(c + 1).padStart(2, "0")}
+          </Label>
+          <Statement lines={[col.head]} x={colX[c] + 70} y={colY[c] + 18} size={32} weight={600} tracking="0.05em" p={ramp(t, beat(94.5 + c), beat(96 + c), "linear")} />
         </React.Fragment>
       ))}
 
@@ -57,16 +66,16 @@ export const ActSystems: React.FC = () => {
       {COLUMNS.map((col, c) =>
         col.items.map((item, k) => {
           const [sx, sy, rot] = scatter(c, k);
-          const startAt = beat(96 + c * 3 + k * 0.5);
+          const startAt = beat(96 + c * 2 + k * 0.4);
           const settle = ramp(t, startAt, startAt + 0.7, "expo.out");
-          const appear = ramp(t, s - 0.4 + (c * 5 + k) * 0.05, s + 0.2 + (c * 5 + k) * 0.05, "power2.out");
+          const appear = ramp(t, s - 0.4 + (c * 6 + k) * 0.04, s + 0.2 + (c * 6 + k) * 0.04, "power2.out");
           return (
             <div
               key={item}
               style={{
                 position: "absolute",
-                left: lerp(sx, colX[c], settle),
-                top: lerp(sy, 545 + k * 54, settle),
+                left: lerp(sx, colX[c] + 70, settle),
+                top: lerp(sy, colY[c] + 76 + k * 44, settle),
                 rotate: `${lerp(rot, 0, settle)}deg`,
                 font: `400 24px ${F.mono}`,
                 color: settle > 0.6 ? P.offwhite : P.steel,
@@ -80,19 +89,21 @@ export const ActSystems: React.FC = () => {
         }),
       )}
 
-      {/* Under all three: people. The psychology voice carries the foundation. */}
-      {colX.map((x, c) => (
-        <VLine key={c} x={x} y={860} h={70} p={ramp(t, beat(104 + c * 0.3), beat(105 + c * 0.3), "expo.out")} color={P.steel} from="bottom" />
+      {/* Under all four: people. The psychology voice carries the foundation. */}
+      {[80, 560].map((x, c) => (
+        <VLine key={c} x={x} y={1100} h={60} p={ramp(t, beat(104 + c * 0.3), beat(105 + c * 0.3), "expo.out")} color={P.steel} from="bottom" />
       ))}
-      <HLine x={80} y={930} w={620} p={ramp(t, beat(104.5), beat(106), "expo.out")} color={P.steel} />
-      <div style={{ position: "absolute", left: 80, top: 962, overflow: "hidden" }}>
-        <div style={{ font: SERIF(64), color: P.offwhite, translate: `0 ${(1 - ramp(t, beat(105), beat(106.5), "expo.out")) * 110}%`, paddingBottom: 12 }}>
+      <HLine x={80} y={1160} w={920} p={ramp(t, beat(104.5), beat(106), "expo.out")} color={P.steel} />
+      <div style={{ position: "absolute", left: 80, top: 1186, overflow: "hidden" }}>
+        <div style={{ font: SERIF(58), color: P.offwhite, translate: `0 ${(1 - ramp(t, beat(105), beat(106.5), "expo.out")) * 110}%`, paddingBottom: 12 }}>
           People: perception, attention, behaviour.
         </div>
       </div>
-      <Label x={80} y={1060} p={ramp(t, beat(106), beat(107.5), "linear")}>the foundation under every column</Label>
-      <Label x={80} y={1150} p={ramp(t, beat(106.5), beat(108), "linear")} color={P.offwhite}>
-        Turkish, native / English, professional working proficiency
+      <div style={{ position: "absolute", left: 80, top: 1270, width: 900, font: `400 28px/1.35 ${F.plex}`, color: "rgba(236,233,226,0.78)", opacity: ramp(t, beat(106), beat(107.2), "power2.out") }}>
+        Hierarchy, legibility and speed, decided by how people actually read.
+      </div>
+      <Label x={80} y={1350} p={ramp(t, beat(106.5), beat(108), "linear")}>
+        languages / Turkish, native / English, professional working
       </Label>
     </AbsoluteFill>
   );
@@ -102,10 +113,10 @@ export const ActSystems: React.FC = () => {
 
 type Kind = "mind" | "both" | "code";
 const PATH: { years: string; what: string; where: string; kind: Kind }[] = [
-  { years: "2018–2022", what: "Psychology, BSc", where: "Çukurova University", kind: "mind" },
-  { years: "2019–2021", what: "Web, graphic and motion design", where: "1907 ÜNİFEB, Çukurova University", kind: "both" },
+  { years: "2018–2022", what: "Psychology, BSc", where: "Çukurova University, Adana", kind: "mind" },
+  { years: "2019–2021", what: "Web board member, 1907 ÜNİFEB", where: "Social media, graphic and motion design, campaigns", kind: "both" },
   { years: "2021", what: "Digital Marketing", where: "Boğaziçi University Business and Economics Club", kind: "both" },
-  { years: "2021–", what: "Web designer and frontend developer", where: "VBT Software", kind: "code" },
+  { years: "2021–", what: "Web designer and frontend developer", where: "VBT Software, UI team: interfaces, page speed, SEO", kind: "code" },
   { years: "2022–2024", what: "Computer Programming, associate degree", where: "Anadolu University", kind: "code" },
   { years: "2024", what: "Intellectual and Industrial Property Rights", where: "Kobimen Akademi", kind: "both" },
   { years: "2026", what: "Circular Economy Trainer Programme", where: "Habitat Association", kind: "both" },
@@ -264,9 +275,10 @@ export const ActSignature: React.FC = () => {
           <span style={{ font: `600 66px ${F.plex}`, color: P.offwhite, letterSpacing: "-0.03em" }}>Software</span>
         </div>
       </div>
-      <Label x={80} y={1030} p={finalBlock(1.5)} color={P.steel} size={24}>web / seo / ai / performance</Label>
+      <Label x={80} y={1030} p={finalBlock(1.5)} color={P.steel} size={24}>frontend / technical seo / performance / ai</Label>
       <Statement lines={["ENGINEER THE", "EXPERIENCE."]} x={76} y={1100} size={112} p={finalBlock(2)} tracking="-0.035em" />
       <Statement lines={["ahmetdenizdundar.com.tr"]} x={80} y={1384} size={34} weight={500} tracking="0" color={P.blue} p={finalBlock(3)} />
+      <Label x={80} y={1440} p={finalBlock(3.5)} color={P.steel} size={22}>istanbul / ui team, vbt software / 2026</Label>
     </AbsoluteFill>
   );
 };

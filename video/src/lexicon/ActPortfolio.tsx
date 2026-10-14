@@ -20,6 +20,8 @@ interface Shot {
   extra?: "payments";
   /** What the screen asks of a person, in the psychology voice. */
   mind: string;
+  /** What I did on it, condensed from the project text on the website. */
+  role: string;
 }
 
 const SHOTS: Shot[] = [
@@ -27,6 +29,7 @@ const SHOTS: Shot[] = [
     layout: "center",
     title: "Anasayfa - Atatürkçü Düşünce Derneği",
     mind: "A face and a name are read first.",
+    role: "Custom content flows for news and archives, structured for search.",
     notes: [
       { fx: 0.3, fy: 0.13, label: "masthead" },
       { fx: 0.6, fy: 0.38, label: "featured story" },
@@ -39,6 +42,7 @@ const SHOTS: Shot[] = [
     layout: "right",
     title: "Heroty",
     mind: "One promise, understood in a second.",
+    role: "Coded the interface, with a GSAP walkthrough of the product.",
     notes: [
       { fx: 0.5, fy: 0.27, label: "product promise" },
       { fx: 0.5, fy: 0.66, label: "app preview" },
@@ -48,6 +52,7 @@ const SHOTS: Shot[] = [
     layout: "left",
     title: "12punto Haber ve İçerik Platformu",
     mind: "Built to be scanned, not studied.",
+    role: "Mobile-first feeds, page speed and fast indexing of new stories.",
     notes: [
       { fx: 0.5, fy: 0.105, label: "markets ticker" },
       { fx: 0.55, fy: 0.4, label: "lead story" },
@@ -59,6 +64,7 @@ const SHOTS: Shot[] = [
     layout: "right",
     title: "Disnet Technology",
     mind: "The headline arrives before the detail.",
+    role: "Pages for its BMC Software ITSM and cloud automation offering.",
     notes: [
       { fx: 0.5, fy: 0.27, label: "headline" },
       { fx: 0.5, fy: 0.52, label: "illustration" },
@@ -70,6 +76,7 @@ const SHOTS: Shot[] = [
     layout: "center",
     title: "Avrupadan Bülten",
     mind: "Familiar cues: language, date, country.",
+    role: "Mobile-first layouts and search visibility across European markets.",
     notes: [
       { fx: 0.5, fy: 0.24, label: "newsletter" },
       { fx: 0.35, fy: 0.37, label: "date bar" },
@@ -81,6 +88,7 @@ const SHOTS: Shot[] = [
     layout: "right",
     title: "Ana Sayfa - KPAY",
     mind: "Trust first, then the next step.",
+    role: "An interface that explains each product plainly to merchants.",
     notes: [
       { fx: 0.5, fy: 0.2, label: "payment platform" },
     ],
@@ -90,6 +98,7 @@ const SHOTS: Shot[] = [
     layout: "left",
     title: "VBT Software: We Make Ideas Digital",
     mind: "One idea per slide.",
+    role: "Solution pages and investor content, built with the UI team.",
     notes: [
       { fx: 0.5, fy: 0.4, label: "solutions carousel" },
       { fx: 0.4, fy: 0.6, label: "feature list" },
@@ -100,6 +109,7 @@ const SHOTS: Shot[] = [
     layout: "center",
     title: "Anasayfa - SER&BERKER BAĞIMSIZ DENETİM A.Ş.",
     mind: "Calm, credible and clear.",
+    role: "Services and regulatory content, organised so people find them.",
     notes: [
       { fx: 0.5, fy: 0.24, label: "hero statement" },
       { fx: 0.3, fy: 0.6, label: "services" },
@@ -110,6 +120,7 @@ const SHOTS: Shot[] = [
     layout: "right",
     title: "Flerpi",
     mind: "Structure lowers the reading load.",
+    role: "A flexible page system that introduces each module on its own.",
     notes: [
       { fx: 0.3, fy: 0.38, label: "general structure" },
       { fx: 0.08, fy: 0.62, label: "module list" },
@@ -121,7 +132,7 @@ const SHOTS: Shot[] = [
 const frameFor = (l: Layout) => {
   switch (l) {
     case "center":
-      return { x: 350, y: 345, w: 380 };
+      return { x: 365, y: 365, w: 350 };
     case "left":
       return { x: 80, y: 345, w: 440 };
     // Kept clear of the Reels action buttons on the right edge.
@@ -158,13 +169,15 @@ export const ActPortfolio: React.FC = () => {
   const zoom = shot.zoom ? lerp(1, shot.zoom, ramp(local, 0.2, dur, "power2.inOut")) : 1;
   const leave = ramp(t, b - 0.32, b - 0.02, "power3.in");
 
-  // Captions sit beside the phone (left/right) or under it (center/macro).
+  // Captions sit beside the phone (left/right) or under it (center), as one flowing column.
   const side = shot.layout === "left" ? "right" : shot.layout === "right" ? "left" : "below";
   const textX = side === "right" ? 570 : 80;
   const textW = side === "below" ? 880 : 400;
-  const nameY = side === "below" ? here.y + here.w * PHONE_RATIO + 30 : 1060;
-  const nameSize = side === "below" ? (shot.lines ? 72 : 96) : shot.lines ? 78 : 92;
   const lines = shot.lines ?? [proj.name];
+  const nameSize = side === "below" ? (lines.length > 1 ? 62 : 80) : lines.length > 1 ? 72 : 84;
+  // Side captions are anchored so the name block ends at the same height whatever its line count.
+  const nameY = side === "below" ? here.y + here.w * PHONE_RATIO + 28 : 1092 - nameSize * 0.98 * lines.length;
+  const reveal = (a0: number, a1: number) => (1 - leave) * ramp(local, a0, a1, "power2.out");
 
   return (
     <AbsoluteFill style={{ opacity: 1 - exitAct }}>
@@ -214,19 +227,33 @@ export const ActPortfolio: React.FC = () => {
         </svg>
       )}
 
-      {/* Name, function, stack, and the page's real <title>. */}
+      {/* Name, function, what I did, documented stack, and the psychology note. */}
       <div style={{ position: "absolute", left: textX, top: nameY, width: textW }}>
-        <Statement lines={lines} x={0} y={0} size={nameSize} lh={0.98} tracking="-0.03em" p={ramp(local, 0.2, 0.9, "linear")} out={leave} />
-      </div>
-      <div style={{ position: "absolute", left: textX, top: nameY + nameSize * 0.98 * lines.length + 22, width: textW, opacity: (1 - leave) * ramp(local, 0.45, 0.85, "power2.out") }}>
-        <div style={{ font: `500 34px/1.3 ${F.plex}`, color: P.offwhite }}>{proj.what}</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "10px 24px", marginTop: 14, font: `400 25px ${F.mono}`, color: P.steel }}>
+        <div style={{ position: "relative", height: nameSize * 0.98 * lines.length }}>
+          <Statement lines={lines} x={0} y={0} size={nameSize} lh={0.98} tracking="-0.03em" p={ramp(local, 0.2, 0.9, "linear")} out={leave} />
+        </div>
+        <div style={{ marginTop: 14, font: `500 30px/1.25 ${F.plex}`, color: P.offwhite, opacity: reveal(0.45, 0.85) }}>{proj.what}</div>
+        <div style={{ marginTop: 8, font: `400 26px/1.35 ${F.plex}`, color: "rgba(236,233,226,0.78)", opacity: reveal(0.6, 1.0) }}>{shot.role}</div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 20px", marginTop: 14, font: `400 22px ${F.mono}`, color: P.steel, opacity: reveal(0.75, 1.15) }}>
           {proj.stack.map((st) => (
-            <span key={st} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ width: 9, height: 9, background: P.blue }} />
+            <span key={st} style={{ display: "flex", alignItems: "center", gap: 9 }}>
+              <span style={{ width: 8, height: 8, background: P.blue }} />
               {st}
             </span>
           ))}
+        </div>
+        {/* The psychology voice: what the screen asks of the person reading it. */}
+        <div
+          style={{
+            marginTop: 22,
+            font: SERIF(side === "below" ? 38 : 40),
+            lineHeight: 1.15,
+            color: P.offwhite,
+            clipPath: `inset(0 ${100 - ramp(local, 0.9, 1.6, "power2.out") * 100}% 0 0)`,
+            opacity: 1 - leave,
+          }}
+        >
+          {shot.mind}
         </div>
       </div>
       <div style={{ position: "absolute", left: 80, top: 290, width: 920, font: `400 21px/1.35 ${F.mono}`, color: P.steelDim, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", clipPath: `inset(0 ${100 - ramp(local, 0.3, 0.9, "linear") * 100}% 0 0)`, opacity: 1 - leave }}>
@@ -235,24 +262,8 @@ export const ActPortfolio: React.FC = () => {
         {"</title>"}
       </div>
 
-      {/* The psychology voice: what the screen asks of the person reading it. */}
-      <div
-        style={{
-          position: "absolute",
-          left: textX,
-          top: side === "below" ? 1478 : 1330,
-          width: textW,
-          font: SERIF(side === "below" ? 38 : 42),
-          lineHeight: 1.15,
-          color: P.offwhite,
-          clipPath: `inset(0 ${100 - ramp(local, 0.9, 1.6, "power2.out") * 100}% 0 0)`,
-          opacity: 1 - leave,
-        }}
-      >
-        {shot.mind}
-      </div>
       {i === 0 && (
-        <Label x={80} y={322} p={ramp(local, 0.8, 1.5, "linear") * (1 - leave)} size={20} color={P.steelDim}>
+        <Label x={80} y={318} p={ramp(local, 0.8, 1.5, "linear") * (1 - leave)} size={19} color={P.steelDim}>
           numbered rings: intended reading order
         </Label>
       )}
