@@ -48,6 +48,8 @@ export interface CivicItem {
 
 export interface Copy {
   meta: { title: string; description: string; locale: string };
+  /** Small drawing-sheet labels used across the page. */
+  labels: { fig: string; sheet: string; cap: string; base: string; mind: string; code: string };
   nav: { work: string; systems: string; civic: string; about: string; contact: string; skip: string; menu: string };
   toggles: { theme: string; lang: string; langLabel: string };
   hero: {
@@ -290,6 +292,7 @@ export const COPY: Record<Lang, Copy> = {
         'İstanbul’da psikolog ve frontend geliştirici. .NET’ten Angular’a web uygulamaları geliştiriyor, haber, SaaS ve kurumsal alanda yayındaki dokuz çalışmanın arayüzünü ve SEO’sunu kurdum.',
       locale: 'tr_TR',
     },
+    labels: { fig: 'şek.', sheet: 'işaret / pafta 01', cap: 'üst çizgi', base: 'taban', mind: 'zihin', code: 'kod' },
     nav: { work: 'İşler', systems: 'Yetkinlikler', civic: 'Ekran dışı', about: 'Hakkımda', contact: 'İletişim', skip: 'İçeriğe geç', menu: 'Menü' },
     toggles: { theme: 'Temayı değiştir', lang: 'EN', langLabel: 'Switch to English' },
     hero: {
@@ -395,7 +398,7 @@ export const COPY: Record<Lang, Copy> = {
       foundationNote: 'Hiyerarşi, okunabilirlik ve hız; insanların bir sayfayı gerçekten nasıl okuduğuna göre.',
     },
     about: {
-      label: 'hakkımda / fig. 1',
+      label: 'hakkımda / şek. 1',
       title: 'Hakkımda',
       spec: [
         ['Konum', 'İstanbul, Türkiye'],
@@ -509,6 +512,7 @@ export const COPY: Record<Lang, Copy> = {
         'Psychologist and frontend developer in Istanbul. I build web applications from .NET to Angular, and built the interface and SEO of nine live projects across news, SaaS and corporate work.',
       locale: 'en_US',
     },
+    labels: { fig: 'fig.', sheet: 'mark / sheet 01', cap: 'cap', base: 'base', mind: 'mind', code: 'code' },
     nav: { work: 'Work', systems: 'Skills', civic: 'Off-screen', about: 'About', contact: 'Contact', skip: 'Skip to content', menu: 'Menu' },
     toggles: { theme: 'Change theme', lang: 'TR', langLabel: 'Türkçeye geç' },
     hero: {

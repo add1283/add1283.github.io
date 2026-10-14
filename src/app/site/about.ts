@@ -17,7 +17,7 @@ import { openCv } from './cv';
         <div class="about__story">
           <figure class="figure">
             <img src="/img/profile.webp" width="320" height="320" alt="Ahmet Deniz Dündar" loading="lazy" decoding="async" />
-            <figcaption class="label">fig. 1</figcaption>
+            <figcaption class="label">{{ i18n.t().labels.fig }} 1</figcaption>
           </figure>
           <dl class="spec">
             @for (row of t.spec; track row[0]) {
@@ -37,7 +37,7 @@ import { openCv } from './cv';
 
         <div class="about__path">
           <h3 class="sub-title">{{ t.pathTitle }}</h3>
-          <p class="path__legend label" aria-hidden="true"><span class="is-mind">mind</span> → <span class="is-code">code</span></p>
+          <p class="path__legend label" aria-hidden="true"><span class="is-mind">{{ i18n.t().labels.mind }}</span> → <span class="is-code">{{ i18n.t().labels.code }}</span></p>
           <ol class="path">
             @for (r of t.path; track r.what) {
               <li class="path__row" [attr.data-kind]="r.kind">

@@ -49,11 +49,11 @@ import { I18n } from '../core/i18n';
 
       <!-- The mark's construction sheet, as in the film's last shot. -->
       <figure class="sheet" aria-hidden="true">
-        <span class="sheet__label">mark / sheet 01</span>
+        <span class="sheet__label">{{ i18n.t().labels.sheet }}</span>
         <span class="sheet__spec">IBM Plex Sans 600 / #4A7DFF</span>
         <span class="sheet__word">
-          <i class="sheet__cap"><span>cap</span></i>
-          <i class="sheet__base"><span>base</span></i>
+          <i class="sheet__cap"><span>{{ i18n.t().labels.cap }}</span></i>
+          <i class="sheet__base"><span>{{ i18n.t().labels.base }}</span></i>
           <i class="sheet__dim"><span>A · D · D</span></i>
           <span data-n="ahmet">A</span><span data-n="deniz">D</span><span data-n="dündar">D</span>
           <i class="sheet__rule"><i class="mark__node"></i></i>

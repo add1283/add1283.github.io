@@ -52,7 +52,7 @@ import { I18n } from '../core/i18n';
                       alt=""
                     />
                     </button>
-                    <figcaption class="label">fig. {{ i + 2 }}.{{ pi + 1 }}</figcaption>
+                    <figcaption class="label">{{ i18n.t().labels.fig }} {{ i + 2 }}.{{ pi + 1 }}</figcaption>
                   </figure>
                 }
               </div>
