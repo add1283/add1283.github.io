@@ -1,4 +1,4 @@
-import { smoothEnergy, energy } from "./audio";
+import { energy, hatPulse, smoothEnergy } from "./audio";
 import { ease, lerp } from "./ease";
 import { B, beat, beatPulse, prog } from "./timing";
 
@@ -26,6 +26,8 @@ export interface State {
   particleGain: number;
   particleSize: number;
   pulse: number;
+  /** Hi-hat flare, used where the bass drops out. */
+  hat: number;
   warp: number;
   /** Chrome logo. */
   logoPos: V3;
@@ -313,8 +315,9 @@ export const getState = (frame: number, fps: number): State => {
           ? 0.35 + 0.35 * bass
           : 0.6,
     particleGain: t >= beat(B.words[0]) && t < beat(B.logo) ? 0.35 : 1,
-    particleSize: 1 + 0.55 * hit * (inGroove ? bass : 0.4) + (t >= beat(B.peak) ? 0.6 * (1 - peakBurst) : 0),
+    particleSize: 1 + 0.55 * hit * (inGroove ? bass : 0.4) + 0.5 * (t >= beat(B.shift) && t < beat(B.peak) ? hatPulse(frame) : 0) + (t >= beat(B.peak) ? 0.6 * (1 - peakBurst) : 0),
     pulse: hit,
+    hat: t >= beat(B.shift) && t < beat(B.peak) ? hatPulse(frame) : 0,
     warp,
     logoPos: atStage ? stage : [0, 0, 0],
     logoSolid,
