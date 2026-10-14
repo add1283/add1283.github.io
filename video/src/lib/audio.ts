@@ -19,3 +19,13 @@ export const smoothEnergy = (band: Band, frame: number, window = 4) => {
 };
 
 export const HATS: number[] = audioMap.hats;
+
+/** A short flare after each detected hi-hat, decaying over a few frames. */
+export const hatPulse = (frame: number, decay = 4) => {
+  let last = -1;
+  for (const h of HATS) {
+    if (h <= frame) last = h;
+    else break;
+  }
+  return last < 0 ? 0 : Math.exp(-(frame - last) / decay);
+};

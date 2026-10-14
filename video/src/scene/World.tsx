@@ -244,15 +244,15 @@ const NeuralLines: React.FC<{ state: State }> = ({ state }) => {
       transparent: true,
       depthWrite: false,
       blending: AdditiveBlending,
-      uniforms: { uTime: { value: 0 }, uOpacity: { value: 0 }, uA: { value: new Color(C.cobalt) }, uB: { value: new Color(C.turquoise) } },
+      uniforms: { uTime: { value: 0 }, uOpacity: { value: 0 }, uHat: { value: 0 }, uA: { value: new Color(C.cobalt) }, uB: { value: new Color(C.turquoise) } },
       vertexShader: `attribute float aT; attribute float aSeed; varying float vT; varying float vSeed;
         void main(){ vT = aT; vSeed = aSeed; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
-      fragmentShader: `uniform float uTime; uniform float uOpacity; uniform vec3 uA; uniform vec3 uB; varying float vT; varying float vSeed;
+      fragmentShader: `uniform float uTime; uniform float uOpacity; uniform float uHat; uniform vec3 uA; uniform vec3 uB; varying float vT; varying float vSeed;
         void main(){
           float head = fract(uTime * 0.9 + vSeed);
           float pulse = smoothstep(0.12, 0.0, abs(vT - head));
           vec3 col = mix(uA, uB, pulse);
-          gl_FragColor = vec4(col * (0.25 + 1.6 * pulse), (0.18 + 0.9 * pulse) * uOpacity);
+          gl_FragColor = vec4(col * (0.25 + 1.6 * pulse + 0.9 * uHat), (0.18 + 0.9 * pulse + 0.4 * uHat) * uOpacity);
         }`,
     });
     return { geometry: g, material: m };
@@ -261,6 +261,7 @@ const NeuralLines: React.FC<{ state: State }> = ({ state }) => {
   useLayoutEffect(() => {
     material.uniforms.uTime.value = state.t;
     material.uniforms.uOpacity.value = state.neuralLines;
+    material.uniforms.uHat.value = state.hat;
   }, [material, state]);
 
   return <lineSegments geometry={geometry} material={material} position={[0, 0, STAGE_Z]} visible={state.neuralLines > 0.001} />;
