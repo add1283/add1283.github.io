@@ -1,5 +1,6 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
+import { SERIF } from "./ActsOpening";
 import { F } from "./fonts";
 import { Callout, Label, PHONE_RATIO, PROJECT_BEATS, Phone, Statement, beat, lerp, ramp, useT } from "./lib";
 import { P, PROJECTS } from "./tokens";
@@ -17,12 +18,15 @@ interface Shot {
   focus?: [number, number];
   lines?: string[];
   extra?: "payments";
+  /** What the screen asks of a person, in the psychology voice. */
+  mind: string;
 }
 
 const SHOTS: Shot[] = [
   {
     layout: "center",
     title: "Anasayfa - Atatürkçü Düşünce Derneği",
+    mind: "A face and a name are read first.",
     notes: [
       { fx: 0.3, fy: 0.13, label: "masthead" },
       { fx: 0.6, fy: 0.38, label: "featured story" },
@@ -34,6 +38,7 @@ const SHOTS: Shot[] = [
   {
     layout: "right",
     title: "Heroty",
+    mind: "One promise, understood in a second.",
     notes: [
       { fx: 0.5, fy: 0.27, label: "product promise" },
       { fx: 0.5, fy: 0.66, label: "app preview" },
@@ -42,6 +47,7 @@ const SHOTS: Shot[] = [
   {
     layout: "left",
     title: "12punto Haber ve İçerik Platformu",
+    mind: "Built to be scanned, not studied.",
     notes: [
       { fx: 0.5, fy: 0.105, label: "markets ticker" },
       { fx: 0.55, fy: 0.4, label: "lead story" },
@@ -52,6 +58,7 @@ const SHOTS: Shot[] = [
   {
     layout: "right",
     title: "Disnet Technology",
+    mind: "The headline arrives before the detail.",
     notes: [
       { fx: 0.5, fy: 0.27, label: "headline" },
       { fx: 0.5, fy: 0.52, label: "illustration" },
@@ -62,6 +69,7 @@ const SHOTS: Shot[] = [
   {
     layout: "center",
     title: "Avrupadan Bülten",
+    mind: "Familiar cues: language, date, country.",
     notes: [
       { fx: 0.5, fy: 0.24, label: "newsletter" },
       { fx: 0.35, fy: 0.37, label: "date bar" },
@@ -72,6 +80,7 @@ const SHOTS: Shot[] = [
   {
     layout: "right",
     title: "Ana Sayfa - KPAY",
+    mind: "Trust first, then the next step.",
     notes: [
       { fx: 0.5, fy: 0.2, label: "payment platform" },
     ],
@@ -80,6 +89,7 @@ const SHOTS: Shot[] = [
   {
     layout: "left",
     title: "VBT Software: We Make Ideas Digital",
+    mind: "One idea per slide.",
     notes: [
       { fx: 0.5, fy: 0.4, label: "solutions carousel" },
       { fx: 0.4, fy: 0.6, label: "feature list" },
@@ -89,6 +99,7 @@ const SHOTS: Shot[] = [
   {
     layout: "center",
     title: "Anasayfa - SER&BERKER BAĞIMSIZ DENETİM A.Ş.",
+    mind: "Calm, credible and clear.",
     notes: [
       { fx: 0.5, fy: 0.24, label: "hero statement" },
       { fx: 0.3, fy: 0.6, label: "services" },
@@ -98,6 +109,7 @@ const SHOTS: Shot[] = [
   {
     layout: "right",
     title: "Flerpi",
+    mind: "Structure lowers the reading load.",
     notes: [
       { fx: 0.3, fy: 0.38, label: "general structure" },
       { fx: 0.08, fy: 0.62, label: "module list" },
@@ -109,11 +121,12 @@ const SHOTS: Shot[] = [
 const frameFor = (l: Layout) => {
   switch (l) {
     case "center":
-      return { x: 340, y: 345, w: 400 };
+      return { x: 350, y: 345, w: 380 };
     case "left":
-      return { x: 80, y: 345, w: 450 };
+      return { x: 80, y: 345, w: 440 };
+    // Kept clear of the Reels action buttons on the right edge.
     case "right":
-      return { x: 550, y: 345, w: 450 };
+      return { x: 530, y: 345, w: 430 };
   }
 };
 
@@ -147,10 +160,10 @@ export const ActPortfolio: React.FC = () => {
 
   // Captions sit beside the phone (left/right) or under it (center/macro).
   const side = shot.layout === "left" ? "right" : shot.layout === "right" ? "left" : "below";
-  const textX = side === "right" ? 590 : 80;
-  const textW = side === "below" ? 920 : 420;
-  const nameY = side === "below" ? here.y + here.w * PHONE_RATIO + 34 : 1090;
-  const nameSize = side === "below" ? (shot.lines ? 76 : 100) : shot.lines ? 82 : 96;
+  const textX = side === "right" ? 570 : 80;
+  const textW = side === "below" ? 880 : 400;
+  const nameY = side === "below" ? here.y + here.w * PHONE_RATIO + 30 : 1060;
+  const nameSize = side === "below" ? (shot.lines ? 72 : 96) : shot.lines ? 78 : 92;
   const lines = shot.lines ?? [proj.name];
 
   return (
@@ -182,8 +195,24 @@ export const ActPortfolio: React.FC = () => {
           if (py < f.y + 20 || py > f.y + h - 20) return null;
           const toX = side === "left" ? f.x - 30 : side === "right" ? f.x + f.w + 30 : n.fx < 0.5 ? f.x - 30 : f.x + f.w + 30;
           const p = ramp(local, 0.4 + k * 0.22, 0.95 + k * 0.22, "linear") * (1 - leave);
-          return <Callout key={k} x={px} y={py} toX={toX} label={n.label} p={p} />;
+          return <Callout key={k} x={px} y={py} toX={toX} label={n.label} p={p} index={k + 1} />;
         })}
+      {/* The reading path between the numbered rings. */}
+      {move > 0.98 && shot.notes.length > 1 && (
+        <svg style={{ position: "absolute", left: 0, top: 0, overflow: "visible" }} width={1080} height={1920}>
+          <polyline
+            points={shot.notes.map((n) => `${f.x + n.fx * f.w},${f.y + (n.fy - scroll) * h}`).join(" ")}
+            fill="none"
+            stroke={P.offwhite}
+            strokeOpacity={0.7}
+            strokeWidth={2}
+            strokeDasharray="6 8"
+            pathLength={100}
+            strokeDashoffset={0}
+            style={{ clipPath: `inset(0 0 ${100 - ramp(local, 0.5, 1.5, "power2.inOut") * 100}% 0)`, opacity: 1 - leave }}
+          />
+        </svg>
+      )}
 
       {/* Name, function, stack, and the page's real <title>. */}
       <div style={{ position: "absolute", left: textX, top: nameY, width: textW }}>
@@ -205,6 +234,28 @@ export const ActPortfolio: React.FC = () => {
         <span style={{ color: P.steel }}>{shot.title}</span>
         {"</title>"}
       </div>
+
+      {/* The psychology voice: what the screen asks of the person reading it. */}
+      <div
+        style={{
+          position: "absolute",
+          left: textX,
+          top: side === "below" ? 1478 : 1330,
+          width: textW,
+          font: SERIF(side === "below" ? 38 : 42),
+          lineHeight: 1.15,
+          color: P.offwhite,
+          clipPath: `inset(0 ${100 - ramp(local, 0.9, 1.6, "power2.out") * 100}% 0 0)`,
+          opacity: 1 - leave,
+        }}
+      >
+        {shot.mind}
+      </div>
+      {i === 0 && (
+        <Label x={80} y={322} p={ramp(local, 0.8, 1.5, "linear") * (1 - leave)} size={20} color={P.steelDim}>
+          numbered rings: intended reading order
+        </Label>
+      )}
 
       {/* Kpay: the three ways its platform takes a payment, as listed on its site. */}
       {shot.extra === "payments" && (

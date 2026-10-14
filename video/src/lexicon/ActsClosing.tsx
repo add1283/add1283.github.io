@@ -1,5 +1,6 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
+import { SERIF } from "./ActsOpening";
 import { F } from "./fonts";
 import { ACT, HLine, Label, Statement, Tick, VLine, beat, lerp, ramp, useT } from "./lib";
 import { P } from "./tokens";
@@ -79,62 +80,106 @@ export const ActSystems: React.FC = () => {
         }),
       )}
 
-      <HLine x={80} y={900} w={920} p={ramp(t, beat(105), beat(106.5), "expo.out")} color={P.steelDim} />
-      {/* The YÖK certificate, filed under intelligence. */}
-      <div style={{ position: "absolute", left: 80, top: 950, width: 920, clipPath: `inset(0 0 ${100 - ramp(t, beat(105.5), beat(107), "expo.out") * 100}% 0)` }}>
-        <div style={{ font: `400 22px ${F.mono}`, color: P.blue }}>certificate</div>
-        <div style={{ font: `500 40px/1.2 ${F.plex}`, color: P.offwhite, marginTop: 12 }}>Artificial Intelligence and Machine Learning</div>
-        <div style={{ font: `400 24px/1.4 ${F.mono}`, color: P.steel, marginTop: 12 }}>Data Analysis School, Council of Higher Education (YÖK), 2026</div>
+      {/* Under all three: people. The psychology voice carries the foundation. */}
+      {colX.map((x, c) => (
+        <VLine key={c} x={x} y={860} h={70} p={ramp(t, beat(104 + c * 0.3), beat(105 + c * 0.3), "expo.out")} color={P.steel} from="bottom" />
+      ))}
+      <HLine x={80} y={930} w={620} p={ramp(t, beat(104.5), beat(106), "expo.out")} color={P.steel} />
+      <div style={{ position: "absolute", left: 80, top: 962, overflow: "hidden" }}>
+        <div style={{ font: SERIF(64), color: P.offwhite, translate: `0 ${(1 - ramp(t, beat(105), beat(106.5), "expo.out")) * 110}%`, paddingBottom: 12 }}>
+          People: perception, attention, behaviour.
+        </div>
       </div>
+      <Label x={80} y={1060} p={ramp(t, beat(106), beat(107.5), "linear")}>the foundation under every column</Label>
+      <Label x={80} y={1150} p={ramp(t, beat(106.5), beat(108), "linear")} color={P.offwhite}>
+        Turkish, native / English, professional working proficiency
+      </Label>
     </AbsoluteFill>
   );
 };
 
-/* ── ACT VI · THE HUMAN DIMENSION ──────────────────────────── */
+/* ── ACT VI · THE PATH: where the two disciplines meet ───── */
+
+type Kind = "mind" | "both" | "code";
+const PATH: { years: string; what: string; where: string; kind: Kind }[] = [
+  { years: "2018–2022", what: "Psychology, BSc", where: "Çukurova University", kind: "mind" },
+  { years: "2019–2021", what: "Web, graphic and motion design", where: "1907 ÜNİFEB, Çukurova University", kind: "both" },
+  { years: "2021", what: "Digital Marketing", where: "Boğaziçi University Business and Economics Club", kind: "both" },
+  { years: "2021–", what: "Web designer and frontend developer", where: "VBT Software", kind: "code" },
+  { years: "2022–2024", what: "Computer Programming, associate degree", where: "Anadolu University", kind: "code" },
+  { years: "2024", what: "Intellectual and Industrial Property Rights", where: "Kobimen Akademi", kind: "both" },
+  { years: "2026", what: "Circular Economy Trainer Programme", where: "Habitat Association", kind: "both" },
+  { years: "2026", what: "AI and Machine Learning", where: "Data Analysis School, YÖK", kind: "code" },
+];
 
 export const ActHuman: React.FC = () => {
   const t = useT();
   const s = beat(ACT.human);
-  const e = beat(ACT.signature);
-  if (t < s - 0.1 || t > e + 0.3) return null;
+  const release = beat(127);
+  if (t < s - 0.1 || t > release + 0.1) return null;
 
-  // A dense architectural grid draws, then thins to a single balanced interface.
-  const dense = ramp(t, s, s + 0.9, "power2.out") * (1 - ramp(t, beat(111), beat(115), "power2.inOut"));
-  const card = ramp(t, beat(112), beat(115), "power3.inOut");
-  const out = ramp(t, e - 0.4, e + 0.1, "power3.in");
-  const first = ramp(t, beat(112), beat(113.5), "linear");
-  const firstOut = ramp(t, beat(118), beat(118.8), "linear");
-  const second = ramp(t, beat(118.5), beat(120), "linear");
-
-  const cx = 240;
-  const cy = 860;
-  const cw = 600;
-  const ch = 470;
+  const pathOut = ramp(t, beat(118.6), beat(119.6), "power3.in");
+  const first = ramp(t, beat(119.5), beat(121), "expo.out");
+  const second = ramp(t, beat(120.8), beat(122.3), "expo.out");
+  // The two sentences hold into the first beats of Act VII.
+  const out = ramp(t, release - 0.4, release, "power3.in");
+  const top = 360;
+  const step = 112;
+  const axis = ramp(t, s, s + 2.2, "power1.inOut");
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{ opacity: dense }}>
-        {Array.from({ length: 30 }).map((_, i) => (
-          <HLine key={`h${i}`} x={80} y={640 + i * 30} w={920} p={ramp(t, s + i * 0.012, s + 0.5 + i * 0.012, "expo.out")} color="rgba(236,233,226,0.22)" />
-        ))}
-        {Array.from({ length: 24 }).map((_, i) => (
-          <VLine key={`v${i}`} x={80 + i * 40} y={640} h={870} p={ramp(t, s + 0.1 + i * 0.012, s + 0.6 + i * 0.012, "expo.out")} color="rgba(236,233,226,0.22)" />
-        ))}
+      <AbsoluteFill style={{ opacity: 1 - pathOut }}>
+        <Label x={80} y={250} p={ramp(t, s, s + 0.7, "linear")}>path / where the two meet</Label>
+        <Label right={80} y={250} p={ramp(t, s + 0.2, s + 0.9, "linear")} align="right" color={P.steel}>
+          <span style={{ color: P.offwhite }}>mind</span> → <span style={{ color: P.blue }}>code</span>
+        </Label>
+        {/* The axis turns from off-white (psychology) to blue (software) as it goes. */}
+        <div
+          style={{
+            position: "absolute",
+            left: 276,
+            top: top - 10,
+            width: 2,
+            height: PATH.length * step,
+            background: `linear-gradient(${P.offwhite}, ${P.offwhite} 18%, ${P.blue} 55%, ${P.blue})`,
+            transformOrigin: "50% 0",
+            scale: `1 ${axis}`,
+          }}
+        />
+        {PATH.map((row, k) => {
+          const at = s + 0.15 + k * 0.25;
+          const p = ramp(t, at, at + 0.55, "expo.out");
+          const dot = row.kind === "mind" ? P.offwhite : row.kind === "code" ? P.blue : P.steel;
+          return (
+            <div key={k} style={{ position: "absolute", left: 0, top: top + k * step, width: 1080, opacity: p, translate: `${(1 - p) * 30}px 0` }}>
+              <div style={{ position: "absolute", left: 80, top: 4, width: 170, font: `400 22px ${F.mono}`, color: P.steel }}>{row.years}</div>
+              <div style={{ position: "absolute", left: 268, top: 8, width: 18, height: 18, borderRadius: 9, background: dot, boxShadow: row.kind === "code" ? `0 0 10px ${P.blue}` : undefined }} />
+              <div
+                style={{
+                  position: "absolute",
+                  left: 316,
+                  top: 0,
+                  width: 640,
+                  font: row.kind === "mind" ? SERIF(40) : `500 30px/1.15 ${F.plex}`,
+                  color: P.offwhite,
+                }}
+              >
+                {row.what}
+              </div>
+              <div style={{ position: "absolute", left: 316, top: 46, width: 640, font: `400 21px ${F.mono}`, color: P.steel }}>{row.where}</div>
+            </div>
+          );
+        })}
       </AbsoluteFill>
 
-      <AbsoluteFill style={{ opacity: 1 - out }}>
-        {/* The simple interface: a title, two lines of text, one action. */}
-        <div style={{ position: "absolute", left: cx, top: cy, width: cw, height: ch, border: `1px solid ${P.steel}`, clipPath: `inset(0 ${100 - card * 100}% 0 0)` }}>
-          <div style={{ position: "absolute", left: 48, top: 56, width: 330, height: 26, background: P.offwhite, scale: `${ramp(t, beat(114), beat(115.5), "expo.out")} 1`, transformOrigin: "0 50%" }} />
-          <div style={{ position: "absolute", left: 48, top: 130, width: 480, height: 12, background: P.steel, scale: `${ramp(t, beat(114.5), beat(116), "expo.out")} 1`, transformOrigin: "0 50%" }} />
-          <div style={{ position: "absolute", left: 48, top: 162, width: 400, height: 12, background: P.steel, scale: `${ramp(t, beat(115), beat(116.5), "expo.out")} 1`, transformOrigin: "0 50%" }} />
-          <div style={{ position: "absolute", left: 48, top: 340, width: 210, height: 64, background: P.blue, opacity: ramp(t, beat(116), beat(117.5), "power2.out") }} />
-        </div>
-        <Label x={cx} y={cy + ch + 40} p={ramp(t, beat(115), beat(117), "linear")}>BSc Psychology, Çukurova University</Label>
-        <Label x={cx} y={cy + ch + 78} p={ramp(t, beat(116), beat(118), "linear")}>Computer Programming, Anadolu University</Label>
-      </AbsoluteFill>
-
-      <Statement lines={["UNDERSTAND THE", "PROBLEM."]} x={76} y={360} size={104} p={first} out={firstOut} tracking="-0.03em" />
-      <Statement lines={["BUILD THE RIGHT", "SOLUTION."]} x={76} y={360} size={104} p={second} out={out} tracking="-0.03em" />
+      {/* Two sentences, two voices. */}
+      <div style={{ position: "absolute", left: 80, top: 760, overflow: "hidden", opacity: 1 - out }}>
+        <div style={{ font: SERIF(110), color: P.offwhite, letterSpacing: "-0.01em", translate: `0 ${(1 - first) * 110}%`, paddingBottom: 16 }}>Understand</div>
+      </div>
+      <div style={{ position: "absolute", left: 80, top: 880, overflow: "hidden", opacity: 1 - out }}>
+        <div style={{ font: SERIF(110), color: P.offwhite, letterSpacing: "-0.01em", translate: `0 ${(1 - first) * 110}%`, paddingBottom: 16 }}>the problem.</div>
+      </div>
+      <Statement lines={["BUILD THE RIGHT", "SOLUTION."]} x={76} y={1040} size={100} p={second} out={out} tracking="-0.035em" />
     </AbsoluteFill>
   );
 };
@@ -149,8 +194,9 @@ export const ActSignature: React.FC = () => {
   const peak = beat(ACT.peak);
   if (t < s - 0.1) return null;
 
-  const reveal = ramp(t, s + 0.15, s + 1.4, "linear");
-  const initialsBlue = ramp(t, beat(129), beat(130), "power2.out");
+  // The name enters once the Act VI sentences have cleared.
+  const reveal = ramp(t, beat(127), beat(127) + 0.9, "linear");
+  const initialsBlue = ramp(t, beat(129.5), beat(130.3), "power2.out");
   const restOut = ramp(t, peak, peak + 0.4, "power3.in");
   const monogram = ramp(t, peak + 0.35, peak + 1.3, "power3.inOut");
   const finalBlock = (k: number) => ramp(t, peak + 0.9 + k * 0.22, peak + 1.8 + k * 0.22, "linear");
@@ -211,9 +257,16 @@ export const ActSignature: React.FC = () => {
 
       {/* Final lockup. */}
       <Statement lines={["Ahmet Deniz Dündar"]} x={80} y={830} size={76} p={finalBlock(0)} tracking="-0.02em" />
-      <Statement lines={["SOFTWARE · WEB · SEO · AI"]} x={80} y={930} size={30} weight={500} tracking="0.1em" color={P.steel} p={finalBlock(1)} />
-      <Statement lines={["ENGINEER THE", "EXPERIENCE."]} x={76} y={1040} size={112} p={finalBlock(2)} tracking="-0.035em" />
-      <Statement lines={["ahmetdenizdundar.com.tr"]} x={80} y={1330} size={34} weight={500} tracking="0" color={P.blue} p={finalBlock(3)} />
+      <div style={{ position: "absolute", left: 80, top: 922, overflow: "hidden" }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 22, translate: `0 ${(1 - ramp(finalBlock(1), 0, 0.8, "expo.out")) * 110}%`, paddingBottom: 8 }}>
+          <span style={{ font: SERIF(80), color: P.offwhite }}>Psychology</span>
+          <span style={{ font: SERIF(80), color: P.blue }}>×</span>
+          <span style={{ font: `600 66px ${F.plex}`, color: P.offwhite, letterSpacing: "-0.03em" }}>Software</span>
+        </div>
+      </div>
+      <Label x={80} y={1030} p={finalBlock(1.5)} color={P.steel} size={24}>web / seo / ai / performance</Label>
+      <Statement lines={["ENGINEER THE", "EXPERIENCE."]} x={76} y={1100} size={112} p={finalBlock(2)} tracking="-0.035em" />
+      <Statement lines={["ahmetdenizdundar.com.tr"]} x={80} y={1384} size={34} weight={500} tracking="0" color={P.blue} p={finalBlock(3)} />
     </AbsoluteFill>
   );
 };

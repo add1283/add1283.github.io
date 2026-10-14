@@ -141,27 +141,35 @@ export const Dim: React.FC<{ x1: number; x2: number; y: number; p: number; label
 );
 
 /** A callout: a ring on the subject, a leader line, and a label. */
-export const Callout: React.FC<{ x: number; y: number; toX: number; label: string; p: number; side?: "left" | "right" }> = ({ x, y, toX, label, p, side }) => {
+export const Callout: React.FC<{ x: number; y: number; toX: number; label: string; p: number; side?: "left" | "right"; index?: number }> = ({ x, y, toX, label, p, side, index }) => {
   const right = side ? side === "right" : toX > x;
   const ring = ramp(p, 0, 0.3, "back.out(2)");
   const line = ramp(p, 0.15, 0.7, "expo.out");
   const text = ramp(p, 0.45, 1, "expo.out");
   return (
     <>
+      {/* Numbered rings read as the intended order of attention. */}
       <div
         style={{
           position: "absolute",
-          left: x - 9,
-          top: y - 9,
-          width: 18,
-          height: 18,
-          borderRadius: 9,
+          left: x - 17,
+          top: y - 17,
+          width: 34,
+          height: 34,
+          borderRadius: 17,
           border: `2px solid ${P.blue}`,
+          background: index ? P.graphite : "transparent",
           scale: String(ring),
           boxShadow: `0 0 12px ${P.blue}`,
+          display: "grid",
+          placeItems: "center",
+          font: `500 18px ${F.mono}`,
+          color: P.offwhite,
         }}
-      />
-      <HLine x={Math.min(x, toX)} y={y} w={Math.abs(toX - x)} p={line} color={P.blue} from={right ? "left" : "right"} />
+      >
+        {index}
+      </div>
+      <HLine x={right ? x + 17 : toX} y={y} w={Math.max(0, Math.abs(toX - x) - 17)} p={line} color={P.blue} from={right ? "left" : "right"} />
       <Label y={y - 16} p={text} color={P.offwhite} {...(right ? { x: toX + 14 } : { right: 1080 - toX + 14, align: "right" as const })}>
         {label}
       </Label>
