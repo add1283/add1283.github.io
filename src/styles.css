@@ -1275,19 +1275,6 @@ textarea {
   color: var(--ink);
 }
 
-.quote {
-  display: grid;
-  gap: 0.5rem;
-  max-width: 34rem;
-  padding-left: 1.25rem;
-  border-left: 2px solid var(--blue);
-}
-
-.quote blockquote {
-  font-size: clamp(1.4rem, 1.15rem + 0.8vw, 1.9rem);
-  line-height: 1.2;
-}
-
 .about__path {
   display: grid;
   align-content: start;
@@ -1764,26 +1751,159 @@ textarea {
   }
 }
 
-/* ── Film ──────────────────────────────────────────────── */
-.film {
+.photo__open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.photo__open:focus-visible img {
+  outline-color: var(--blue);
+}
+
+/* ── Lightbox ──────────────────────────────────────────── */
+.lightbox {
+  width: min(96vw, 1280px);
+  max-height: 96vh;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  color: var(--ink);
+  overflow: hidden;
+}
+
+.lightbox::backdrop {
+  background: rgba(10, 11, 14, 0.86);
+  backdrop-filter: blur(4px);
+}
+
+.lightbox__figure {
   display: grid;
-  gap: 0.75rem;
-  margin-top: 1rem;
 }
 
-.film__video {
-  width: min(100%, 260px);
-  height: auto;
-  aspect-ratio: 9 / 16;
-  background: #111317;
-  border-radius: 22px;
-  outline: 1px solid var(--line-strong);
-  outline-offset: 8px;
+.lightbox__figure img {
+  width: 100%;
+  max-height: calc(96vh - 9rem);
+  object-fit: contain;
+  background: #0a0b0e;
 }
 
-.film__caption {
-  font-size: 1.15rem;
-  color: var(--muted);
+.lightbox__figure figcaption {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 1rem 1.25rem 0;
+  font-size: 0.95rem;
+}
+
+.lightbox__bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox[open] {
+    animation: rise 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* ── The principle, signed ─────────────────────────────── */
+.maxim {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 2rem;
+  margin-top: clamp(96px, 12vw, 160px);
+  padding: clamp(3.5rem, 7vw, 6rem) 0;
+  border-block: 1px solid var(--line-strong);
+  text-align: center;
+}
+
+/* Registration ticks on two corners, as on the film's sheets. */
+.maxim::before,
+.maxim::after {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background:
+    linear-gradient(var(--muted), var(--muted)) center / 1px 100% no-repeat,
+    linear-gradient(var(--muted), var(--muted)) center / 100% 1px no-repeat;
+  opacity: 0.6;
+}
+
+.maxim::before {
+  left: -14px;
+  top: -14px;
+}
+
+.maxim::after {
+  right: -14px;
+  bottom: -14px;
+}
+
+.maxim__text {
+  max-width: 24ch;
+  font-size: clamp(2rem, 1.1rem + 3.4vw, 4.4rem);
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.maxim__text::before,
+.maxim__text::after {
+  color: var(--blue);
+}
+
+.maxim__text::before {
+  content: '“';
+}
+
+.maxim__text::after {
+  content: '”';
+}
+
+.maxim__by {
+  display: grid;
+  justify-items: center;
+  gap: 0.9rem;
+}
+
+.maxim__by::before {
+  content: '';
+  width: 64px;
+  height: 2px;
+  margin-bottom: 0.5rem;
+  background: var(--blue);
+  box-shadow: 0 0 12px var(--blue-glow);
+}
+
+/* The signature takes the ink colour of the theme. */
+.maxim__signature {
+  display: block;
+  width: clamp(180px, 20vw, 280px);
+  aspect-ratio: 572 / 205;
+  background: var(--ink);
+  -webkit-mask: url(/img/ataturk-signature.svg) center / contain no-repeat;
+  mask: url(/img/ataturk-signature.svg) center / contain no-repeat;
+}
+
+/* A line in his own words, inside an organisation card. */
+.org__quote {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0.6rem 0 0.2rem;
+  padding-left: 1.1rem;
+  border-left: 2px solid var(--blue);
+}
+
+.org__quote blockquote {
+  font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.8rem);
+  line-height: 1.15;
 }
 
 /* ── Section rail (wide screens) ───────────────────────── */
@@ -1921,6 +2041,18 @@ textarea {
       animation-range: entry 5% entry 60%;
     }
 
+    .maxim__signature {
+      animation: sign linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 45%;
+    }
+
+    .maxim__text {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 60%;
+    }
+
     .foot .mark__rule {
       transform-origin: 0 50%;
       animation: draw linear both;
@@ -1933,6 +2065,15 @@ textarea {
 @keyframes rail {
   to {
     background-size: 100% 2px;
+  }
+}
+
+@keyframes sign {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
   }
 }
 

@@ -75,7 +75,7 @@ export class I18n {
         recognizedBy: { '@type': 'Organization', name: c.issuer },
         ...(c.url ? { url: c.url } : {}),
       })),
-      knowsAbout: ['Frontend development', 'Search engine optimization', 'Angular', 'Three.js', 'Web performance', 'Data analysis', 'Machine learning'],
+      knowsAbout: ['Frontend development', 'ASP.NET MVC', 'Angular', 'Search engine optimization', 'Web performance', 'Claude', 'Prompt engineering', 'Data analysis', 'Machine learning', 'Psychology', 'Civil society'],
       sameAs: SOCIAL.map((s) => s.url),
       subjectOf: PROJECTS.map((p) => ({ '@type': 'WebSite', name: p.name, url: p.url })),
     };

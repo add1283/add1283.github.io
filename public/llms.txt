@@ -11,7 +11,7 @@ Contact: contact@ahmetdenizdundar.com.tr
 - Software: C#, .NET, ASP.NET MVC, SQL, TypeScript, Angular, HTML, CSS/SASS, Tailwind CSS, GSAP, Three.js
 - Search engine optimisation: technical SEO, page speed, structured data, content architecture
 - CMS and back-end work on client sites: WordPress, PHP, ASP.NET, Bootstrap
-- AI-assisted development and data: Cursor, GitHub Copilot, data analysis, machine learning basics
+- AI-assisted development and data: Claude and Claude Code, Cursor, GitHub Copilot, prompt engineering, data analysis, machine learning
 
 ## Live work
 
@@ -28,7 +28,7 @@ Contact: contact@ahmetdenizdundar.com.tr
 ## Civil society and writing
 
 - Adana City Council Youth Council (2024–): board member; co-chair of the Twin Transition and Technology working group; youth workshops and events with the Adana Metropolitan Municipality Student Communication Centre
-- 1907 ÜNİFEB, Çukurova University (2019–2022): volunteer board member (events and projects, web, board, university lead); opened the Koray Şener Nursery Class with Fenerbahçe's Adana association in May 2022
+- 1907 ÜNİFEB, Çukurova University (2019–2022): volunteer board member (events and projects, web, board, university lead); opened the Koray Şener Nursery Class in Sarıçam, Adana, with the Adana Fenerbahçe association on 16 May 2022 (#ÜnifebCares) and gave the opening speech
 - Üçüncü Yol (2018–): writer and IT director; essays on the Republic, the Enlightenment and folk literature (https://ucuncuyol1919.com/author/ahmetdenizdundaruy1919/)
 - Yeni Yücel (2024): essay on artificial intelligence and people, issue 2
 

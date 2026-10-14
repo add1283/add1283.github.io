@@ -32,16 +32,7 @@ import { openCv } from './cv';
               <p>{{ p }}</p>
             }
           </div>
-          <figure class="quote">
-            <blockquote class="serif">{{ t.quote }}</blockquote>
-            <figcaption class="label">{{ t.quoteBy }}</figcaption>
-          </figure>
           <button type="button" class="button button--quiet" (click)="cv()">{{ t.cv }}</button>
-          <figure class="film">
-            <p class="label">{{ t.film.label }}</p>
-            <video class="film__video" src="/video/add-portfolio-60.mp4" poster="/video/add-portfolio-poster.webp" width="540" height="960" controls muted playsinline preload="none"></video>
-            <figcaption class="film__caption serif">{{ t.film.caption }}</figcaption>
-          </figure>
         </div>
 
         <div class="about__path">
@@ -68,6 +59,16 @@ import { openCv } from './cv';
         <span class="method__mind serif">{{ t.method[0] }}</span>
         <span class="method__code">{{ t.method[1] }}</span>
       </p>
+
+      <!-- A principle to close on, signed in his own hand. -->
+      <figure class="maxim">
+        <p class="label maxim__label">{{ t.quoteLabel }}</p>
+        <blockquote class="maxim__text serif">{{ t.quote }}</blockquote>
+        <figcaption class="maxim__by">
+          <span class="maxim__signature" role="img" [attr.aria-label]="t.quoteBy"></span>
+          <span class="label">{{ t.quoteBy }}</span>
+        </figcaption>
+      </figure>
     </section>
   `,
 })

@@ -42,6 +42,8 @@ export interface CivicItem {
   points: string[];
   photos?: { src: string; alt: string }[];
   link?: { label: string; url: string };
+  /** A line in his own words, with where it was said. */
+  quote?: { text: string; source: string };
 }
 
 export interface Copy {
@@ -81,6 +83,7 @@ export interface Copy {
     writingTitle: string;
     writing: { title: string; where: string; date: string; url?: string }[];
     read: string;
+    lightbox: { open: string; close: string; prev: string; next: string };
   };
   systems: {
     label: string;
@@ -96,10 +99,10 @@ export interface Copy {
     pathTitle: string;
     path: PathRow[];
     method: [string, string];
-    film: { label: string; caption: string };
     paragraphs: string[];
     quote: string;
     quoteBy: string;
+    quoteLabel: string;
     experienceTitle: string;
     experience: Role[];
     educationTitle: string;
@@ -339,10 +342,11 @@ export const COPY: Record<Lang, Copy> = {
           role: 'Gönüllü yönetici',
           field: 'Sosyal sorumluluk',
           points: [
-            'Üniversite Fenerbahçeliler Birliği, bir tribün grubundan fazlası: sosyal sorumluluk projeleri yürüten bir sivil toplum kuruluşu.',
+            'Üniversite Fenerbahçeliler Birliği, bir tribün grubundan fazlası: #ÜnifebCares gibi sosyal sorumluluk projeleri yürüten bir sivil toplum kuruluşu.',
             'Organizasyon ve projeler, web, yönetim ve üniversite sorumluluğu görevlerini sırasıyla üstlendim.',
-            'Mayıs 2022’de Fenerbahçe Adana Derneği ile Koray Şener Ana Sınıfı’nın açılışını gerçekleştirdik.',
+            '16 Mayıs 2022’de, 2018’de kaybettiğimiz taraftarımız Koray Şener anısına, Adana Fenerbahçeliler Derneği’nin desteğiyle Adana Sarıçam’da Koray Şener Ana Sınıfı’nı açtık. Pandemiye rağmen süren bir çalışmanın sonunda açılış konuşmasını Üniversite Sorumlusu olarak yaptım.',
           ],
+          quote: { text: 'Biz gençler için zaman, çalışma zamanıdır.', source: 'Koray Şener Ana Sınıfı açılış konuşması, 2022' },
           photos: [
             { src: 'unifeb-scarf', alt: '1907 ÜNİFEB Çukurova üyeleri, ellerinde dernek atkısıyla' },
             { src: 'unifeb-tribune', alt: '1907 ÜNİFEB Çukurova üyeleri bir basketbol maçında tribünde' },
@@ -375,6 +379,7 @@ export const COPY: Record<Lang, Copy> = {
         { title: 'İki Gözünde İki Zindan: Âşık Veysel', where: 'Üçüncü Yol', date: '2020-03', url: 'https://ucuncuyol1919.com/2020/03/21/iki-gozunde-iki-zindan-asik-veysel/' },
       ],
       read: 'Oku',
+      lightbox: { open: 'Fotoğrafı büyüt', close: 'Kapat', prev: 'Önceki fotoğraf', next: 'Sonraki fotoğraf' },
     },
     systems: {
       label: 'yetkinlikler / işin nasıl bağlandığı',
@@ -383,7 +388,7 @@ export const COPY: Record<Lang, Copy> = {
         { head: 'Mühendislik', items: ['C# / .NET', 'ASP.NET MVC / Core', 'SQL', 'PHP / WordPress', 'Git / GitHub'] },
         { head: 'Arayüz', items: ['TypeScript / Angular', 'HTML / SCSS', 'Tailwind / Bootstrap', 'GSAP / Three.js', 'Responsive, erişilebilir arayüz'] },
         { head: 'Görünürlük', items: ['Teknik SEO', 'Core Web Vitals', 'Yapılandırılmış veri', 'Search Console / GA4', 'SEM / Google Ads', 'İçerik mimarisi'] },
-        { head: 'Yapay zekâ', items: ['Yapay zekâ ve makine öğrenmesi', 'Veri analizi', 'Prompt mühendisliği', 'Claude / GPT API’leri', 'Cursor / Copilot', 'Otomasyon'] },
+        { head: 'Yapay zekâ', items: ['Yapay zekâ ve makine öğrenmesi', 'Veri analizi', 'Prompt mühendisliği', 'Claude ve Claude Code', 'GPT API’leri', 'Cursor / Copilot', 'Otomasyon'] },
         { head: 'Toplum ve farkındalık', items: ['Sivil toplum ve gönüllülük', 'Gençlik katılımı ve çalıştay tasarımı', 'Yazarlık: edebiyat ve siyaset', 'Topluluk ve kampanya yönetimi', 'Fikri mülkiyet farkındalığı', 'Döngüsel ekonomi eğitmenliği'] },
       ],
       foundation: 'İnsan: algı, dikkat, davranış.',
@@ -412,7 +417,6 @@ export const COPY: Record<Lang, Copy> = {
         { years: '2026', what: 'Yapay Zekâ ve Makine Öğrenmesi', where: 'Veri Analizi Okulu, YÖK', kind: 'code', url: 'https://belge.verianaliziokulu.com/e1f35b42-ae82-487a-a271-90dbd0bba565' },
       ],
       method: ['Problemi anla.', 'Doğru çözümü kur.'],
-      film: { label: 'film / 60 sn', caption: 'Portfolyo filmi: aynı tasarım dili, bir dakikada.' },
       paragraphs: [
         'Adana, 2000. Psikoloji okurken 1907 ÜNİFEB’in web işlerini üstlendim; kodla orada tanıştım. O günden beri iki şeyi birlikte yapıyorum: insanları anlamak ve onlar için yapılar kurmak.',
         'Bugün işim, insanların gerçekten okuduğu ve arama motorlarının doğru anladığı sayfalar yapmak. Algı ve dikkat üzerine öğrendiklerim hiyerarşi, okunabilirlik ve hız kararlarımın arkasında duruyor.',
@@ -420,6 +424,7 @@ export const COPY: Record<Lang, Copy> = {
       ],
       quote: 'Hiçbir şeye ihtiyacımız yok, yalnız bir şeye ihtiyacımız vardır: Çalışkan olmak.',
       quoteBy: 'Mustafa Kemal Atatürk',
+      quoteLabel: 'ilke',
       experienceTitle: 'Deneyim',
       experience: [
         {
@@ -467,7 +472,7 @@ export const COPY: Record<Lang, Copy> = {
         { group: 'Her gün', items: ['HTML', 'CSS / SCSS', 'JavaScript', 'TypeScript', 'Angular', 'Tailwind CSS'] },
         { group: 'Projelerde', items: ['WordPress', 'PHP', 'ASP.NET', 'Bootstrap', 'GSAP', 'Three.js'] },
         { group: 'Arama', items: ['Teknik SEO', 'Sayfa hızı', 'Yapılandırılmış veri', 'İçerik mimarisi'] },
-        { group: 'Yapay zekâ ve veri', items: ['Cursor', 'GitHub Copilot', 'Prompt ve otomasyon', 'Veri analizi', 'Makine öğrenmesi temelleri'] },
+        { group: 'Yapay zekâ ve veri', items: ['Claude / Claude Code', 'Cursor', 'GitHub Copilot', 'Prompt ve otomasyon', 'Veri analizi', 'Makine öğrenmesi temelleri'] },
       ],
       credentialsTitle: 'Sertifikalar',
       verify: 'Belgeyi doğrula',
@@ -556,10 +561,11 @@ export const COPY: Record<Lang, Copy> = {
           role: 'Volunteer board member',
           field: 'Social responsibility',
           points: [
-            'The University Fenerbahçe Fans’ Union is more than a supporters’ group: a civil society organisation that runs social responsibility projects.',
+            'The University Fenerbahçe Fans’ Union is more than a supporters’ group: a civil society organisation that runs social responsibility projects such as #ÜnifebCares.',
             'I held the events and projects, web, board and university lead roles in turn.',
-            'In May 2022, with Fenerbahçe’s Adana association, we opened the Koray Şener Nursery Class.',
+            'On 16 May 2022, in memory of Koray Şener, a fan we lost in 2018, and with the support of the Adana Fenerbahçe association, we opened the Koray Şener Nursery Class in Sarıçam, Adana. After work that carried on through the pandemic, I gave the opening speech as university lead.',
           ],
+          quote: { text: 'For us young people, the time is the time to work.', source: 'Opening speech, Koray Şener Nursery Class, 2022' },
           photos: [
             { src: 'unifeb-scarf', alt: '1907 ÜNİFEB Çukurova members holding the union’s scarf' },
             { src: 'unifeb-tribune', alt: '1907 ÜNİFEB Çukurova members in the stands at a basketball game' },
@@ -592,6 +598,7 @@ export const COPY: Record<Lang, Copy> = {
         { title: 'İki Gözünde İki Zindan: Âşık Veysel', where: 'Üçüncü Yol (TR)', date: '2020-03', url: 'https://ucuncuyol1919.com/2020/03/21/iki-gozunde-iki-zindan-asik-veysel/' },
       ],
       read: 'Read',
+      lightbox: { open: 'Enlarge photo', close: 'Close', prev: 'Previous photo', next: 'Next photo' },
     },
     systems: {
       label: 'skills / how the work connects',
@@ -600,7 +607,7 @@ export const COPY: Record<Lang, Copy> = {
         { head: 'Engineering', items: ['C# / .NET', 'ASP.NET MVC / Core', 'SQL', 'PHP / WordPress', 'Git / GitHub'] },
         { head: 'Interface', items: ['TypeScript / Angular', 'HTML / SCSS', 'Tailwind / Bootstrap', 'GSAP / Three.js', 'Responsive, accessible UI'] },
         { head: 'Visibility', items: ['Technical SEO', 'Core Web Vitals', 'Structured data', 'Search Console / GA4', 'SEM / Google Ads', 'Content architecture'] },
-        { head: 'Intelligence', items: ['AI and machine learning', 'Data analysis', 'Prompt engineering', 'Claude / GPT APIs', 'Cursor / Copilot', 'Automation'] },
+        { head: 'Intelligence', items: ['AI and machine learning', 'Data analysis', 'Prompt engineering', 'Claude and Claude Code', 'GPT APIs', 'Cursor / Copilot', 'Automation'] },
         { head: 'Society and awareness', items: ['Civil society and volunteering', 'Youth participation and workshop design', 'Writing: literature and politics', 'Community and campaign management', 'Intellectual property awareness', 'Circular economy training'] },
       ],
       foundation: 'People: perception, attention, behaviour.',
@@ -629,7 +636,6 @@ export const COPY: Record<Lang, Copy> = {
         { years: '2026', what: 'AI and Machine Learning', where: 'Data Analysis School, YÖK', kind: 'code', url: 'https://belge.verianaliziokulu.com/e1f35b42-ae82-487a-a271-90dbd0bba565' },
       ],
       method: ['Understand the problem.', 'Build the right solution.'],
-      film: { label: 'film / 60 s', caption: 'The portfolio film: the same design language, in one minute.' },
       paragraphs: [
         'Adana, 2000. While studying psychology I took over the web work for 1907 ÜNİFEB, and that is where I met code. Since then I have done two things together: understanding people, and building structures for them.',
         'Today my job is building pages people actually read and search engines understand correctly. What I learned about perception and attention sits behind my decisions on hierarchy, legibility and speed.',
@@ -637,6 +643,7 @@ export const COPY: Record<Lang, Copy> = {
       ],
       quote: 'We need nothing but one thing: to be hardworking.',
       quoteBy: 'Mustafa Kemal Atatürk',
+      quoteLabel: 'principle',
       experienceTitle: 'Experience',
       experience: [
         {
@@ -684,7 +691,7 @@ export const COPY: Record<Lang, Copy> = {
         { group: 'Every day', items: ['HTML', 'CSS / SCSS', 'JavaScript', 'TypeScript', 'Angular', 'Tailwind CSS'] },
         { group: 'On projects', items: ['WordPress', 'PHP', 'ASP.NET', 'Bootstrap', 'GSAP', 'Three.js'] },
         { group: 'Search', items: ['Technical SEO', 'Page speed', 'Structured data', 'Content architecture'] },
-        { group: 'AI and data', items: ['Cursor', 'GitHub Copilot', 'Prompting and automation', 'Data analysis', 'Machine learning basics'] },
+        { group: 'AI and data', items: ['Claude / Claude Code', 'Cursor', 'GitHub Copilot', 'Prompting and automation', 'Data analysis', 'Machine learning basics'] },
       ],
       credentialsTitle: 'Certificates',
       verify: 'Verify',
