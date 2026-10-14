@@ -100,7 +100,7 @@ const projectShot = (i: number, start: number, end: number, rapid: boolean): Sho
       const radius = rapid ? lerp(13.5, 11.2, u) : lerp(9.2, 12.8, e);
       const y = rapid ? 0.3 : lerp(1.4, 0.35, e);
       // Look slightly below the panel so the caption sits under it.
-      return pose(orbit(c, radius, angle, y), add(c, [0, -1.1, 0]), 40, rapid ? 0 : lerp(dir * 0.06, 0, e));
+      return pose(orbit(c, radius, angle, y), add(c, [0, -0.7, 0]), 40, rapid ? 0 : lerp(dir * 0.06, 0, e));
     },
   };
 };
@@ -295,10 +295,10 @@ export const getState = (frame: number, fps: number): State => {
 
   const flash =
     Math.max(
-      Math.exp(-Math.max(0, t - beat(B.drop)) * 6) * (t >= beat(B.drop) - 0.06 ? 1 : 0) * (t < beat(B.drop) + 1 ? 1 : 0),
+      Math.exp(-Math.max(0, t - beat(B.drop)) * 9) * (t >= beat(B.drop) - 0.04 ? 1 : 0) * (t < beat(B.drop) + 1 ? 1 : 0),
       Math.exp(-Math.max(0, t - beat(B.peak)) * 9) * (t >= beat(B.peak) ? 0.55 : 0),
       wordBursts * 0.18,
-    ) + prog(t, beat(B.drop) - 0.35, beat(B.drop)) * (t < beat(B.drop) ? 0.6 : 0);
+    ) + prog(t, beat(B.drop) - 0.12, beat(B.drop)) * (t < beat(B.drop) ? 0.5 : 0);
 
   return {
     t,
@@ -337,5 +337,5 @@ export const getState = (frame: number, fps: number): State => {
 };
 
 const flashBoost = (t: number) =>
-  Math.exp(-Math.max(0, t - beat(B.peak)) * 5) * (t >= beat(B.peak) ? 0.6 : 0) +
+  Math.exp(-Math.max(0, t - beat(B.peak)) * 6) * (t >= beat(B.peak) ? 0.35 : 0) +
   Math.exp(-Math.max(0, t - beat(B.drop)) * 4) * (t >= beat(B.drop) ? 0.6 : 0);

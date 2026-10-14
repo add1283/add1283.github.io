@@ -337,7 +337,7 @@ const Shockwave: React.FC<{ state: State }> = ({ state }) => {
         fragmentShader: `uniform float uR; uniform float uA; uniform vec3 uColor; varying vec2 vUv;
           void main(){
             float d = length(vUv - 0.5) * 2.0;
-            float ring = exp(-pow((d - uR) * 18.0, 2.0)) + 0.35 * exp(-pow((d - uR * 0.82) * 9.0, 2.0));
+            float ring = exp(-pow((d - uR) * 40.0, 2.0)) + 0.25 * exp(-pow((d - uR * 0.85) * 16.0, 2.0));
             gl_FragColor = vec4(mix(vec3(1.0), uColor, 0.5) * ring * uA, ring * uA);
           }`,
       }),
@@ -346,7 +346,7 @@ const Shockwave: React.FC<{ state: State }> = ({ state }) => {
   const geo = useMemo(() => new PlaneGeometry(40, 40), []);
   useLayoutEffect(() => {
     material.uniforms.uR.value = 0.05 + state.ring * 0.95;
-    material.uniforms.uA.value = state.ring > 0 ? (1 - state.ring) * 1.4 : 0;
+    material.uniforms.uA.value = state.ring > 0 ? (1 - state.ring) * 0.9 : 0;
   }, [material, state.ring]);
   return <mesh geometry={geo} material={material} position={[0, 0, STAGE_Z - 0.5]} visible={state.ring > 0 && state.ring < 1} />;
 };
