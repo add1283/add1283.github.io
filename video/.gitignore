@@ -7,4 +7,4 @@ dist
 out
 
 # Licensed music is not redistributed
-public/music.*
+public/music*

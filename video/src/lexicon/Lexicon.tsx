@@ -42,7 +42,7 @@ export const Lexicon: React.FC<{ music?: boolean }> = ({ music = true }) => {
 
   return (
     <AbsoluteFill style={{ background: P.graphite }}>
-      {music && <Audio src={staticFile("music64.m4a")} />}
+      {music && <Audio src={staticFile("music60.m4a")} />}
       {ready && (
         <TimeContext.Provider value={frame / fps}>
           {/* Laid out on a 1080 × 1920 grid and scaled to the output size. */}

@@ -2,284 +2,129 @@ import React from "react";
 import { AbsoluteFill } from "remotion";
 import { SERIF } from "./ActsOpening";
 import { F } from "./fonts";
-import { Callout, Label, PHONE_RATIO, PROJECT_BEATS, Phone, Statement, beat, lerp, ramp, useT } from "./lib";
+import { GROUP_BEATS, Label, PHONE_RATIO, Phone, Statement, beat, lerp, ramp, useT } from "./lib";
 import { P, PROJECTS } from "./tokens";
 
-type Layout = "center" | "left" | "right";
+/** What I did on each project, condensed from the project text on the website. */
+const ROLE: Record<string, string> = {
+  add: "Custom content flows for news and archives, structured for search.",
+  heroty: "Coded the interface, with a GSAP walkthrough of the product.",
+  "12punto": "Mobile-first feeds, page speed and fast indexing of new stories.",
+  disnet: "Pages for its BMC Software ITSM and cloud automation offering.",
+  avrupadan: "Mobile-first layouts and search visibility across European markets.",
+  kpay: "An interface that explains each product plainly to merchants.",
+  vbt: "Solution pages and investor content, built with the UI team.",
+  serberker: "Services and regulatory content, organised so people find them.",
+  flerpi: "A flexible page system that introduces each module on its own.",
+};
 
-interface Shot {
-  layout: Layout;
-  /** Real <title> of the page, read from the live site at capture time. */
-  title: string;
-  /** Callouts: position on the screen (0..1) and what is visibly there. */
-  notes: { fx: number; fy: number; label: string }[];
-  scroll?: [number, number];
-  zoom?: number;
-  focus?: [number, number];
-  lines?: string[];
-  extra?: "payments";
-  /** What the screen asks of a person, in the psychology voice. */
-  mind: string;
-  /** What I did on it, condensed from the project text on the website. */
-  role: string;
-}
+/** A slow drift down the page only where the page allows it: further down, news sites carry unrelated headlines. */
+const SCROLL: Record<string, number> = { add: 0.05, "12punto": 0.02, avrupadan: 0.06, serberker: 0.08 };
 
-const SHOTS: Shot[] = [
-  {
-    layout: "center",
-    title: "Anasayfa - Atatürkçü Düşünce Derneği",
-    mind: "A face and a name are read first.",
-    role: "Custom content flows for news and archives, structured for search.",
-    notes: [
-      { fx: 0.3, fy: 0.13, label: "masthead" },
-      { fx: 0.6, fy: 0.38, label: "featured story" },
-      { fx: 0.3, fy: 0.62, label: "leadership" },
-    ],
-    scroll: [0, 0.05],
-    lines: ["Atatürkçü", "Düşünce Derneği"],
-  },
-  {
-    layout: "right",
-    title: "Heroty",
-    mind: "One promise, understood in a second.",
-    role: "Coded the interface, with a GSAP walkthrough of the product.",
-    notes: [
-      { fx: 0.5, fy: 0.27, label: "product promise" },
-      { fx: 0.5, fy: 0.66, label: "app preview" },
-    ],
-  },
-  {
-    layout: "left",
-    title: "12punto Haber ve İçerik Platformu",
-    mind: "Built to be scanned, not studied.",
-    role: "Mobile-first feeds, page speed and fast indexing of new stories.",
-    notes: [
-      { fx: 0.5, fy: 0.105, label: "markets ticker" },
-      { fx: 0.55, fy: 0.4, label: "lead story" },
-    ],
-    // A slow drift only: further down the page are unrelated news headlines.
-    scroll: [0, 0.02],
-  },
-  {
-    layout: "right",
-    title: "Disnet Technology",
-    mind: "The headline arrives before the detail.",
-    role: "Pages for its BMC Software ITSM and cloud automation offering.",
-    notes: [
-      { fx: 0.5, fy: 0.27, label: "headline" },
-      { fx: 0.5, fy: 0.52, label: "illustration" },
-    ],
-    zoom: 1.16,
-    focus: [0.5, 0.22],
-  },
-  {
-    layout: "center",
-    title: "Avrupadan Bülten",
-    mind: "Familiar cues: language, date, country.",
-    role: "Mobile-first layouts and search visibility across European markets.",
-    notes: [
-      { fx: 0.5, fy: 0.24, label: "newsletter" },
-      { fx: 0.35, fy: 0.37, label: "date bar" },
-      { fx: 0.13, fy: 0.49, label: "country tabs" },
-    ],
-    scroll: [0, 0.06],
-  },
-  {
-    layout: "right",
-    title: "Ana Sayfa - KPAY",
-    mind: "Trust first, then the next step.",
-    role: "An interface that explains each product plainly to merchants.",
-    notes: [
-      { fx: 0.5, fy: 0.2, label: "payment platform" },
-    ],
-    extra: "payments",
-  },
-  {
-    layout: "left",
-    title: "VBT Software: We Make Ideas Digital",
-    mind: "One idea per slide.",
-    role: "Solution pages and investor content, built with the UI team.",
-    notes: [
-      { fx: 0.5, fy: 0.4, label: "solutions carousel" },
-      { fx: 0.4, fy: 0.6, label: "feature list" },
-    ],
-    lines: ["VBT", "Software"],
-  },
-  {
-    layout: "center",
-    title: "Anasayfa - SER&BERKER BAĞIMSIZ DENETİM A.Ş.",
-    mind: "Calm, credible and clear.",
-    role: "Services and regulatory content, organised so people find them.",
-    notes: [
-      { fx: 0.5, fy: 0.24, label: "hero statement" },
-      { fx: 0.3, fy: 0.6, label: "services" },
-    ],
-    scroll: [0, 0.08],
-  },
-  {
-    layout: "right",
-    title: "Flerpi",
-    mind: "Structure lowers the reading load.",
-    role: "A flexible page system that introduces each module on its own.",
-    notes: [
-      { fx: 0.3, fy: 0.38, label: "general structure" },
-      { fx: 0.08, fy: 0.62, label: "module list" },
-    ],
-  },
+/** Three screens, three projects each: one shared idea per screen, in both voices. */
+const GROUPS: { title: string; mind: string; slugs: string[] }[] = [
+  { title: "News and editorial", mind: "Read in seconds: scanned, not studied.", slugs: ["add", "12punto", "avrupadan"] },
+  { title: "Products and platforms", mind: "One promise first, then the next step.", slugs: ["heroty", "kpay", "flerpi"] },
+  { title: "Corporate and enterprise", mind: "Calm, credible and clear.", slugs: ["vbt", "disnet", "serberker"] },
 ];
 
-/** Where the phone sits and how big it is, per layout. */
-const frameFor = (l: Layout) => {
-  switch (l) {
-    case "center":
-      return { x: 365, y: 365, w: 350 };
-    case "left":
-      return { x: 80, y: 345, w: 440 };
-    // Kept clear of the Reels action buttons on the right edge.
-    case "right":
-      return { x: 530, y: 345, w: 430 };
-  }
-};
+/** Phone columns: kept left of the Reels action buttons. */
+export const COLUMN = { xs: [80, 385, 690], y: 470, w: 270 };
+
+const project = (slug: string) => PROJECTS.find((p) => p.slug === slug)!;
 
 export const ActPortfolio: React.FC = () => {
   const t = useT();
-  const s = beat(PROJECT_BEATS[0]);
-  const e = beat(PROJECT_BEATS[9]);
+  const s = beat(GROUP_BEATS[0]);
+  const e = beat(GROUP_BEATS[3]);
   if (t < s - 0.05 || t > e + 0.6) return null;
 
-  let i = 0;
-  while (i < 8 && t >= beat(PROJECT_BEATS[i + 1])) i++;
-  const a = beat(PROJECT_BEATS[i]);
-  const b = beat(PROJECT_BEATS[i + 1]);
-  const shot = SHOTS[i];
-  const proj = PROJECTS[i];
+  let g = 0;
+  while (g < 2 && t >= beat(GROUP_BEATS[g + 1])) g++;
+  const a = beat(GROUP_BEATS[g]);
+  const b = beat(GROUP_BEATS[g + 1]);
+  const group = GROUPS[g];
   const local = t - a;
   const dur = b - a;
-
-  // The phone glides from the previous frame to this one, and the next screen wipes in at the cut.
-  const prev = frameFor(SHOTS[Math.max(0, i - 1)].layout);
-  const here = frameFor(shot.layout);
-  const move = i === 0 ? 1 : ramp(t, a - 0.05, a + 0.45, "power3.inOut");
-  const f = { x: lerp(prev.x, here.x, move), y: lerp(prev.y, here.y, move), w: lerp(prev.w, here.w, move) };
-  const h = f.w * PHONE_RATIO;
-  const wipeNext = i < 8 ? ramp(t, b - 0.3, b + 0.05, "power3.inOut") : 0;
+  const leave = ramp(t, b - 0.4, b - 0.05, "power3.in");
   const exitAct = ramp(t, e - 0.2, e + 0.5, "power3.inOut");
-
-  const scroll = shot.scroll ? lerp(shot.scroll[0], shot.scroll[1], ramp(local, 0.3, dur, "power1.inOut")) : 0;
-  const zoom = shot.zoom ? lerp(1, shot.zoom, ramp(local, 0.2, dur, "power2.inOut")) : 1;
-  const leave = ramp(t, b - 0.32, b - 0.02, "power3.in");
-
-  // Captions sit beside the phone (left/right) or under it (center), as one flowing column.
-  const side = shot.layout === "left" ? "right" : shot.layout === "right" ? "left" : "below";
-  const textX = side === "right" ? 570 : 80;
-  const textW = side === "below" ? 880 : 400;
-  const lines = shot.lines ?? [proj.name];
-  const nameSize = side === "below" ? (lines.length > 1 ? 62 : 80) : lines.length > 1 ? 72 : 84;
-  // Side captions are anchored so the name block ends at the same height whatever its line count.
-  const nameY = side === "below" ? here.y + here.w * PHONE_RATIO + 28 : 1092 - nameSize * 0.98 * lines.length;
-  const reveal = (a0: number, a1: number) => (1 - leave) * ramp(local, a0, a1, "power2.out");
+  const h = COLUMN.w * PHONE_RATIO;
 
   return (
     <AbsoluteFill style={{ opacity: 1 - exitAct }}>
-      <Label x={80} y={250} p={ramp(local, 0, 0.4, "linear")}>
-        work / {String(i + 1).padStart(2, "0")} of 09
+      <Label x={80} y={250} p={ramp(local, 0, 0.5, "linear")}>
+        work / {String(g + 1).padStart(2, "0")} of 03
       </Label>
       <Label right={80} y={250} p={ramp(local, 0.1, 0.6, "linear")} align="right">
-        {proj.domain}
+        nine live sites
       </Label>
 
-      <Phone
-        x={f.x}
-        y={f.y}
-        w={f.w}
-        src={`mobile/${proj.slug}-long.jpg`}
-        scroll={scroll}
-        zoom={zoom}
-        focus={shot.focus}
-        incoming={i < 8 ? { src: `mobile/${PROJECTS[i + 1].slug}-long.jpg`, p: wipeNext } : undefined}
-      />
-
-      {/* Callouts on what is actually on the screen. */}
-      {move > 0.98 &&
-        shot.notes.map((n, k) => {
-          const px = f.x + n.fx * f.w;
-          // Notes ride with the page as it scrolls, and drop out once off screen.
-          const py = f.y + (n.fy - scroll) * h;
-          if (py < f.y + 20 || py > f.y + h - 20) return null;
-          const toX = side === "left" ? f.x - 30 : side === "right" ? f.x + f.w + 30 : n.fx < 0.5 ? f.x - 30 : f.x + f.w + 30;
-          const p = ramp(local, 0.4 + k * 0.22, 0.95 + k * 0.22, "linear") * (1 - leave);
-          return <Callout key={k} x={px} y={py} toX={toX} label={n.label} p={p} index={k + 1} />;
-        })}
-      {/* The reading path between the numbered rings. */}
-      {move > 0.98 && shot.notes.length > 1 && (
-        <svg style={{ position: "absolute", left: 0, top: 0, overflow: "visible" }} width={1080} height={1920}>
-          <polyline
-            points={shot.notes.map((n) => `${f.x + n.fx * f.w},${f.y + (n.fy - scroll) * h}`).join(" ")}
-            fill="none"
-            stroke={P.offwhite}
-            strokeOpacity={0.7}
-            strokeWidth={2}
-            strokeDasharray="6 8"
-            pathLength={100}
-            strokeDashoffset={0}
-            style={{ clipPath: `inset(0 0 ${100 - ramp(local, 0.5, 1.5, "power2.inOut") * 100}% 0)`, opacity: 1 - leave }}
-          />
-        </svg>
-      )}
-
-      {/* Name, function, what I did, documented stack, and the psychology note. */}
-      <div style={{ position: "absolute", left: textX, top: nameY, width: textW }}>
-        <div style={{ position: "relative", height: nameSize * 0.98 * lines.length }}>
-          <Statement lines={lines} x={0} y={0} size={nameSize} lh={0.98} tracking="-0.03em" p={ramp(local, 0.2, 0.9, "linear")} out={leave} />
-        </div>
-        <div style={{ marginTop: 14, font: `500 30px/1.25 ${F.plex}`, color: P.offwhite, opacity: reveal(0.45, 0.85) }}>{proj.what}</div>
-        <div style={{ marginTop: 8, font: `400 26px/1.35 ${F.plex}`, color: "rgba(236,233,226,0.78)", opacity: reveal(0.6, 1.0) }}>{shot.role}</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 20px", marginTop: 14, font: `400 22px ${F.mono}`, color: P.steel, opacity: reveal(0.75, 1.15) }}>
-          {proj.stack.map((st) => (
-            <span key={st} style={{ display: "flex", alignItems: "center", gap: 9 }}>
-              <span style={{ width: 8, height: 8, background: P.blue }} />
-              {st}
-            </span>
-          ))}
-        </div>
-        {/* The psychology voice: what the screen asks of the person reading it. */}
-        <div
-          style={{
-            marginTop: 22,
-            font: SERIF(side === "below" ? 38 : 40),
-            lineHeight: 1.15,
-            color: P.offwhite,
-            clipPath: `inset(0 ${100 - ramp(local, 0.9, 1.6, "power2.out") * 100}% 0 0)`,
-            opacity: 1 - leave,
-          }}
-        >
-          {shot.mind}
-        </div>
-      </div>
-      <div style={{ position: "absolute", left: 80, top: 290, width: 920, font: `400 21px/1.35 ${F.mono}`, color: P.steelDim, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", clipPath: `inset(0 ${100 - ramp(local, 0.3, 0.9, "linear") * 100}% 0 0)`, opacity: 1 - leave }}>
-        {"<title>"}
-        <span style={{ color: P.steel }}>{shot.title}</span>
-        {"</title>"}
+      {/* The screen's idea: a heading in Plex and the psychology note in the serif. */}
+      <Statement lines={[group.title]} x={80} y={292} size={62} tracking="-0.025em" p={ramp(local, 0.05, 0.75, "linear")} out={leave} />
+      <div
+        style={{
+          position: "absolute",
+          left: 80,
+          top: 372,
+          font: SERIF(42),
+          color: P.steel,
+          clipPath: `inset(0 ${100 - ramp(local, 0.45, 1.3, "power2.out") * 100}% 0 0)`,
+          opacity: 1 - leave,
+        }}
+      >
+        {group.mind}
       </div>
 
-      {i === 0 && (
-        <Label x={80} y={318} p={ramp(local, 0.8, 1.5, "linear") * (1 - leave)} size={19} color={P.steelDim}>
-          numbered rings: intended reading order
-        </Label>
-      )}
-
-      {/* Kpay: the three ways its platform takes a payment, as listed on its site. */}
-      {shot.extra === "payments" && (
-        <div style={{ position: "absolute", left: 80, top: 650, width: 420, opacity: (1 - leave) * ramp(local, 0.6, 1.1, "power2.out") }}>
-          {["POS", "SoftPOS", "Virtual POS"].map((name, k) => (
-            <div key={name} style={{ display: "flex", alignItems: "center", gap: 18, height: 86 }}>
-              <div style={{ width: 22, height: 22, borderRadius: 11, border: `2px solid ${P.blue}`, background: ramp(local, 0.8 + k * 0.2, 1.0 + k * 0.2, "linear") > 0.5 ? P.blue : "transparent" }} />
-              <div style={{ font: `500 36px ${F.plex}`, color: P.offwhite }}>{name}</div>
+      {group.slugs.map((slug, k) => {
+        const proj = project(slug);
+        const x = COLUMN.xs[k];
+        // The first screen opens out of the Act III outline (the middle phone); later screens wipe in, one phone at a time.
+        const reveal = g === 0 ? (k === 1 ? 1 : ramp(local, 0.1 + (k === 0 ? 0 : 0.12), 0.8 + (k === 0 ? 0 : 0.12), "expo.out")) : 1;
+        const next = g < 2 ? GROUPS[g + 1].slugs[k] : undefined;
+        const wipe = next ? ramp(t, b - 0.55 + k * 0.1, b - 0.05 + k * 0.1, "power3.inOut") : 0;
+        const scroll = (SCROLL[slug] ?? 0) * ramp(local, 0.8, dur, "power1.inOut");
+        const cap = (d: number) => ramp(local, 0.5 + k * 0.22 + d, 1.0 + k * 0.22 + d, "power2.out") * (1 - leave);
+        return (
+          <React.Fragment key={slug}>
+            <Label x={x} y={COLUMN.y - 52} p={cap(0)} size={19} color={P.steel}>
+              <span style={{ color: P.blue }}>{String(g * 3 + k + 1).padStart(2, "0")}</span> {proj.domain}
+            </Label>
+            <Phone
+              x={x}
+              y={COLUMN.y}
+              w={COLUMN.w}
+              src={`mobile/${slug}-long.jpg`}
+              scroll={scroll}
+              reveal={reveal}
+              frameOpacity={reveal}
+              incoming={next ? { src: `mobile/${next}-long.jpg`, p: wipe } : undefined}
+            />
+            <div style={{ position: "absolute", left: x, top: COLUMN.y + h + 34, width: COLUMN.w }}>
+              <div style={{ overflow: "hidden", paddingTop: 6, marginTop: -6 }}>
+                <div style={{ font: `600 ${proj.name.length > 14 ? 31 : 40}px/1.05 ${F.plex}`, letterSpacing: "-0.02em", color: P.offwhite, translate: `0 ${(1 - cap(0)) * 105}%` }}>{proj.name}</div>
+              </div>
+              <div style={{ marginTop: 10, font: `500 23px/1.3 ${F.plex}`, color: P.offwhite, opacity: cap(0.1) }}>{proj.what}</div>
+              <div style={{ marginTop: 8, font: `400 21px/1.38 ${F.plex}`, color: "rgba(236,233,226,0.72)", opacity: cap(0.25) }}>{ROLE[slug]}</div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 14px", marginTop: 12, font: `400 18px ${F.mono}`, color: P.steel, opacity: cap(0.4) }}>
+                {proj.stack.map((st) => (
+                  <span key={st} style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                    <span style={{ width: 7, height: 7, background: P.blue }} />
+                    {st}
+                  </span>
+                ))}
+              </div>
             </div>
-          ))}
-          <div style={{ position: "absolute", left: 10, top: 54, width: 2, height: 172 * ramp(local, 0.7, 1.4, "power2.inOut"), background: P.blue, opacity: 0.6 }} />
-        </div>
-      )}
+          </React.Fragment>
+        );
+      })}
+
+      {/* Progress through the nine: a rail that fills one segment per project. */}
+      <div style={{ position: "absolute", left: 80, top: 1470, width: 880, display: "flex", gap: 8, opacity: 1 - exitAct }}>
+        {Array.from({ length: 9 }).map((_, i) => {
+          const on = i < g * 3 ? 1 : i < g * 3 + 3 ? ramp(local, 0.5 + (i - g * 3) * 0.22, 1.0 + (i - g * 3) * 0.22, "power2.out") : 0;
+          return <div key={i} style={{ flex: 1, height: 3, background: P.steelDim, overflow: "hidden" }}><div style={{ height: "100%", width: `${lerp(0, 100, on)}%`, background: P.blue }} /></div>;
+        })}
+      </div>
     </AbsoluteFill>
   );
 };
