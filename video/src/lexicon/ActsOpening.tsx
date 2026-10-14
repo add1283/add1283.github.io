@@ -66,11 +66,25 @@ export const ActSignal: React.FC = () => {
       <div style={{ position: "absolute", left: 80, top: 1270, font: SERIF(58), color: P.steel, clipPath: `inset(0 ${100 - tagline * 100}% 0 0)`, opacity: 1 - out }}>
         Beyond the interface.
       </div>
+      <div style={{ position: "absolute", left: 80, top: 1356, width: 900, font: `400 32px/1.35 ${F.plex}`, color: P.offwhite, opacity: ramp(t, beat(9), beat(10.2), "power2.out") * (1 - out) }}>
+        Interfaces built around how people actually read,
+        <br />
+        <span style={{ color: P.steel }}>and built for search engines too.</span>
+      </div>
     </AbsoluteFill>
   );
 };
 
 /* ── ACT II · THE IDENTITY ─────────────────────────────────── */
+
+/** Facts as published on the website and LinkedIn. */
+const SPEC: [string, string][] = [
+  ["BASED", "Istanbul, Türkiye"],
+  ["ROLE", "UI team, VBT Software"],
+  ["SINCE", "2021"],
+  ["STUDIED", "Psychology, Computer Programming"],
+  ["CERTIFIED", "AI and Machine Learning, YÖK"],
+];
 
 export const ActIdentity: React.FC = () => {
   const t = useT();
@@ -119,8 +133,21 @@ export const ActIdentity: React.FC = () => {
       <div style={{ position: "absolute", left: 80, top: 1272, overflow: "hidden", opacity: fade }}>
         <div style={{ font: SERIF(60), color: P.offwhite, translate: `0 ${(1 - ramp(t, beat(18), beat(19.5), "expo.out")) * 110}%`, paddingBottom: 10 }}>Psychology graduate.</div>
       </div>
-      <Statement lines={["Software developer."]} x={80} y={1350} size={56} tracking="-0.02em" p={ramp(t, beat(19), beat(20.5), "linear")} out={out} />
-      <Label x={80} y={1430} p={ramp(t, beat(21), beat(23), "linear") * fade}>web engineering / seo / ai / performance</Label>
+      <Statement lines={["Frontend developer & SEO specialist."]} x={80} y={1350} size={50} tracking="-0.02em" p={ramp(t, beat(19), beat(20.5), "linear")} out={out} />
+      <Label x={80} y={1428} p={ramp(t, beat(21), beat(23), "linear") * fade}>interfaces / technical seo / performance / ai</Label>
+
+      {/* A specification sheet beside the name, read like a drawing's title block. */}
+      <div style={{ position: "absolute", left: 700, top: 668, width: 300, opacity: fade }}>
+        {SPEC.map(([k, v], i) => {
+          const p = ramp(t, beat(21 + i * 0.6), beat(22 + i * 0.6), "expo.out");
+          return (
+            <div key={k} style={{ borderTop: `1px solid ${P.steelDim}`, padding: "12px 0 16px", opacity: p, translate: `${(1 - p) * 24}px 0` }}>
+              <div style={{ font: `400 18px ${F.mono}`, color: P.steel, letterSpacing: "0.06em" }}>{k}</div>
+              <div style={{ font: `500 25px/1.25 ${F.plex}`, color: P.offwhite, marginTop: 6 }}>{v}</div>
+            </div>
+          );
+        })}
+      </div>
     </AbsoluteFill>
   );
 };
@@ -170,10 +197,10 @@ export const ActCraft: React.FC = () => {
   const fold = ramp(t, beat(43), e, "power3.inOut");
 
   const panel = {
-    x: lerp(80, 350, fold),
-    y: lerp(340, 345, fold),
-    w: lerp(920, 380, fold),
-    h: lerp(760, 380 * (932 / 430), fold),
+    x: lerp(80, 365, fold),
+    y: lerp(340, 365, fold),
+    w: lerp(920, 350, fold),
+    h: lerp(760, 350 * (932 / 430), fold),
   };
 
   const color = (k?: string) => (k === "kw" ? P.steel : k === "type" ? P.blue : P.offwhite);
@@ -291,8 +318,23 @@ export const ActCraft: React.FC = () => {
         </div>
       </div>
 
+      {/* Which stage of the request is on screen. */}
+      <div style={{ position: "absolute", left: 80, top: 1118, width: 920, display: "flex", justifyContent: "space-between", font: `400 21px ${F.mono}`, opacity: ramp(t, s + 0.3, s + 1, "power2.out") * (1 - fold) }}>
+        {["01 controller", "02 query", "03 interface", "04 dashboard"].map((name, k) => {
+          const stage = toDash > 0.5 ? 3 : toUi > 0.5 ? 2 : toTable > 0.5 ? 1 : 0;
+          return (
+            <span key={name} style={{ color: k === stage ? P.blue : k < stage ? P.steel : P.steelDim }}>
+              {name}
+            </span>
+          );
+        })}
+      </div>
+      <HLine x={80} y={1150} w={920} p={ramp(t, s + 0.3, s + 1.2, "expo.out") * (1 - fold)} />
+      <div style={{ position: "absolute", left: 80, top: 1440, width: 920, font: SERIF(46), color: P.offwhite, clipPath: `inset(0 ${100 - ramp(t, beat(41), beat(42.5), "power2.out") * 100}% 0 0)`, opacity: 1 - fold }}>
+        From the database to the first glance.
+      </div>
       {/* The stack, lit as each layer of the request is touched. */}
-      <div style={{ position: "absolute", left: 80, top: 1170, width: 920, display: "grid", gridTemplateColumns: "1fr 1fr", rowGap: 18, opacity: 1 - fold }}>
+      <div style={{ position: "absolute", left: 80, top: 1176, width: 920, display: "grid", gridTemplateColumns: "1fr 1fr", rowGap: 14, opacity: 1 - fold }}>
         {STACK.map((st) => {
           const on = ramp(t, beat(st.at), beat(st.at) + 0.35, "expo.out");
           return (
