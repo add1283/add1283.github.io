@@ -31,19 +31,19 @@ export function openCv(lang: Lang) {
   @font-face { font-family: Plex; src: url(${location.origin}/fonts/ibm-plex-sans-latin-400-normal.woff2) format('woff2'); }
   @font-face { font-family: Plex; font-weight: 600; src: url(${location.origin}/fonts/ibm-plex-sans-latin-600-normal.woff2) format('woff2'); }
   @page { margin: 16mm; }
-  body { font: 10.5pt/1.5 Plex, system-ui, sans-serif; color: #141A2E; margin: 0 auto; max-width: 720px; }
+  body { font: 10.5pt/1.5 Plex, system-ui, sans-serif; color: #111317; margin: 0 auto; max-width: 720px; }
   h1 { font-size: 22pt; margin: 0; letter-spacing: -0.01em; }
-  .role { color: #2346A0; margin: 2px 0 8px; font-weight: 600; }
-  .contact { color: #4A5368; margin: 0 0 14px; }
-  h2 { font-size: 11pt; color: #2346A0; border-bottom: 1px solid #D5DBE6; padding-bottom: 3px; margin: 18px 0 8px; }
+  .role { color: #2754D6; margin: 2px 0 8px; font-weight: 600; }
+  .contact { color: #555C66; margin: 0 0 14px; }
+  h2 { font-size: 11pt; color: #2754D6; border-bottom: 1px solid #D9D6CF; padding-bottom: 3px; margin: 18px 0 8px; }
   .item { margin-bottom: 8px; break-inside: avoid; }
   .row { display: flex; justify-content: space-between; gap: 12px; }
-  .row span, .org { color: #4A5368; }
+  .row span, .org { color: #555C66; }
   p { margin: 2px 0 0; }
   ul { margin: 4px 0 0; padding-left: 18px; }
 </style></head><body>
 <h1>Ahmet Deniz Dündar</h1>
-<p class="role">${esc(t.hero.role)}</p>
+<p class="role">${esc(t.hero.grad)}, ${esc(t.hero.role)}</p>
 <p class="contact">${EMAIL}, ${SITE.replace('https://', '')}, Istanbul</p>
 <p>${esc(a.paragraphs[1])}</p>
 <h2>${esc(a.experienceTitle)}</h2>${roles(a.experience)}

@@ -26,12 +26,14 @@ import { I18n } from '../core/i18n';
         <p class="hero__tagline">{{ t.tagline }}</p>
 
         <h1 class="hero__name" id="hero-title">Ahmet Deniz Dündar</h1>
-        <p class="hero__role">
-          <span class="serif">{{ t.grad }}</span>
-          <span>{{ t.role }}.</span>
-        </p>
+        <p class="hero__role"><span class="serif">{{ t.grad }}</span> {{ i18n.lang() === 'tr' ? 've' : 'and' }} {{ t.role }}.</p>
         <p class="hero__lead">{{ t.lead }}</p>
         <p class="hero__now label">{{ t.now }}</p>
+        <ul class="proof">
+          @for (p of t.proof; track p) {
+            <li>{{ p }}</li>
+          }
+        </ul>
         <p class="hero__cred">
           <span class="hero__node" aria-hidden="true"></span>
           <span>

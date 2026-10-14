@@ -37,6 +37,11 @@ import { openCv } from './cv';
             <figcaption class="label">{{ t.quoteBy }}</figcaption>
           </figure>
           <button type="button" class="button button--quiet" (click)="cv()">{{ t.cv }}</button>
+          <figure class="film">
+            <p class="label">{{ t.film.label }}</p>
+            <video class="film__video" src="/video/add-portfolio-60.mp4" poster="/video/add-portfolio-poster.webp" width="540" height="960" controls muted playsinline preload="none"></video>
+            <figcaption class="film__caption serif">{{ t.film.caption }}</figcaption>
+          </figure>
         </div>
 
         <div class="about__path">

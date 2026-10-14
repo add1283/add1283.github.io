@@ -20,8 +20,9 @@ import { Mark } from './mark';
       <nav class="bar__nav" [class.is-open]="open()" [attr.aria-label]="t.nav.menu">
         <a routerLink="." fragment="work" (click)="open.set(false)"><span aria-hidden="true">01</span>{{ t.nav.work }}</a>
         <a routerLink="." fragment="systems" (click)="open.set(false)"><span aria-hidden="true">02</span>{{ t.nav.systems }}</a>
-        <a routerLink="." fragment="about" (click)="open.set(false)"><span aria-hidden="true">03</span>{{ t.nav.about }}</a>
-        <a routerLink="." fragment="contact" (click)="open.set(false)"><span aria-hidden="true">04</span>{{ t.nav.contact }}</a>
+        <a routerLink="." fragment="civic" (click)="open.set(false)"><span aria-hidden="true">03</span>{{ t.nav.civic }}</a>
+        <a routerLink="." fragment="about" (click)="open.set(false)"><span aria-hidden="true">04</span>{{ t.nav.about }}</a>
+        <a routerLink="." fragment="contact" (click)="open.set(false)"><span aria-hidden="true">05</span>{{ t.nav.contact }}</a>
       </nav>
 
       <div class="bar__tools">

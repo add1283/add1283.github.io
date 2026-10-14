@@ -1,6 +1,6 @@
 # Ahmet Deniz Dündar
 
-> Frontend developer and SEO specialist based in Istanbul, Türkiye. Works on the UI team at VBT Yazılım (VBT Software) since 2021. Holds a BSc in Psychology (Çukurova University, 2022) and an associate degree in Computer Programming (Anadolu University, 2024), and uses his psychology background to design interfaces around how people read.
+> Psychologist (BSc, Çukurova University, 2018–2022) and frontend developer based in Istanbul, Türkiye. Frontend Web Developer on the UI team at VBT Yazılım (VBT Software) since 2021, building web applications with .NET, ASP.NET MVC, C#, SQL and Angular, with SEO analysis and prompt engineering. Associate degree in Computer Programming (Anadolu University, 2024). Uses a psychology background to design interfaces around how people read. Also active in civil society and writing: Adana City Council Youth Council, 1907 ÜNİFEB, Üçüncü Yol and Yeni Yücel.
 
 Site in Turkish: https://ahmetdenizdundar.com.tr/
 Site in English: https://ahmetdenizdundar.com.tr/en/
@@ -8,7 +8,7 @@ Contact: contact@ahmetdenizdundar.com.tr
 
 ## Focus
 
-- Frontend development: HTML, CSS/SCSS, JavaScript, TypeScript, Angular, Tailwind CSS, Three.js, GSAP
+- Software: C#, .NET, ASP.NET MVC, SQL, TypeScript, Angular, HTML, CSS/SASS, Tailwind CSS, GSAP, Three.js
 - Search engine optimisation: technical SEO, page speed, structured data, content architecture
 - CMS and back-end work on client sites: WordPress, PHP, ASP.NET, Bootstrap
 - AI-assisted development and data: Cursor, GitHub Copilot, data analysis, machine learning basics
@@ -24,6 +24,13 @@ Contact: contact@ahmetdenizdundar.com.tr
 - [VBT Yazılım](https://vbt.com.tr/en): corporate site; solution pages and investor content
 - [Ser&Berker](https://serberker.com): independent audit firm in the DFK International network; services and regulatory content
 - [Flerpi](https://flerpi.com/en): modular ERP product; page system introducing each module
+
+## Civil society and writing
+
+- Adana City Council Youth Council (2024–): board member; co-chair of the Twin Transition and Technology working group; youth workshops and events with the Adana Metropolitan Municipality Student Communication Centre
+- 1907 ÜNİFEB, Çukurova University (2019–2022): volunteer board member (events and projects, web, board, university lead); opened the Koray Şener Nursery Class with Fenerbahçe's Adana association in May 2022
+- Üçüncü Yol (2018–): writer and IT director; essays on the Republic, the Enlightenment and folk literature (https://ucuncuyol1919.com/author/ahmetdenizdundaruy1919/)
+- Yeni Yücel (2024): essay on artificial intelligence and people, issue 2
 
 ## Certificates
 
