@@ -2,7 +2,9 @@
 
 Personal portfolio of Ahmet Deniz Dündar, frontend developer and SEO specialist in Istanbul.
 
-The page is built around a wall of İznik tiles rendered with Three.js. The front of each tile carries a piece of a star-and-cross pattern; the back carries a piece of a project screenshot. As you scroll, the tiles turn in a wave to show each of nine live sites, scatter behind the About section, and settle back into the pattern at Contact.
+The design follows the portfolio film: a technical blueprint in graphite, warm off-white, steel and one electric blue, set in IBM Plex Sans and Mono with Instrument Serif for the psychology voice. The hero sets the two disciplines on one blue line (Psychology × Software); the ADD mark (the initials on the blue signal rule, ending in a node) signs the header and the footer.
+
+In 3D view a wall of blueprint tiles is rendered with Three.js. The front of each tile carries a piece of a technical sheet (grid, registration crosses, the signal line); the back carries a piece of a project screenshot. Scrolling turns the wall to each group of projects, and pointing at or focusing a site turns it to that site; behind the work grid the wall fades into the page. Plain view shows the mark's construction sheet instead.
 
 ## Stack
 

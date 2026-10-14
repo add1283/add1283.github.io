@@ -85,7 +85,7 @@ export class I18n {
       url,
       name: t.meta.title,
       inLanguage: lang,
-      dateModified: '2026-10-13',
+      dateModified: '2026-10-14',
       mainEntity: person,
     };
     let el = this.doc.head.querySelector<HTMLScriptElement>('script#ld-person');

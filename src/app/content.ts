@@ -24,14 +24,57 @@ export interface Credential {
   url?: string;
 }
 
+export interface PathRow {
+  years: string;
+  what: string;
+  where: string;
+  /** Which side of the two disciplines a step belongs to. */
+  kind: 'mind' | 'both' | 'code';
+  url?: string;
+}
+
 export interface Copy {
   meta: { title: string; description: string; locale: string };
-  nav: { work: string; about: string; contact: string; skip: string; menu: string };
+  nav: { work: string; systems: string; about: string; contact: string; skip: string; menu: string };
   toggles: { view3d: string; viewPlain: string; theme: string; lang: string; langLabel: string };
-  hero: { role: string; lead: string; now: string; credential: string; verify: string; primary: string; secondary: string; scroll: string };
-  work: { title: string; intro: string; open: string; count: (i: number, n: number) => string; next: string; nextLink: string };
-  about: {
+  hero: {
+    kicker: string;
+    mind: string;
+    code: string;
+    tagline: string;
+    grad: string;
+    role: string;
+    lead: string;
+    now: string;
+    credential: string;
+    verify: string;
+    primary: string;
+    secondary: string;
+    scroll: string;
+  };
+  work: {
+    label: string;
     title: string;
+    intro: string;
+    open: string;
+    groups: { title: string; mind: string; slugs: string[] }[];
+    next: string;
+    nextLink: string;
+  };
+  systems: {
+    label: string;
+    title: string;
+    columns: { head: string; items: string[] }[];
+    foundation: string;
+    foundationNote: string;
+  };
+  about: {
+    label: string;
+    title: string;
+    spec: [string, string][];
+    pathTitle: string;
+    path: PathRow[];
+    method: [string, string];
     paragraphs: string[];
     quote: string;
     quoteBy: string;
@@ -222,9 +265,14 @@ export const COPY: Record<Lang, Copy> = {
         'İstanbul’da frontend geliştirici ve SEO uzmanı. Haber, SaaS ve kurumsal alanda yayında olan dokuz siteyi tasarladım, kodladım ve arama için optimize ettim.',
       locale: 'tr_TR',
     },
-    nav: { work: 'İşler', about: 'Hakkımda', contact: 'İletişim', skip: 'İçeriğe geç', menu: 'Menü' },
+    nav: { work: 'İşler', systems: 'Yetkinlikler', about: 'Hakkımda', contact: 'İletişim', skip: 'İçeriğe geç', menu: 'Menü' },
     toggles: { view3d: '3D görünüm', viewPlain: 'Sade görünüm', theme: 'Temayı değiştir', lang: 'EN', langLabel: 'Switch to English' },
     hero: {
+      kicker: 'zihin × kod',
+      mind: 'Psikoloji',
+      code: 'Yazılım',
+      tagline: 'Arayüzün ötesinde.',
+      grad: 'Psikoloji mezunu.',
       role: 'Frontend geliştirici ve SEO uzmanı',
       lead: 'Psikoloji okudum, sonra kod yazmaya başladım. Arayüzleri insanların bir sayfayı nasıl okuduğuna göre kuruyor, aynı sayfayı arama motorları için de hazırlıyorum.',
       now: 'Şu an İstanbul’da, VBT Yazılım’ın UI ekibindeyim.',
@@ -235,15 +283,51 @@ export const COPY: Record<Lang, Copy> = {
       scroll: 'Kaydırdıkça karolar dönüp işlerimi gösterecek',
     },
     work: {
+      label: 'işler / yayındaki dokuz site',
       title: 'Yayındaki dokuz site',
       intro: 'Haber platformları, SaaS tanıtım siteleri ve kurumsal portallar. Hepsi canlı ve hepsinde arayüz ile SEO tarafında çalıştım.',
       open: 'Siteyi aç',
-      count: (i, n) => `${i} / ${n}`,
+      groups: [
+        { title: 'Haber ve editoryal', mind: 'Saniyeler içinde okunur: incelenmez, taranır.', slugs: ['add', '12punto', 'avrupadan'] },
+        { title: 'Ürünler ve platformlar', mind: 'Önce tek bir vaat, sonra bir sonraki adım.', slugs: ['heroty', 'kpay', 'flerpi'] },
+        { title: 'Kurumsal', mind: 'Sakin, güvenilir ve net.', slugs: ['vbt', 'disnet', 'serberker'] },
+      ],
       next: 'Benzer bir iş için konuşalım.',
       nextLink: 'İletişime geç',
     },
+    systems: {
+      label: 'yetkinlikler / işin nasıl bağlandığı',
+      title: 'Dört disiplin, tek temel',
+      columns: [
+        { head: 'Mühendislik', items: ['C# / .NET', 'ASP.NET MVC / Core', 'SQL', 'PHP / WordPress', 'Git / GitHub'] },
+        { head: 'Arayüz', items: ['TypeScript / Angular', 'HTML / SCSS', 'Tailwind / Bootstrap', 'GSAP / Three.js', 'Responsive, erişilebilir arayüz'] },
+        { head: 'Görünürlük', items: ['Teknik SEO', 'Core Web Vitals', 'Yapılandırılmış veri', 'Search Console / GA4', 'SEM / Google Ads', 'İçerik mimarisi'] },
+        { head: 'Yapay zekâ', items: ['Yapay zekâ ve makine öğrenmesi', 'Veri analizi', 'Prompt mühendisliği', 'Claude / GPT API’leri', 'Cursor / Copilot', 'Otomasyon'] },
+      ],
+      foundation: 'İnsan: algı, dikkat, davranış.',
+      foundationNote: 'Hiyerarşi, okunabilirlik ve hız; insanların bir sayfayı gerçekten nasıl okuduğuna göre.',
+    },
     about: {
+      label: 'hakkımda / fig. 1',
       title: 'Hakkımda',
+      spec: [
+        ['Konum', 'İstanbul, Türkiye'],
+        ['Rol', 'UI ekibi, VBT Yazılım'],
+        ['Başlangıç', '2021'],
+        ['Öğrenim', 'Psikoloji, Bilgisayar Programcılığı'],
+      ],
+      pathTitle: 'Yol: ikisinin buluştuğu yer',
+      path: [
+        { years: '2018–2022', what: 'Psikoloji, lisans', where: 'Çukurova Üniversitesi, Adana', kind: 'mind' },
+        { years: '2019–2021', what: 'Web kurulu üyesi, 1907 ÜNİFEB', where: 'Sosyal medya, grafik ve hareketli tasarım, kampanyalar', kind: 'both' },
+        { years: '2021', what: 'Dijital Pazarlama', where: 'Boğaziçi Üniversitesi İşletme ve Ekonomi Kulübü', kind: 'both' },
+        { years: '2021–', what: 'Web tasarımcı ve frontend geliştirici', where: 'VBT Yazılım, UI ekibi: arayüz, sayfa hızı, SEO', kind: 'code' },
+        { years: '2022–2024', what: 'Bilgisayar Programcılığı, önlisans', where: 'Anadolu Üniversitesi', kind: 'code' },
+        { years: '2024', what: 'Fikri ve Sınai Mülkiyet Hakları', where: 'Kobimen Akademi', kind: 'both' },
+        { years: '2026', what: 'Döngüsel Ekonomi Eğitmen Eğitimi', where: 'Habitat Derneği', kind: 'both', url: 'https://verified.sertifier.com/en/verify/08098888944153/' },
+        { years: '2026', what: 'Yapay Zekâ ve Makine Öğrenmesi', where: 'Veri Analizi Okulu, YÖK', kind: 'code', url: 'https://belge.verianaliziokulu.com/e1f35b42-ae82-487a-a271-90dbd0bba565' },
+      ],
+      method: ['Problemi anla.', 'Doğru çözümü kur.'],
       paragraphs: [
         '2000’de Adana’da doğdum. Çukurova Üniversitesi’nde psikoloji okurken üniversite kulübünün web ve tasarım işlerini üstlendim; kodla tanışmam orada oldu.',
         'Bugün işim, insanların gerçekten okuduğu ve arama motorlarının doğru anladığı sayfalar yapmak. Algı ve dikkat üzerine öğrendiklerim hiyerarşi, okunabilirlik ve hız kararlarımın arkasında duruyor.',
@@ -311,7 +395,7 @@ export const COPY: Record<Lang, Copy> = {
       notConfigured: 'Form şu an kapalı. Lütfen doğrudan e-posta ile yaz.',
       elsewhere: 'Başka yerlerde',
     },
-    footer: { made: 'Angular ve Three.js ile İstanbul’da yapıldı.', top: 'Başa dön' },
+    footer: { made: 'İstanbul’da Angular ve Three.js ile yapıldı.', top: 'Başa dön' },
   },
   en: {
     meta: {
@@ -320,9 +404,14 @@ export const COPY: Record<Lang, Copy> = {
         'Frontend developer and SEO specialist in Istanbul. I designed, built and optimised nine live sites across news, SaaS and corporate work.',
       locale: 'en_US',
     },
-    nav: { work: 'Work', about: 'About', contact: 'Contact', skip: 'Skip to content', menu: 'Menu' },
+    nav: { work: 'Work', systems: 'Skills', about: 'About', contact: 'Contact', skip: 'Skip to content', menu: 'Menu' },
     toggles: { view3d: '3D view', viewPlain: 'Plain view', theme: 'Change theme', lang: 'TR', langLabel: 'Türkçeye geç' },
     hero: {
+      kicker: 'mind × code',
+      mind: 'Psychology',
+      code: 'Software',
+      tagline: 'Beyond the interface.',
+      grad: 'Psychology graduate.',
       role: 'Frontend developer and SEO specialist',
       lead: 'I studied psychology before I started writing code. I build interfaces around how people actually read a page, and build the same page for search engines too.',
       now: 'Currently in Istanbul, on the UI team at VBT Software.',
@@ -333,15 +422,51 @@ export const COPY: Record<Lang, Copy> = {
       scroll: 'Scroll and the tiles turn to show my work',
     },
     work: {
+      label: 'work / nine live sites',
       title: 'Nine sites, all live',
       intro: 'News platforms, SaaS marketing sites and corporate portals. Every one is live, and on every one I worked on the interface and on search.',
       open: 'Open site',
-      count: (i, n) => `${i} / ${n}`,
+      groups: [
+        { title: 'News and editorial', mind: 'Read in seconds: scanned, not studied.', slugs: ['add', '12punto', 'avrupadan'] },
+        { title: 'Products and platforms', mind: 'One promise first, then the next step.', slugs: ['heroty', 'kpay', 'flerpi'] },
+        { title: 'Corporate and enterprise', mind: 'Calm, credible and clear.', slugs: ['vbt', 'disnet', 'serberker'] },
+      ],
       next: 'Planning something similar?',
       nextLink: 'Get in touch',
     },
+    systems: {
+      label: 'skills / how the work connects',
+      title: 'Four disciplines, one foundation',
+      columns: [
+        { head: 'Engineering', items: ['C# / .NET', 'ASP.NET MVC / Core', 'SQL', 'PHP / WordPress', 'Git / GitHub'] },
+        { head: 'Interface', items: ['TypeScript / Angular', 'HTML / SCSS', 'Tailwind / Bootstrap', 'GSAP / Three.js', 'Responsive, accessible UI'] },
+        { head: 'Visibility', items: ['Technical SEO', 'Core Web Vitals', 'Structured data', 'Search Console / GA4', 'SEM / Google Ads', 'Content architecture'] },
+        { head: 'Intelligence', items: ['AI and machine learning', 'Data analysis', 'Prompt engineering', 'Claude / GPT APIs', 'Cursor / Copilot', 'Automation'] },
+      ],
+      foundation: 'People: perception, attention, behaviour.',
+      foundationNote: 'Hierarchy, legibility and speed, decided by how people actually read a page.',
+    },
     about: {
+      label: 'about / fig. 1',
       title: 'About',
+      spec: [
+        ['Based', 'Istanbul, Türkiye'],
+        ['Role', 'UI team, VBT Software'],
+        ['Since', '2021'],
+        ['Studied', 'Psychology, Computer Programming'],
+      ],
+      pathTitle: 'Path: where the two meet',
+      path: [
+        { years: '2018–2022', what: 'Psychology, BSc', where: 'Çukurova University, Adana', kind: 'mind' },
+        { years: '2019–2021', what: 'Web board member, 1907 ÜNİFEB', where: 'Social media, graphic and motion design, campaigns', kind: 'both' },
+        { years: '2021', what: 'Digital Marketing', where: 'Boğaziçi University Business and Economics Club', kind: 'both' },
+        { years: '2021–', what: 'Web designer and frontend developer', where: 'VBT Software, UI team: interfaces, page speed, SEO', kind: 'code' },
+        { years: '2022–2024', what: 'Computer Programming, associate degree', where: 'Anadolu University', kind: 'code' },
+        { years: '2024', what: 'Intellectual and Industrial Property Rights', where: 'Kobimen Akademi', kind: 'both' },
+        { years: '2026', what: 'Circular Economy Trainer Programme', where: 'Habitat Association', kind: 'both', url: 'https://verified.sertifier.com/en/verify/08098888944153/' },
+        { years: '2026', what: 'AI and Machine Learning', where: 'Data Analysis School, YÖK', kind: 'code', url: 'https://belge.verianaliziokulu.com/e1f35b42-ae82-487a-a271-90dbd0bba565' },
+      ],
+      method: ['Understand the problem.', 'Build the right solution.'],
       paragraphs: [
         'I was born in Adana in 2000. While studying psychology at Çukurova University I took over the web and design work for a student club, and that is where I met code.',
         'Today my job is building pages people actually read and search engines understand correctly. What I learned about perception and attention sits behind my decisions on hierarchy, legibility and speed.',

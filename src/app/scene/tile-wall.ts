@@ -20,8 +20,9 @@ import {
 } from 'three';
 
 /**
- * A wall of glazed İznik tiles. The front of every tile carries a piece of a
- * star-and-cross pattern; the back carries a piece of a project screenshot.
+ * A wall of blueprint tiles. The front of every tile carries a piece of a
+ * technical drawing (a fine grid, registration crosses and the blue signal
+ * line from the brand); the back carries a piece of a project screenshot.
  * Scrolling drives `state`: 0 is the pattern, 1..n are projects. Between two
  * whole states the tiles flip in a diagonal wave from one face to the other.
  */
@@ -44,6 +45,8 @@ export interface Pose {
   wallRotX: number;
   camZ: number;
   scatter: number;
+  /** 0 shows the wall at full strength, 1 fades it into the page. */
+  dim: number;
 }
 
 const COLS_WIDE = 32;
@@ -125,11 +128,12 @@ const fragment = /* glsl */ `
   uniform float uFrontIsPattern;
   uniform float uBackIsPattern;
   uniform vec2 uGrid;
-  uniform vec3 uPorcelain;
-  uniform vec3 uCobalt;
-  uniform vec3 uTurquoise;
+  uniform vec3 uPaper;
+  uniform vec3 uInk;
+  uniform vec3 uBlue;
   uniform vec3 uFog;
   uniform float uFogNear;
+  uniform float uDim;
 
   varying vec2 vLocal;
   varying vec2 vCell;
@@ -137,33 +141,26 @@ const fragment = /* glsl */ `
   varying vec3 vView;
   varying float vFace;
 
-  // Signed distance to an eight-pointed star (two overlapping squares).
-  float sdBox(vec2 p, float r) { vec2 q = abs(p) - r; return max(q.x, q.y); }
-  float star(vec2 p, float r) {
-    float a = sdBox(p, r);
-    vec2 q = vec2(p.x + p.y, p.y - p.x) * 0.70710678;
-    return min(a, sdBox(q, r));
-  }
+  // A technical sheet: fine grid lines, a cross every four tiles, the signal line.
+  float lineAt(float x, float w) { float d = abs(fract(x) - 0.5); return smoothstep(w, w * 0.4, 0.5 - d); }
 
   vec3 pattern(vec2 g) {
-    // One motif repeats every four tiles: a cobalt star, crosses between.
-    vec2 cell = g * 0.25;
-    vec2 f = fract(cell) - 0.5;
-    vec2 h = fract(cell + 0.5) - 0.5;
-    float aa = 0.006;
-
-    float st = star(f, 0.3);
-    float ring = star(f, 0.215);
-    float core = length(f) - 0.075;
-    // Cross between four stars: two short bars.
-    float bars = min(sdBox(h * vec2(1.0, 3.2), 0.16), sdBox(h * vec2(3.2, 1.0), 0.16));
-
-    vec3 col = uPorcelain;
-    col = mix(col, uCobalt, smoothstep(aa, 0.0, st));
-    col = mix(col, uPorcelain, smoothstep(aa, 0.0, ring));
-    col = mix(col, uCobalt, smoothstep(aa, 0.0, star(f, 0.15)));
-    col = mix(col, uTurquoise, smoothstep(aa, 0.0, core));
-    col = mix(col, uTurquoise, smoothstep(aa, 0.0, bars));
+    vec3 col = uPaper;
+    float minor = max(lineAt(g.x * 2.0 + 0.5, 0.02), lineAt(g.y * 2.0 + 0.5, 0.02));
+    col = mix(col, uInk, minor * 0.16);
+    // Registration crosses where every fourth row and column meet.
+    vec2 c = fract(g * 0.25 + 0.5) - 0.5;
+    float arm = 0.09;
+    float cross = max(
+      step(abs(c.x), 0.006) * step(abs(c.y), arm),
+      step(abs(c.y), 0.006) * step(abs(c.x), arm)
+    );
+    col = mix(col, uInk, cross * 0.55);
+    // The signal line runs across the whole wall, a little above centre.
+    float y = g.y / uGrid.y;
+    float sig = smoothstep(0.006, 0.0, abs(y - 0.58));
+    float glow = exp(-abs(y - 0.58) * 60.0) * 0.35;
+    col = mix(col, uBlue, clamp(sig + glow, 0.0, 1.0));
     return col;
   }
 
@@ -182,23 +179,24 @@ const fragment = /* glsl */ `
     vec3 base;
     if (vFace > 0.5) base = face(uTexFront, uFrontIsPattern, vLocal, false);
     else if (vFace < -0.5) base = face(uTexBack, uBackIsPattern, vLocal, true);
-    else base = uPorcelain * 0.92;
+    else base = uPaper * 0.9;
 
-    // Glaze: soft key light, wrap, and a tight specular sheen.
+    // Matte paper: soft key light and a faint edge sheen, no glaze.
     vec3 l = normalize(vec3(-0.45, 0.6, 0.75));
-    float diff = max(dot(n, l), 0.0) * 0.35 + 0.7;
+    float diff = max(dot(n, l), 0.0) * 0.25 + 0.8;
     vec3 hv = normalize(l + v);
-    float spec = pow(max(dot(n, hv), 0.0), 80.0) * 0.25;
-    float fres = pow(1.0 - max(dot(n, v), 0.0), 3.0) * 0.1;
+    float spec = pow(max(dot(n, hv), 0.0), 60.0) * 0.08;
 
-    // Bevel darkening near each tile's edge reads as grout.
+    // A hairline at each tile's edge, like a sheet cut into cards.
     vec2 e = min(vLocal, 1.0 - vLocal);
-    float bevel = smoothstep(0.0, 0.06, min(e.x, e.y));
-    vec3 col = base * diff * mix(0.78, 1.0, bevel) + spec + fres;
+    float edge = 1.0 - smoothstep(0.0, 0.025, min(e.x, e.y));
+    vec3 col = base * diff + spec;
+    col = mix(col, uInk, edge * 0.25);
 
     // Distance fog toward the page colour.
     float depth = length(vView);
     col = mix(col, uFog, smoothstep(uFogNear, uFogNear + 30.0, depth) * 0.9);
+    col = mix(col, uFog, uDim);
     gl_FragColor = vec4(col, 1.0);
     #include <colorspace_fragment>
   }
@@ -229,7 +227,7 @@ export class TileWall {
   /** Target and eased state. */
   private stateTarget = 0;
   private state = 0;
-  private poseTarget: Pose = { wallX: 0, wallY: 0, wallRotY: 0, wallRotX: 0, camZ: 24, scatter: 0 };
+  private poseTarget: Pose = { wallX: 0, wallY: 0, wallRotY: 0, wallRotX: 0, camZ: 24, scatter: 0, dim: 0 };
   private pose: Pose = { ...this.poseTarget };
   private motion = 1;
 
@@ -264,7 +262,9 @@ export class TileWall {
   setDark(dark: boolean) {
     const u = this.material.uniforms;
     const pal = palette(dark);
-    u['uPorcelain'].value.set(pal.porcelain);
+    u['uPaper'].value.set(pal.paper);
+    u['uInk'].value.set(pal.ink);
+    u['uBlue'].value.set(pal.blue);
     u['uFog'].value.set(pal.fog);
   }
 
@@ -341,11 +341,12 @@ export class TileWall {
         uTexBack: { value: null },
         uFrontIsPattern: { value: 1 },
         uBackIsPattern: { value: 0 },
-        uPorcelain: { value: new Color(pal.porcelain) },
-        uCobalt: { value: new Color('#2346A0') },
-        uTurquoise: { value: new Color('#1FA39A') },
+        uPaper: { value: new Color(pal.paper) },
+        uInk: { value: new Color(pal.ink) },
+        uBlue: { value: new Color(pal.blue) },
         uFog: { value: new Color(pal.fog) },
         uFogNear: { value: 30 },
+        uDim: { value: 0 },
       },
     });
 
@@ -425,6 +426,7 @@ export class TileWall {
     u['uTime'].value += dt;
     u['uMotion'].value = this.motion;
     u['uScatter'].value = this.pose.scatter;
+    u['uDim'].value = this.pose.dim;
     // Fog starts just behind the wall wherever the camera is.
     u['uFogNear'].value = this.pose.camZ + 6;
 
@@ -456,8 +458,9 @@ export class TileWall {
   }
 }
 
+/** The film's palette: graphite, warm off-white, steel and one electric blue. */
 function palette(dark: boolean) {
   return dark
-    ? { porcelain: '#E4E8EF', fog: '#0C1324' }
-    : { porcelain: '#F7F8FA', fog: '#F3F5F8' };
+    ? { paper: '#181B21', ink: '#ECE9E2', blue: '#4A7DFF', fog: '#111317' }
+    : { paper: '#F6F4EF', ink: '#111317', blue: '#2F62F0', fog: '#ECE9E2' };
 }
