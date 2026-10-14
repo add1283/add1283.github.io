@@ -14,67 +14,58 @@ export const BaselineGrid: React.FC<{ p: number; top?: number; rows?: number; ga
   </>
 );
 
-/* ── ACT I · THE SIGNAL ───────────────────────────────────── */
+/* ── ACT I · THE SIGNAL: Psychology × Software ─────────────── */
 
-/** Fragments of the site's own interface, set at three depths. */
-const LAYERS: { z: number; x: number; y: number; w: number; kind: "shot" | "frame" | "code"; crop?: number; text?: string }[] = [
-  { z: -1700, x: 600, y: 300, w: 360, kind: "shot", crop: 0.1 },
-  { z: -1700, x: 600, y: 980, w: 340, kind: "frame" },
-  { z: -1150, x: 560, y: 380, w: 420, kind: "code", text: "<header class=\"bar\">" },
-  { z: -1150, x: 120, y: 1180, w: 360, kind: "shot", crop: 0.3 },
-  { z: -650, x: 660, y: 1240, w: 300, kind: "code", text: "font: 600 168px Plex" },
-  { z: -650, x: 90, y: 330, w: 300, kind: "frame" },
-];
+/** Two voices run through the film: a serif for the mind, Plex for the machine. */
+export const SERIF = (size: number, italic = true) => `${italic ? "italic " : ""}400 ${size}px/1 ${F.serif}`;
 
 export const ActSignal: React.FC = () => {
   const t = useT();
   const end = beat(ACT.identity);
   if (t > end + 0.1) return null;
-  const line = ramp(t, beat(1), beat(1) + 0.9, "expo.out");
-  const gridOpen = ramp(t, beat(1) + 0.2, beat(4), "power2.out");
-  // Camera dolly through the layers.
-  const dolly = lerp(0, 1500, ramp(t, 0.6, end, "power2.inOut"));
-  const statementIn = ramp(t, beat(6), beat(6) + 1.1, "linear");
-  const statementOut = ramp(t, end - 0.45, end, "linear");
+  // No empty first frame: the grid and the line are already there for the cover.
+  // Frame 0 doubles as the Reels thumbnail: the line, the grid and the labels are already set.
+  const line = 1;
+  const grid = 0.85 + 0.15 * ramp(t, 0, 1, "power2.out");
+  const mind = ramp(t, beat(1), beat(1) + 0.8, "expo.out");
+  const code = ramp(t, beat(3), beat(3) + 0.8, "expo.out");
+  const meet = ramp(t, beat(5), beat(6.5), "power3.inOut");
+  const times = ramp(t, beat(6), beat(7), "back.out(1.6)");
+  const tagline = ramp(t, beat(8), beat(9.5), "linear");
+  const out = ramp(t, end - 0.45, end, "power3.in");
+
+  const mindY = lerp(560, 735, meet);
+  const codeY = lerp(1090, 985, meet);
   return (
     <AbsoluteFill>
-      {/* The grid only exists where the light has passed. */}
-      <AbsoluteFill style={{ clipPath: `inset(${50 - gridOpen * 50}% 0 ${50 - gridOpen * 50}% 0)` }}>
-        <BaselineGrid p={gridOpen} />
+      <div style={{ opacity: grid * (1 - out) }}>
+        <BaselineGrid p={1} alpha={0.05} />
         {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-          <VLine key={i} x={80 + i * 153.3} y={260} h={1280} p={gridOpen} color="rgba(236,233,226,0.05)" />
+          <VLine key={i} x={80 + i * 153.3} y={260} h={1280} p={1} color="rgba(236,233,226,0.045)" />
         ))}
-      </AbsoluteFill>
+      </div>
+      <Label x={80} y={250} p={1 - out}>ahmetdenizdundar.com.tr</Label>
+      <Label right={80} y={250} p={1 - out} align="right">mind × code</Label>
 
-      <AbsoluteFill style={{ perspective: 1100, perspectiveOrigin: "50% 50%" }}>
-        <AbsoluteFill style={{ transformStyle: "preserve-3d", translate: `0 0 ${dolly}px` }}>
-          {LAYERS.map((l, i) => {
-            const z = l.z + dolly;
-            const vis = ramp(t, beat(2 + i * 0.5), beat(3 + i * 0.5), "power2.out") * (1 - ramp(z, -200, 250, "linear"));
-            return (
-              <div key={i} style={{ position: "absolute", left: l.x, top: l.y, width: l.w, translate: `0 0 ${l.z}px`, opacity: vis }}>
-                {l.kind === "shot" && (
-                  <div style={{ height: l.w * 0.9, overflow: "hidden", outline: `1px solid ${P.steelDim}`, outlineOffset: 8 }}>
-                    <Img src={staticFile("site/site-dark.jpg")} style={{ width: "100%", translate: `0 ${-(l.crop ?? 0) * 100}%` }} />
-                  </div>
-                )}
-                {l.kind === "frame" && (
-                  <div style={{ height: l.w * 0.62, border: `1px solid ${P.steelDim}` }}>
-                    <div style={{ margin: 24, height: 18, width: "55%", background: P.steelDim }} />
-                    <div style={{ margin: "0 24px", height: 10, width: "80%", background: "rgba(139,147,158,0.35)" }} />
-                    <div style={{ margin: "14px 24px", height: 10, width: "70%", background: "rgba(139,147,158,0.35)" }} />
-                  </div>
-                )}
-                {l.kind === "code" && <div style={{ font: `400 30px ${F.mono}`, color: P.steel }}>{l.text}</div>}
-              </div>
-            );
-          })}
-        </AbsoluteFill>
-      </AbsoluteFill>
+      {/* The mind, in the serif voice. */}
+      <div style={{ position: "absolute", left: 76, top: mindY, overflow: "hidden", opacity: 1 - out }}>
+        <div style={{ font: SERIF(200), color: P.offwhite, letterSpacing: "-0.02em", translate: `0 ${(1 - mind) * 105}%`, paddingBottom: 24 }}>Psychology</div>
+      </div>
+      <Label x={80} y={mindY - 44} p={ramp(t, beat(1.5), beat(2.5), "linear") * (1 - meet) * (1 - out)}>how people think</Label>
 
-      <HLine x={0} y={959} w={1080} p={line * (1 - ramp(t, beat(5), beat(6), "power2.in") * 0.4)} color={P.blue} glow />
-      <Label x={80} y={250} p={ramp(t, beat(2), beat(3.5), "linear")}>ahmetdenizdundar.com.tr</Label>
-      <Statement lines={["BEYOND THE", "INTERFACE."]} x={76} y={760} size={124} p={statementIn} out={statementOut} tracking="-0.035em" />
+      <HLine x={0} y={959} w={1080} p={line} color={P.blue} glow />
+
+      {/* The machine, in Plex. */}
+      <div style={{ position: "absolute", left: 74, top: codeY, overflow: "hidden", opacity: 1 - out }}>
+        <div style={{ font: `600 176px/1 ${F.plex}`, color: P.offwhite, letterSpacing: "-0.04em", translate: `0 ${(1 - code) * 105}%`, paddingBottom: 20 }}>Software</div>
+      </div>
+      <Label x={80} y={codeY + 200} p={ramp(t, beat(3.5), beat(4.5), "linear") * (1 - meet) * (1 - out)}>how systems work</Label>
+
+      <div style={{ position: "absolute", right: 80, top: 880, font: SERIF(150), color: P.blue, scale: String(times), opacity: 1 - out }}>×</div>
+
+      <div style={{ position: "absolute", left: 80, top: 1270, font: SERIF(58), color: P.steel, clipPath: `inset(0 ${100 - tagline * 100}% 0 0)`, opacity: 1 - out }}>
+        Beyond the interface.
+      </div>
     </AbsoluteFill>
   );
 };
@@ -124,21 +115,12 @@ export const ActIdentity: React.FC = () => {
       <div style={{ opacity: fade }}>
         <Dim x1={80} x2={1000} y={1236} p={ramp(t, beat(16), beat(17.5), "expo.out")} label="1080 px" />
       </div>
-      <Statement lines={["WEB ENGINEERING · SEO · AI"]} x={80} y={1284} size={34} weight={500} tracking="0.06em" p={ramp(t, beat(18), beat(19.5), "linear")} out={out} />
-      <div
-        style={{
-          position: "absolute",
-          left: 80,
-          top: 1344,
-          width: 760,
-          font: `400 32px/1.45 ${F.plex}`,
-          color: P.steel,
-          clipPath: `inset(0 0 ${100 - ramp(t, beat(20), beat(22), "power2.out") * 100}% 0)`,
-          opacity: fade,
-        }}
-      >
-        Building useful digital experiences through engineering, design and optimization.
+      {/* The two disciplines, each in its own voice. */}
+      <div style={{ position: "absolute", left: 80, top: 1272, overflow: "hidden", opacity: fade }}>
+        <div style={{ font: SERIF(60), color: P.offwhite, translate: `0 ${(1 - ramp(t, beat(18), beat(19.5), "expo.out")) * 110}%`, paddingBottom: 10 }}>Psychology graduate.</div>
       </div>
+      <Statement lines={["Software developer."]} x={80} y={1350} size={56} tracking="-0.02em" p={ramp(t, beat(19), beat(20.5), "linear")} out={out} />
+      <Label x={80} y={1430} p={ramp(t, beat(21), beat(23), "linear") * fade}>web engineering / seo / ai / performance</Label>
     </AbsoluteFill>
   );
 };
@@ -188,10 +170,10 @@ export const ActCraft: React.FC = () => {
   const fold = ramp(t, beat(43), e, "power3.inOut");
 
   const panel = {
-    x: lerp(80, 340, fold),
+    x: lerp(80, 350, fold),
     y: lerp(340, 345, fold),
-    w: lerp(920, 400, fold),
-    h: lerp(760, 400 * (932 / 430), fold),
+    w: lerp(920, 380, fold),
+    h: lerp(760, 380 * (932 / 430), fold),
   };
 
   const color = (k?: string) => (k === "kw" ? P.steel : k === "type" ? P.blue : P.offwhite);
