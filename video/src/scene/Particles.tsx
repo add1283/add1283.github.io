@@ -41,8 +41,11 @@ const vertex = /* glsl */ `
     vec3 dust = mod(position - uCam + ${DUST / 2}.0, ${DUST}.0) - ${DUST / 2}.0 + uCam;
     float t = uTime;
     dust += 0.35 * vec3(sin(t * 0.21 + aRand.x * 40.0), cos(t * 0.17 + aRand.y * 40.0), sin(t * 0.13 + aRand.z * 40.0));
-    // Big bang: everything starts in one point at the origin and blows out toward the camera.
-    dust = mix(vec3(0.0), dust, uBang);
+    // Big bang: everything starts in one point at the origin and blows out as a
+    // ragged sphere; each particle stops once it reaches its place in the field.
+    float reach = uBang * 46.0 * (0.25 + aRand.w * aRand.w * 1.2);
+    float dist = length(dust);
+    dust = normalize(dust + 1e-4) * min(dist, reach);
 
     vec3 logo = aLogo + uLogoPos + 0.012 * vec3(sin(t * 3.0 + aRand.x * 90.0));
     vec3 neural = aNeural + uStage;
