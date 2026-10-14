@@ -22,15 +22,9 @@ import { Mark } from './mark';
         <a routerLink="." fragment="systems" (click)="open.set(false)"><span aria-hidden="true">02</span>{{ t.nav.systems }}</a>
         <a routerLink="." fragment="about" (click)="open.set(false)"><span aria-hidden="true">03</span>{{ t.nav.about }}</a>
         <a routerLink="." fragment="contact" (click)="open.set(false)"><span aria-hidden="true">04</span>{{ t.nav.contact }}</a>
-        <button type="button" class="bar__view-m" (click)="prefs.toggleView(); open.set(false)">
-          {{ prefs.view() === '3d' ? t.toggles.viewPlain : t.toggles.view3d }}
-        </button>
       </nav>
 
       <div class="bar__tools">
-        <button type="button" class="tool tool--text bar__view" (click)="prefs.toggleView()">
-          {{ prefs.view() === '3d' ? t.toggles.viewPlain : t.toggles.view3d }}
-        </button>
         <button type="button" class="tool" (click)="prefs.toggleTheme()" [attr.aria-label]="t.toggles.theme" [attr.title]="t.toggles.theme">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
             @if (prefs.theme() === 'dark') {

@@ -36,7 +36,7 @@ export interface PathRow {
 export interface Copy {
   meta: { title: string; description: string; locale: string };
   nav: { work: string; systems: string; about: string; contact: string; skip: string; menu: string };
-  toggles: { view3d: string; viewPlain: string; theme: string; lang: string; langLabel: string };
+  toggles: { theme: string; lang: string; langLabel: string };
   hero: {
     kicker: string;
     mind: string;
@@ -50,7 +50,6 @@ export interface Copy {
     verify: string;
     primary: string;
     secondary: string;
-    scroll: string;
   };
   work: {
     label: string;
@@ -266,7 +265,7 @@ export const COPY: Record<Lang, Copy> = {
       locale: 'tr_TR',
     },
     nav: { work: 'İşler', systems: 'Yetkinlikler', about: 'Hakkımda', contact: 'İletişim', skip: 'İçeriğe geç', menu: 'Menü' },
-    toggles: { view3d: '3D görünüm', viewPlain: 'Sade görünüm', theme: 'Temayı değiştir', lang: 'EN', langLabel: 'Switch to English' },
+    toggles: { theme: 'Temayı değiştir', lang: 'EN', langLabel: 'Switch to English' },
     hero: {
       kicker: 'zihin × kod',
       mind: 'Psikoloji',
@@ -280,7 +279,6 @@ export const COPY: Record<Lang, Copy> = {
       verify: 'Belgeyi doğrula',
       primary: 'İşleri gör',
       secondary: 'E-posta gönder',
-      scroll: 'Kaydırdıkça karolar dönüp işlerimi gösterecek',
     },
     work: {
       label: 'işler / yayındaki dokuz site',
@@ -395,7 +393,7 @@ export const COPY: Record<Lang, Copy> = {
       notConfigured: 'Form şu an kapalı. Lütfen doğrudan e-posta ile yaz.',
       elsewhere: 'Başka yerlerde',
     },
-    footer: { made: 'İstanbul’da Angular ve Three.js ile yapıldı.', top: 'Başa dön' },
+    footer: { made: 'İstanbul’da Angular ile yapıldı.', top: 'Başa dön' },
   },
   en: {
     meta: {
@@ -405,7 +403,7 @@ export const COPY: Record<Lang, Copy> = {
       locale: 'en_US',
     },
     nav: { work: 'Work', systems: 'Skills', about: 'About', contact: 'Contact', skip: 'Skip to content', menu: 'Menu' },
-    toggles: { view3d: '3D view', viewPlain: 'Plain view', theme: 'Change theme', lang: 'TR', langLabel: 'Türkçeye geç' },
+    toggles: { theme: 'Change theme', lang: 'TR', langLabel: 'Türkçeye geç' },
     hero: {
       kicker: 'mind × code',
       mind: 'Psychology',
@@ -419,7 +417,6 @@ export const COPY: Record<Lang, Copy> = {
       verify: 'Verify',
       primary: 'See the work',
       secondary: 'Send an email',
-      scroll: 'Scroll and the tiles turn to show my work',
     },
     work: {
       label: 'work / nine live sites',
@@ -534,6 +531,6 @@ export const COPY: Record<Lang, Copy> = {
       notConfigured: 'The form is off right now. Please email me directly.',
       elsewhere: 'Elsewhere',
     },
-    footer: { made: 'Built in Istanbul with Angular and Three.js.', top: 'Back to top' },
+    footer: { made: 'Built in Istanbul with Angular.', top: 'Back to top' },
   },
 };

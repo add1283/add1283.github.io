@@ -45,8 +45,8 @@ import { I18n } from '../core/i18n';
         </div>
       </div>
 
-      <!-- Plain view: the mark's construction sheet. 3D view: the tile wall takes this place. -->
-      <figure class="sheet only-plain" aria-hidden="true">
+      <!-- The mark's construction sheet, as in the film's last shot. -->
+      <figure class="sheet" aria-hidden="true">
         <span class="sheet__label">mark / sheet 01</span>
         <span class="sheet__spec">IBM Plex Sans 600 / #4A7DFF</span>
         <span class="sheet__word">
@@ -58,7 +58,6 @@ import { I18n } from '../core/i18n';
         </span>
       </figure>
 
-      <p class="hero__hint only-3d" aria-hidden="true"><span class="hero__hint-line"></span>{{ t.scroll }}</p>
     </section>
   `,
 })

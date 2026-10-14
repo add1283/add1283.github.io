@@ -7,16 +7,14 @@ import { Contact } from './contact';
 import { Footer } from './footer';
 import { Header } from './header';
 import { Hero } from './hero';
-import { SceneCanvas } from './scene-canvas';
 import { Systems } from './systems';
 import { Work } from './work';
 
 @Component({
   selector: 'app-home',
-  imports: [Header, Hero, Work, Systems, About, Contact, Footer, SceneCanvas],
+  imports: [Header, Hero, Work, Systems, About, Contact, Footer],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <app-scene-canvas />
     <app-header />
     <main id="main" class="page" tabindex="-1">
       <app-hero />

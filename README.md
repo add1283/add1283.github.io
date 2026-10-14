@@ -4,13 +4,12 @@ Personal portfolio of Ahmet Deniz Dündar, frontend developer and SEO specialist
 
 The design follows the portfolio film: a technical blueprint in graphite, warm off-white, steel and one electric blue, set in IBM Plex Sans and Mono with Instrument Serif for the psychology voice. The hero sets the two disciplines on one blue line (Psychology × Software); the ADD mark (the initials on the blue signal rule, ending in a node) signs the header and the footer.
 
-In 3D view a wall of blueprint tiles is rendered with Three.js. The front of each tile carries a piece of a technical sheet (grid, registration crosses, the signal line); the back carries a piece of a project screenshot. Scrolling turns the wall to each group of projects, and pointing at or focusing a site turns it to that site; behind the work grid the wall fades into the page. Plain view shows the mark's construction sheet instead.
+The hero shows the mark's construction sheet, drawn like the film's last shot. As you scroll, the film's motion carries on in CSS: rails and lines draw themselves, headings rise through a mask, and each phone screen wipes up into its outline. It runs on scroll-driven animations where the browser supports them and respects reduced motion.
 
 ## Stack
 
 - Angular 20, prerendered to static HTML for `/` (Turkish) and `/en/` (English)
-- Three.js, loaded lazily in the browser only; one instanced mesh and a custom shader
-- Plain CSS with design tokens; Bricolage Grotesque and IBM Plex Sans, self-hosted
+- Plain CSS with design tokens; IBM Plex Sans, IBM Plex Mono and Instrument Serif, self-hosted
 - EmailJS for the contact form, loaded only when someone sends a message
 - GitHub Pages, deployed by `.github/workflows/deploy.yml` on every push to `main`
 

@@ -285,11 +285,6 @@ textarea {
   white-space: nowrap;
 }
 
-[data-view='plain'] .only-3d,
-[data-view='3d'] .only-plain {
-  display: none;
-}
-
 /* ── Shared pieces ─────────────────────────────────────── */
 .page {
   outline: none;
@@ -770,23 +765,6 @@ textarea {
   align-items: center;
   gap: 1.5rem;
   margin-top: 0.75rem;
-}
-
-.hero__hint {
-  position: absolute;
-  right: var(--gutter);
-  bottom: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font: 400 0.8125rem / 1 var(--mono);
-  color: var(--muted);
-}
-
-.hero__hint-line {
-  width: 48px;
-  height: 1px;
-  background: var(--blue);
 }
 
 /* The mark's construction sheet, drawn like the film's last shot. */
@@ -1587,35 +1565,98 @@ textarea {
   border-top: 1px solid var(--line);
 }
 
-/* ── 3D view ───────────────────────────────────────────── */
-/* Copy keeps a solid backing wherever the wall can pass behind it. */
-[data-view='3d'] .site,
-[data-view='3d'] .group__head,
-[data-view='3d'] .section-head,
-[data-view='3d'] .discipline,
-[data-view='3d'] .foundation,
-[data-view='3d'] .about__story,
-[data-view='3d'] .about__path,
-[data-view='3d'] .method,
-[data-view='3d'] .contact__intro,
-[data-view='3d'] .form {
-  background: color-mix(in srgb, var(--bg) 86%, transparent);
-}
+/* ── Motion: the film's moves, driven by scroll ───────── */
+/* Lines draw, headings rise through a mask, phone screens wipe up into
+   their outlines. Without scroll-driven animations everything is simply shown. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .section-head .section-title,
+    .group__title,
+    .group__mind,
+    .foundation__line,
+    .method__mind,
+    .method__code,
+    .contact .section-title {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 70%;
+    }
 
-@media (min-width: 960px) {
-  [data-view='3d'] .hero__copy {
-    padding: 1.5rem 1.5rem 1.5rem 0;
-    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    .section-head,
+    .group,
+    .discipline,
+    .foundation,
+    .work__next,
+    .foot__row {
+      background-repeat: no-repeat;
+    }
+
+    /* The rails draw from their node outwards. */
+    .group,
+    .discipline {
+      border-top-color: transparent;
+      background-image: linear-gradient(var(--blue), var(--blue));
+      background-size: 0 2px;
+      background-position: 0 0;
+      background-origin: border-box;
+      animation: rail linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+
+    .group::before,
+    .discipline::before {
+      animation: pop linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 25%;
+    }
+
+    /* Each phone screen wipes up from the bottom edge, as on the film's cut. */
+    .phone img {
+      animation: wipe linear both;
+      animation-timeline: view();
+      animation-range: entry 15% entry 80%;
+    }
+
+    .site__name,
+    .site__kind,
+    .site__summary,
+    .site .tags,
+    .discipline__list li,
+    .path__row,
+    .spec__row {
+      animation: settle linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 60%;
+    }
+
+    .foot .mark__rule {
+      transform-origin: 0 50%;
+      animation: draw linear both;
+      animation-timeline: view();
+      animation-range: entry 20% entry 90%;
+    }
   }
 }
 
-/* Narrow screens in 3D: the wall sits up top, the copy below. */
-@media (max-width: 759px) {
-  [data-view='3d'] .hero {
-    padding-top: calc(var(--bar) + 30svh);
+@keyframes rail {
+  to {
+    background-size: 100% 2px;
   }
+}
 
-  .hero__hint {
-    display: none;
+@keyframes wipe {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
   }
 }

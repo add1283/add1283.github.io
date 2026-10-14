@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr" data-theme="light" data-view="plain">
+<html lang="tr" data-theme="light">
 <head>
   <meta charset="utf-8">
   <title>Ahmet Deniz Dündar | Frontend Geliştirici ve SEO Uzmanı</title>
@@ -27,14 +27,13 @@
   <link rel="preload" href="/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 
-  <!-- Theme and view are applied before first paint to avoid a flash. -->
+  <!-- The theme is applied before first paint to avoid a flash. -->
   <script>
     (function () {
       var h = document.documentElement, s = {};
-      try { s.theme = localStorage.getItem('add-theme'); s.view = localStorage.getItem('add-view'); } catch (e) {}
+      try { s.theme = localStorage.getItem('add-theme'); } catch (e) {}
       var mq = function (q) { return window.matchMedia && matchMedia(q).matches; };
       h.dataset.theme = s.theme || (mq('(prefers-color-scheme: dark)') ? 'dark' : 'light');
-      h.dataset.view = s.view || (mq('(prefers-reduced-motion: reduce)') ? 'plain' : '3d');
     })();
   </script>
 </head>
